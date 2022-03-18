@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<global_settings>
+
+    <!--- STARTSEITE -->
+    <site_name>Stocherkahn Medizin e.V.</site_name>
+    <site_name_html><![CDATA[<span>Mediziner</span><span class='orange-text'>Kahn</span>]]></site_name_html>
+    <site_footer_name>Stocherkahn Medizin e.V.</site_footer_name>
+    <display_big_footer>false</display_big_footer>
+    <big_footer_left_column_html>
+        <![CDATA[
+        <h5 class="white-text">Wichtige Links</h5>
+        <ul>
+        <li><a class="white-text" href="#!">Impressum</a></li>
+        <li><a class="white-text" href="#!">Datenschutz</a></li>
+        <li><a class="white-text" href="#!">Fachschaft Medizin</a></li>
+        </ul>]]>
+    </big_footer_left_column_html>
+
+    <big_footer_right_column_html>
+        <![CDATA[
+        <h5 class="white-text">Über uns...</h5>
+        <p class="grey-text text-lighten-4">Ne coole Truppe die Spaß am Kahnfahren hat:)</p>
+    ]]>
+    </big_footer_right_column_html>
+
+   <!-- LORA STUFF -->
+ <schluesselrueckgabe_automat_aktiv>on</schluesselrueckgabe_automat_aktiv>
+<warnung_lora_unterspannung_aktiv>on</warnung_lora_unterspannung_aktiv>
+<batterie_spannung_untergrenze>3.5</batterie_spannung_untergrenze>
+<warnung_lora_totmann_aktiv>on</warnung_lora_totmann_aktiv>
+
+    <!--MAILSTUFF-->
+    <absender_mail>buchungstool@stocherkahn.fachschaftmedizin.de</absender_mail>
+    <absender_name>Buchungstool Stocherkahn Medizin</absender_name>
+    <reply_mail>info@stocherkahn.fachschaftmedizin.de</reply_mail>
+    <site_url>https://www.stocherkahn.fachschaftmedizin.de</site_url>
+
+    <!--PRETIX-->
+    <pretix_widget_global>on</pretix_widget_global>
+    <pretix_widget_css><![CDATA[ <link rel="stylesheet" type="text/css" href="https://pretix.tueticket.shop/medikahn/grundkurs/widget/v1.css">]]></pretix_widget_css>
+    <pretix_widget_js><![CDATA[<script type="text/javascript" src="https://pretix.tueticket.shop/widget/v1.de.js" async></script> ]]></pretix_widget_js>
+
+    <!--SMS-->
+    <sms-active>on</sms-active>
+    <user-sms>StocherkahnMedizin</user-sms>
+    <key-sms>g19pF7qM3f3yr4tukMwHOeSzi0881QPO</key-sms>
+    <absender-sms>Stocherkahn</absender-sms>
+    <type-sms>direct</type-sms>
+
+    <!--- GENERAL -->
+    <max_items_row_container>4</max_items_row_container>
+    <max_size_file_upload>500000</max_size_file_upload>
+    <index_tabs_that_require_wart_rights>wartwiki</index_tabs_that_require_wart_rights>
+    <delete-inactive-users-after-x-years>2</delete-inactive-users-after-x-years>
+
+
+    <!--- VERLEIH -->
+    <earliest_begin>8</earliest_begin>
+    <latest_begin>22</latest_begin>
+    <von-montag>8</von-montag>
+    <von-dienstag>8</von-dienstag>
+    <von-mittwoch>8</von-mittwoch>
+    <von-donnerstag>8</von-donnerstag>
+    <von-freitag>8</von-freitag>
+    <von-samstag>8</von-samstag>
+    <von-sonntag>8</von-sonntag>
+    <bis-montag>22</bis-montag>
+    <bis-dienstag>22</bis-dienstag>
+    <bis-mittwoch>22</bis-mittwoch>
+    <bis-donnerstag>22</bis-donnerstag>
+    <bis-freitag>22</bis-freitag>
+    <bis-samstag>22</bis-samstag>
+    <bis-sonntag>22</bis-sonntag>
+    <max-kosten-einer-reservierung>200</max-kosten-einer-reservierung>
+    <max-dauer-einer-reservierung>6</max-dauer-einer-reservierung>
+    <max-stunden-vor-abfahrt-buchbar>6</max-stunden-vor-abfahrt-buchbar>
+    <dauer-uebergabe-minuten>15</dauer-uebergabe-minuten>
+    <uebernahmefunktion-global-aktiv>on</uebernahmefunktion-global-aktiv>
+    <max-tage-vor-abfahrt-uebergabe>5</max-tage-vor-abfahrt-uebergabe>
+    <max-minuten-vor-abfahrt-uebergabe>5</max-minuten-vor-abfahrt-uebergabe>
+    <zeit-ab-wann-zukuenftige-uebergaben-in-schluesselverfuegbarkeitskalkulation-einfliessen-tage>4</zeit-ab-wann-zukuenftige-uebergaben-in-schluesselverfuegbarkeitskalkulation-einfliessen-tage>
+    <tage-spontanuebergabe-reservierungen-zukunft-dropdown>15</tage-spontanuebergabe-reservierungen-zukunft-dropdown>
+    <tage-spontanuebergabe-reservierungen-vergangenheit-dropdown>20</tage-spontanuebergabe-reservierungen-vergangenheit-dropdown>
+    <erinnerung-schluessel-zurueckgeben-manuell-intervallgroesse>2</erinnerung-schluessel-zurueckgeben-manuell-intervallgroesse>
+    <moegliche_schluesselorte>rueckgabekasten,vermisst,verloren,geklaut</moegliche_schluesselorte>
+    <termin_typen>Geldrückgabe,andere</termin_typen>
+    <kritischer-abstand-storno-vor-beginn>120</kritischer-abstand-storno-vor-beginn>
+    <wochen-vergangenheit-durchgefuehrte-uebergaben>2</wochen-vergangenheit-durchgefuehrte-uebergaben>
+    <wochen-vergangenheit-durchgefuehrte-transaktionen>2</wochen-vergangenheit-durchgefuehrte-transaktionen>
+    <schluesseluebernahme-ueber-mehrere-res>false</schluesseluebernahme-ueber-mehrere-res>
+    <erinnerung-uebergabe-ausmachen-1>3</erinnerung-uebergabe-ausmachen-1>
+    <erinnerung-uebergabe-ausmachen-2>1</erinnerung-uebergabe-ausmachen-2>
+    <erinnerung-schluessel-zurueckgeben-intervall-beginn>5</erinnerung-schluessel-zurueckgeben-intervall-beginn>
+    <erinnerung-schluessel-zurueckgeben-intervall-groesse>7</erinnerung-schluessel-zurueckgeben-intervall-groesse>
+    <stunden-bis-uebergabe-eingetragen-sein-soll>6</stunden-bis-uebergabe-eingetragen-sein-soll>
+    <grill-global-aktiv>false</grill-global-aktiv>
+<soll_uhrzeit_weekly_status_mail>18:00</soll_uhrzeit_weekly_status_mail>
+    <soll_uhrzeit_daily_status_mail>18:00</soll_uhrzeit_daily_status_mail>
+    <future_daily_status_mail>2</future_daily_status_mail>
+
+    <!--PAYMENT-->
+    <paypal-aktiv>on</paypal-aktiv>
+<paypal-text><![CDATA[<li class='collection-item'><i class='tiny material-icons'>label</i> Du zahlst <b><a href='https://paypal.me/medizinerkahn/[betrag]' target='_blank'>via PayPal</a></b> - <b>Bitte beachte:</b> Du wirst auf eine PayPal-Me Seite verwiesen. Der Betrag deiner Reservierung wird dabei bereits übermittelt, bitte gib noch im Kommentar bei der Bezahlung deine Reservierungsnummer an, damit wir die Zahlung dann leichter zuordnen können:)</li>]]></paypal-text>
+<normal-payment-options><![CDATA[<li class='collection-item'><i class='tiny material-icons'>label</i> Du zahlst wenn du dein Schlüssel bei einem der Stocherkahnwärte abholst.</li>
+<li class='collection-item'><i class='tiny material-icons'>label</i> Du wirfst das Geld nach der Fahrt zusammen mit dem Schlüssel in den Briefkasten des Stocherkahnwartes welcher dir den Schlüssel gegeben hat.</li>]]></normal-payment-options>
+    <zeit-tage-nach-res-ende-zahlen>5</zeit-tage-nach-res-ende-zahlen>
+    <rechnungs_header><![CDATA[Stocherkahn Medizin Tübingen e.V.<br>c/o Gustav Jung<br>Bursagasse 18<br>72070 Tübingen]]></rechnungs_header>
+    <rechnungs_footer><![CDATA[Wir bitten um eine Begleichung der Rechnung innerhalb von 14 Tagen nach Erhalt. Bitte überweisen Sie den vollständigen Betrag an:<br><br>
+<b>Empfänger:</b> Stocherkahn Medizin Tübingen e.V.<br>
+<b>IBAN</b>: DE70 6415 0020 0004 1130 41<br>
+<b>BIC</b>: SOLADES1TUB<br><br>Mit freundlichen Grüßen,<br>Das Team des Stocherkahn Medizin Tübingen e.V.]]></rechnungs_footer>
+    <rechnungsfunktion_global>on</rechnungsfunktion_global>
+    <rechnungsfunktion_wart>on</rechnungsfunktion_wart>
+    <erinnerung-nachzahlung-intervall-beginn>7</erinnerung-nachzahlung-intervall-beginn>
+    <erinnerung-nachzahlung-intervall-groesse>7</erinnerung-nachzahlung-intervall-groesse>
+
+    <!--- COLORS -->
+    <site_menue_color>white</site_menue_color>
+    <site_menue_text_color>white-text</site_menue_text_color>
+    <site_footer_color>green</site_footer_color>
+    <site_buttons_color>blue</site_buttons_color>
+    <site_error_buttons_color>red</site_error_buttons_color>
+    <farbe-button-kalender-buchbar>green</farbe-button-kalender-buchbar>
+    <farbe-button-kalender-nicht-buchbar>red</farbe-button-kalender-nicht-buchbar>
+    <farbe-button-kalender-reserviert>yellow</farbe-button-kalender-reserviert>
+    <card_panel_hintergrund>white</card_panel_hintergrund>
+
+    <!--- INFOs FOR USERS -->
+    <titelinfo-reservierung-hinzufuegen><![CDATA[        <p class='center-align'>Um deine Reservierung einzugeben, scrolle einfach ganz nach unten und trage dein gewünschtes Zeitfenster ein:)<br>Vorher kannst du im Kalender noch einmal nachschauen ob das Zeitfenster noch frei ist.</p>
+    ]]></titelinfo-reservierung-hinzufuegen>
+    <inhalt-dokumente-und-nuetzliches><![CDATA[        <p><a href='./mv_info.php'><i class='tiny material-icons'>description</i> Mietvertrag</a></p>
+        <p><a href='./ds_info.php'><i class='tiny material-icons'>description</i> Datenschutzerklärung</a></p>
+<p><a href='./media/documents/Fahrgastdokumentation.pdf'><i class='tiny material-icons'> description </i> Vorlage für die Fahrgastdokumentation im Rahmen der Hygienebestimmungen</a></p>
+        <p><a href='./index.php?tab=korrektes_anlegen'><i class='tiny material-icons'>info</i> Anleitung zum Festmachen des Kahns</a></p>
+    ]]></inhalt-dokumente-und-nuetzliches>
+    <html-faq-user-hauptansicht><![CDATA[ <div class='section'>
+    <h5>Schlechtes Wetter</h5>
+    <p>Pech mit dem Wetter bedeutet bei uns nicht, dass dein Geld futsch ist. Solltest du bevor deine Fahrt offiziell los geht bemerken, dass das mit dem Wetter nix wird, kannst du ganz einfach im Buchungssystem deine Reservierung stornieren. Hast du rechtzeitig storniert, bekommst dann einfach das Geld zurück:) <a href='./index.php?tab=kontakt'>Melde dich</a> dazu einfach bei uns um dafür ein Termin auszumachen.</p>
+    <p>Nachdem deine Fahrt begonnen hat, gilt diese Regelung leider nicht mehr und dein Anspruch auf Erstattung verfällt.</p>
+    <p>Bitte denke trotzdem immer daran deinen Schlüssel möglichst bald zu unserem <a href='./index.php?tab=way_to_rueckgabekasten'>Rückgabekasten</a> zu bringen, da wir ihn wieder für andere Reservierungen benötigen:)</p>
+    </div>
+    <div class='section'>
+    <h5>Grillen an Bord</h5>
+    <p>Wir stecken in unseren Kahn viel Arbeit und hatten leider in den letzten Jahren öfters schlechte Erfahrungen mit Gruppen die gegrillt und nicht aufgepasst haben. Daher erkennt das geübte Auge auch die eine oder andere Brandspur am Kahn. Daher können wir es euch leider nicht mehr erlauben auf dem Kahn zu grillen:/</p>
+    </div>]]></html-faq-user-hauptansicht>
+    <text-info-uebergabe-dabei-haben><![CDATA[    <ul class='collection'>
+        <li class='collection-item'>Geld für die Bezahlung deiner Reservierung</li>
+        <li class='collection-item'>Studentenausweis, falls du dein Konto als Stundentenkonto laufen hast</li>
+    </ul>
+]]></text-info-uebergabe-dabei-haben>
+    <text-info-uebergabe-ablauf><![CDATA[    <p>In der Schlüsselübergabe bekommst du von der/dem zuständigen/m Stocherkahnwart/-in den Kahnschlüssel und aktuelle Informationen was es organisatorisch und meteorologisch zu beachten gibt. Du kannst bei der Gelegenheit auch deine Fahrt bezahlen, oder auch nach der Fahrt wenn du deinen Schlüssel zurück gibst.</p><p>Falls du neu bei unserem Kahn bist, wird es eine kurze Ersteinweisung geben.</p>
+]]></text-info-uebergabe-ablauf>
+    <text-info-uebergabe-einweisung><![CDATA[    <p>Stocherkahn fahren ist einfach, aber dennoch gibt es einige Sachen die man beachten muss. Du kannst dich hier auf der Homepage schon vorab informieren, aber die wichtigsten Facts und Regeln werden wir dir nochmal persöhnlich erklären und dir gerne deine Fragen beantworten.</p>
+    <p>Eine Ersteinweisung dauert in etwa 5-10 Minuten.</p>
+]]></text-info-uebergabe-einweisung>
+    <erklaerung_schluesseluebernahme><![CDATA[        <p><table><tr><th><i class='large material-icons'>new_releases</i> </th><td>Du bist im Begriff eine Schlüsselübernahme für deine Reservierung auszumachen. Damit kannst du dir und uns Stocherkahnwärten ein bisschen Arbeit ersparen, indem du den Schlüssel nicht persönlich bei uns abholen kommst. Dennoch gibt es folgende Dinge zu beachten:</td></tr></table></p>
+    <p><ul class='collection'>
+    <li class='collection-item'><table><tr><th><i class='small material-icons'>schedule</i> </th><td>Eine Schlüsselübernahme hängt sowohl von deiner Pünktlichkeit, als auch der der Gruppe vor dir ab. Sei daher bitte pünktlich an der Anlegestelle zu Beginn deiner Reservierung damit die Gruppe vor dir nicht warten muss.<br>Im Gegenzug erhät die Gruppe vor dir von uns nochmal den Hinweis ebenfalls pünktlich an die Anlegestelle zurückzukehren.</td></tr></table></li>
+    <li class='collection-item'><table><tr><th><i class='small material-icons'>info</i> </th><td>Die Gruppe vor dir wird eine eMail erhalten, die sie über dein Vorhaben in Kenntnis setzt. Sollte die Gruppe dies nicht wünschen (z.B. wenn sie den Kahn nicht bis ganz ans Ende der Fahrt nutzen möchte), kann diese die geplante Schlüsselübernahme absagen und du erhältst eine Mail.</td></tr></table></li>
+    <li class='collection-item'><table><tr><th><i class='small material-icons'>info</i> </th><td>Wir Stocherkahnwärte können keine Garantie dafür Übernehmen, dass die Übernahme klappt. Falls also kurzfristig sich doch etwas ändern sollte, kann es daher sein, dass du doch keinen Schlüssel bekommst.</td></tr></table></li>
+    <li class='collection-item'><table><tr><th><i class='small material-icons'>loyalty</i> </th><td>Da du deine Fahrt nicht persöhnlich bei einem unserer Wärte bezahlen kannst, verlassen wir uns darauf, dass du die Ausleihgebühr und den Schlüssel zuverlässig direkt nach deiner Fahrt in den Rückgabebriefkasten wirfst.</td></tr></table></li>
+    </ul></p>
+    ]]></erklaerung_schluesseluebernahme>
+    <wasserstand_sperrungsautomatik_text><![CDATA[Der Neckar hat den kritischen Wasserstand überschritten und es ist nicht mehr sicher diesen zu befahren. Daher hat das System deine Reservierung automatisch storniert und den Kahn gesperrt. Kontaktiere uns gerne bei Fragen und ab wann der Neckar wieder befahrbar sein wird.]]></wasserstand_sperrungsautomatik_text>
+    <erklaerung-forderung-zahlen-user><![CDATA[ <ul><li>Werfe das Geld einfach in den Rückgabebriefkasten - denke bitte dabei das Geld zB in einen Umschlag zu packen und drauf zu schrieben von wem das Geld ist, damit wir es auch zuordnen können:)</li><li>Du zahlst <b><a href='https://paypal.me/medizinerkahn/' target='_blank'>via PayPal</a></b> - <b>Bitte beachte:</b> Du wirst auf eine PayPal-Me Seite verwiesen. Bitte gib den Betrag und im Kommentar deine Reservierungsnummer an, damit wir die Zahlung dann leichter zuordnen können:)</li></ul> ]]></erklaerung-forderung-zahlen-user>
+    <hinweis_login_formular>Bitte beachte: Solltest du den Kahn über ein Jahr nicht genutzt haben, wird dein Konto entsprechend der Datenschutzerklärung gelöscht worden sein. In diesem Falle kannst du dich aber natürlich gerne neu registrieren!:)</hinweis_login_formular>
+<wasserstand_vorwarnung_beginner>75</wasserstand_vorwarnung_beginner><wasserstand_vorwarnung_erfahrene>100</wasserstand_vorwarnung_erfahrene><wasserstand_generelle_sperrung>130</wasserstand_generelle_sperrung><wasserstand_global_on_off>on</wasserstand_global_on_off><anzahl_messungen_trendberechnung_wasserstand>13</anzahl_messungen_trendberechnung_wasserstand><grenze_trendberechnung_wasserstand>0</grenze_trendberechnung_wasserstand><wasserstand_mail_mode>on</wasserstand_mail_mode><wasserstand_mail_time>2</wasserstand_mail_time><wasserstand_generelle_sperrung_auto>150</wasserstand_generelle_sperrung_auto><wasserstand_sperrungsautomatik_on_off>on</wasserstand_sperrungsautomatik_on_off><wasserstand_sperrungsautomatik_stunden>24</wasserstand_sperrungsautomatik_stunden><wasserstand_mail_wart_mode/><wasserstand_akkordeon_title>Aktueller Pegelstand</wasserstand_akkordeon_title><homepagetext_wasserstand_fuer_erfahrene_geeignet>Wasserstand nur noch fÃ¼r erfahrene Stocherer geeignet!</homepagetext_wasserstand_fuer_erfahrene_geeignet><homepagetext_wasserstand_fuer_anfaenger_geeignet>Wasserstand fÃÂ¼r AnfÃÂ¤nger geeignet</homepagetext_wasserstand_fuer_anfaenger_geeignet><rssi_db_untergrenze>-95</rssi_db_untergrenze><search_URL_pegelstaende>https://www.hvz.baden-wuerttemberg.de/js/hvz_peg_stmn.js</search_URL_pegelstaende></global_settings>
