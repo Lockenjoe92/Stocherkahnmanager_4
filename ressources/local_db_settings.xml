@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local_db_settings>
+
+    <!--- DATABASE -->
+    <db_host>localhost</db_host>
+    <db_user>d0326c8d</db_user>
+    <db_pswd>q2qBgsRg2gv7Qskx</db_pswd>
+    <db_dbname>d0326c8d</db_dbname>
+
+</local_db_settings>
