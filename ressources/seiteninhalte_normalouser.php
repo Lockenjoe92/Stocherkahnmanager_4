@@ -129,11 +129,12 @@ function faellige_schluesselrueckgaben_user(){
     $link = connect_db();
 
     //Lade ID
-    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' AND storno_user = 0"))) {
+    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe <> NULL AND rueckgabe = NULL AND storno_user = 0"))) {
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
-    if (!$stmt->bind_param("s", lade_user_id())) {
+    $UserId = lade_user_id();
+    if (!$stmt->bind_param("s", $UserId)) {
         $Antwort = false;
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
@@ -225,7 +226,7 @@ function faellige_schluesselrueckgaben_user(){
 function anstehende_termine_user(){
 
     $link = connect_db();
-    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung = '0000-00-00 00:00:00' ORDER BY zeitpunkt ASC";
+    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung = NULL ORDER BY zeitpunkt ASC";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
     if($Anzahl>0){
