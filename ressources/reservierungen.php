@@ -951,7 +951,7 @@ function schluesselwesen($ID, $Ansicht='user'){
     $Reservierung = lade_reservierung($ID);
 
     //Ist ein schlüssel ausgeteilt?
-    $Anfrage = "SELECT * FROM schluesselausgabe WHERE reservierung = '$ID' AND storno_user = '0' AND ausgabe > '0000-00-00 00:00:00'";
+    $Anfrage = "SELECT * FROM schluesselausgabe WHERE reservierung = '$ID' AND storno_user = '0' AND ausgabe > NULL";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
 
