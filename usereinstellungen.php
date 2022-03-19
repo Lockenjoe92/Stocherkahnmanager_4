@@ -310,7 +310,7 @@ function spalte_konto_loeschen(){
         $Reservierung = mysqli_fetch_assoc($AbfrageLadeAlleResUser);
 
         //Schlüssel zurückgegeben falls Ausgabe erfolgt?
-        $SchluesselausgabeAnfrage = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND ausgabe > '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00'";
+        $SchluesselausgabeAnfrage = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND ausgabe > NULL AND rueckgabe = NULL";
         $SchluesselausgabeAbfrage = mysqli_query($link, $SchluesselausgabeAnfrage);
         $SchluesselausgabeAnzahl = mysqli_num_rows($SchluesselausgabeAbfrage);
 
