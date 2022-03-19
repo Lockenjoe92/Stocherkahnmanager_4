@@ -244,6 +244,13 @@ function navbar_links_big(){
             }
             $HTML .= "</ul>";
             $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">Wartfunktionen<i class="material-icons right">arrow_drop_down</i></a></li>';
+        } else {
+            if($UserMeta['ist_admin'] == 'true'){
+                $HTML .= "<ul id='dropdown2' class='dropdown-content'>";
+                $HTML .= '<li><a href="./administration.php">Admin</a></li>';
+                $HTML .= "</ul>";
+                $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">Administration<i class="material-icons right">arrow_drop_down</i></a></li>';
+            }
         }
 
         $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Buchungstool<i class="material-icons right">arrow_drop_down</i></a></li>';
