@@ -22,6 +22,7 @@
         <p class="grey-text text-lighten-4">Ne coole Truppe die Spaß am Kahnfahren hat:)</p>
     ]]>
     </big_footer_right_column_html>
+    <destination_url_after_logout>./index.php</destination_url_after_logout>
 
    <!-- LORA STUFF -->
  <schluesselrueckgabe_automat_aktiv>on</schluesselrueckgabe_automat_aktiv>

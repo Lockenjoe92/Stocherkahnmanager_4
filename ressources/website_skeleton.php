@@ -203,6 +203,9 @@ function navbar_links_big(){
         $SiteName = lade_xml_einstellung('site_name_html');
     }
 
+    $ColorSpan = "<span class='".lade_xml_einstellung('site_menue_text_color')."'>";
+    $EndColorSpan = "</span>";
+
     $HTML = '<a id="logo-container" href="./index.php" class="brand-logo">'.$SiteName.'</a>';
     $HTML .= '<ul class="right hide-on-med-and-down">';
 
@@ -214,13 +217,11 @@ function navbar_links_big(){
 
     for ($x=1;$x<=$Anzahl;$x++){
         $Ergebnis = mysqli_fetch_assoc($Abfrage);
-        $HTML .= "<li><a href='./index.php?tab=".$Ergebnis['name']."'>".$Ergebnis['menue_text']."</a></li>";
+        $HTML .= "<li><a href='./index.php?tab=".$Ergebnis['name']."'>".$ColorSpan.$Ergebnis['menue_text'].$EndColorSpan."</a></li>";
     }
 
     #Load available sites according to login and rights status
     $UserID = lade_user_id();
-    $ColorSpan = "<span class='".lade_xml_einstellung('site_menue_text_color')."'>";
-    $EndColorSpan = "</span>";
 
     if($UserID>0){
 

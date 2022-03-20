@@ -17,7 +17,9 @@ $XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms
     'zeit-tage-nach-res-ende-zahlen', 'card_panel_hintergrund', 'delete-inactive-users-after-x-years', 'site_menue_text_color', 'rechnungsfunktion_global', 'rechnungsfunktion_wart', 'paypal-aktiv', 'future_daily_status_mail',
     'soll_uhrzeit_weekly_status_mail', 'soll_uhrzeit_daily_status_mail', 'erinnerung-nachzahlung-intervall-groesse', 'erinnerung-nachzahlung-intervall-beginn', 'rssi_db_untergrenze',
     'schluesselrueckgabe_automat_aktiv', 'wasserstand_mail_time', 'wasserstand_mail_wart_mode', 'wasserstand_akkordeon_title', 'wasserstand_sperrungsautomatik_stunden', 'wasserstand_sperrungsautomatik_on_off',
-    'pretix_widget_global', 'wasserstand_generelle_sperrung_auto', 'wasserstand_vorwarnung_beginner', 'wasserstand_mail_mode', 'grenze_trendberechnung_wasserstand', 'wasserstand_global_on_off', 'anzahl_messungen_trendberechnung_wasserstand', 'wasserstand_vorwarnung_erfahrene', 'wasserstand_generelle_sperrung', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown','warnung_lora_unterspannung_aktiv', 'batterie_spannung_untergrenze', 'warnung_lora_totmann_aktiv', 'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende'];
+    'pretix_widget_global', 'wasserstand_generelle_sperrung_auto', 'wasserstand_vorwarnung_beginner', 'wasserstand_mail_mode', 'grenze_trendberechnung_wasserstand', 'wasserstand_global_on_off', 'anzahl_messungen_trendberechnung_wasserstand',
+    'wasserstand_vorwarnung_erfahrene', 'wasserstand_generelle_sperrung', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown','warnung_lora_unterspannung_aktiv', 'batterie_spannung_untergrenze', 'warnung_lora_totmann_aktiv',
+    'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende', 'destination_url_after_logout'];
 admin_xml_settings_parser($XMLsettings);
 
 $CDATAxmlSETTINGS = ['titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',
@@ -42,6 +44,7 @@ $SettingTableItems .= table_form_string_item('Website Footer Name', 'site_footer
 $SettingTableItems .= table_form_swich_item('Website Big Footer', 'display_big_footer', 'deaktiviert', 'aktiviert', lade_db_einstellung('display_big_footer'), false);
 $SettingTableItems .= table_form_html_area_item('Big Footer Left Column', 'big_footer_left_column_html', lade_db_einstellung('big_footer_left_column_html'), slider_setting_interpreter(lade_db_einstellung('display_big_footer')));
 $SettingTableItems .= table_form_html_area_item('Big Footer Right Column', 'big_footer_right_column_html', lade_db_einstellung('big_footer_right_column_html'), slider_setting_interpreter(lade_db_einstellung('display_big_footer')));
+$SettingTableItems .= table_form_string_item('Logout Ziel URL', 'destination_url_after_logout', lade_xml_einstellung('destination_url_after_logout'), false);
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Website Skeleton', $SettingTable, 'colorize');
 
