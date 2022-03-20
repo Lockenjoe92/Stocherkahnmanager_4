@@ -80,7 +80,7 @@ function sperrung_eintragen($Typ, $Beginn, $Ende, $Titel, $Erklaerung, $Erstelle
 
     $link = connect_db();
 
-    $AnfragePauseEintragen = "INSERT INTO sperrungen (typ, beginn, ende, titel, erklaerung, ersteller, storno_user, storno_zeit) VALUES ('$Typ', '$Beginn', '$Ende', '$Titel', '$Erklaerung', '$Ersteller', '0',NULL)";
+    $AnfragePauseEintragen = "INSERT INTO sperrungen (typ, beginn, ende, titel, erklaerung, ersteller, storno_user, storno_zeit) VALUES ('$Typ', '$Beginn', '$Ende', '$Titel', '$Erklaerung', '$Ersteller', '0','0000-00-00 00:00:00')";
     $AbfragePauseEintragen = mysqli_query($link, $AnfragePauseEintragen);
 
     if ($AbfragePauseEintragen == TRUE){

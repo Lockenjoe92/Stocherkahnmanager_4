@@ -415,7 +415,7 @@ function startseitenelement_anlegen($Ort, $Typ, $Name){
         $Rang = $AnzahlBisherigerObjekte + 1;
         $Timestamp = timestamp();
         $LadeUserID = lade_user_id();
-        $Anfrage3 = "INSERT INTO homepage_bausteine (ort, typ, rang, name, angelegt_am, angelegt_von, storno_user, storno_time) VALUES ('".$Ort."', '".$Typ."', '".$Rang."', '".$Name."', '".$Timestamp."', '".$LadeUserID."', '0', NULL)";
+        $Anfrage3 = "INSERT INTO homepage_bausteine (ort, typ, rang, name, angelegt_am, angelegt_von, storno_user, storno_time) VALUES ('".$Ort."', '".$Typ."', '".$Rang."', '".$Name."', '".$Timestamp."', '".$LadeUserID."', '0', '0000-00-00 00:00:00')";
         $Abfrage3 = mysqli_query($link, $Anfrage3);
 
         #Überprüfen ob es geklappt hat
@@ -506,7 +506,7 @@ function startseiteninhalt_einfuegen($IDbaustein, $titel, $titel2, $titelColor, 
     } else {
         #Eintragen
         $Rang = $Anzahl + 1;
-        $Anfrage2 = "INSERT INTO homepage_content (id_baustein, rang, ueberschrift, zweite_ueberschrift, ueberschrift_farbe, zweite_ueberschrift_farbe, html_content, uri_bild, icon, icon_farbe, angelegt_am, angelegt_von, storno_user, storno_time) VALUES ('".$IDbaustein."', '".$Rang."', '".htmlentities($titel)."', '".htmlentities($titel2)."', '".htmlentities($titelColor)."', '".htmlentities($titel2Color)."', '".htmlentities($html)."', '".$uri_bild."', '".$icon."', '".$iconColor."', '".timestamp()."', '".lade_user_id()."', '0', NULL)";
+        $Anfrage2 = "INSERT INTO homepage_content (id_baustein, rang, ueberschrift, zweite_ueberschrift, ueberschrift_farbe, zweite_ueberschrift_farbe, html_content, uri_bild, icon, icon_farbe, angelegt_am, angelegt_von, storno_user, storno_time) VALUES ('".$IDbaustein."', '".$Rang."', '".htmlentities($titel)."', '".htmlentities($titel2)."', '".htmlentities($titelColor)."', '".htmlentities($titel2Color)."', '".htmlentities($html)."', '".$uri_bild."', '".$icon."', '".$iconColor."', '".timestamp()."', '".lade_user_id()."', '0', '0000-00-00 00:00:00')";
         $Abfrage2 = mysqli_query($link, $Anfrage2);
 
         #Überprüfen ob es geklappt hat

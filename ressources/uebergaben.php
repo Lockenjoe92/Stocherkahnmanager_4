@@ -229,7 +229,7 @@ function uebergabe_hinzufuegen($Res, $Wart, $Termin, $Beginn, $Kommentar, $Creat
 
     } else if ($DAUcounter == 0){
 
-        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', NULL, '0', '$Timestamp', '$Kommentar', NULL, '0', '')";
+        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', NULL, '0', '$Timestamp', '$Kommentar', '0000-00-00 00:00:00', '0', '')";
         if (mysqli_query($link, $AnfrageUebergabeEintragen)){
 
             $Terminangebot = lade_terminangebot($Termin);
@@ -571,7 +571,7 @@ function spontanuebergabe_eintragen($IDres, $IDschluessel, $Gratisfahrt, $Andere
     }
 
     //Übergabeobjekt anlegen
-    $AnfrageSpontanuebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$IDres', '$Wart', '0', '".$Timestamp."', '".$Timestamp."', '$IDschluessel', '".$Timestamp."', 'Spontan&uuml;bergabe', NULL, '0', '')";
+    $AnfrageSpontanuebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$IDres', '$Wart', '0', '".$Timestamp."', '".$Timestamp."', '$IDschluessel', '".$Timestamp."', 'Spontan&uuml;bergabe', '0000-00-00 00:00:00', '0', '')";
     if (!mysqli_query($link, $AnfrageSpontanuebergabeEintragen)){
         $Errorcounter++;
         $Error .= "Fehler beim Eintragen der Spontan&uuml;bergabe!<br>";
@@ -926,7 +926,7 @@ function terminangebot_hinzufuegen($IDwart, $Beginn, $Ende, $Ort, $Kommentar, $T
         $Antwort['meldung'] = $DAUerror;
     } else {
 
-        $Anfrage = "INSERT INTO terminangebote (wart, von, bis, terminierung, ort, kommentar, create_time, create_user, storno_time, storno_user) VALUES ('$IDwart', '$Beginn','$Ende','$Terminierung','$Ort','$Kommentar','$Timestamp','".lade_user_id()."',NULL,'0')";
+        $Anfrage = "INSERT INTO terminangebote (wart, von, bis, terminierung, ort, kommentar, create_time, create_user, storno_time, storno_user) VALUES ('$IDwart', '$Beginn','$Ende','$Terminierung','$Ort','$Kommentar','$Timestamp','".lade_user_id()."','0000-00-00 00:00:00','0')";
         if (mysqli_query($link, $Anfrage)){
             $Antwort['success'] = TRUE;
             $Antwort['meldung'] = "Terminangebot erfolgreich eingetragen!";
