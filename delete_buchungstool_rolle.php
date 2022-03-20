@@ -16,6 +16,7 @@ $User = $_GET['user'];
 
 //PARSER
 $Parser = parser($Rolle, $User);
+var_dump($Parser);
 
 # Page Title
 $PageTitle = '<h1 class="center-align hide-on-med-and-down">Benutzerrolle l&ouml;schen</h1>';
@@ -38,12 +39,16 @@ echo site_header($Header);
 echo site_body($HTML);
 
 function parser($Rolle, $User){
+
+    var_dump($Rolle);
     if(isset($_POST['loeschen'])){
         
         if($Rolle=='ist_wart'){
             return wartrolle_loeschen($User);
         } elseif($Rolle=='ist_admin'){
             return adminrolle_loeschen($User);
+        } elseif($Rolle=='ist_kasse'){
+            return kassenrolle_loeschen($User);
         } else {
             $Nutzergruppen = lade_alle_nutzgruppen();
             foreach($Nutzergruppen as $Nutzergruppe){

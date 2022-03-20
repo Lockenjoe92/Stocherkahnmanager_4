@@ -701,6 +701,15 @@ function adminrolle_loeschen($User){
     }
 }
 
+function kassenrolle_loeschen($User){
+    $Admins = get_sorted_user_array_with_user_meta_fields('ist_kasse');
+    if(count($Admins)<=1){
+        return false;
+    } else {
+        return delete_user_meta($User, 'ist_kasse', 'true');
+    }
+}
+
 function wartrolle_loeschen($User){
     $Admins = get_sorted_user_array_with_user_meta_fields('ist_wart');
     if(count($Admins)<=1){

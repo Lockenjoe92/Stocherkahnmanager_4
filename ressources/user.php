@@ -160,15 +160,15 @@ function delete_user_meta($UserID, $Key, $Value){
 
     if (!($stmt = $link->prepare("DELETE FROM user_meta WHERE user = ? AND schluessel = ? AND wert = ?"))) {
         $Antwort['erfolg'] = false;
-        echo "Prepare failed: (" . $link->errno . ") " . $link->error;
+        var_dump("Prepare failed: (" . $link->errno . ") " . $link->error);
     }
     if (!$stmt->bind_param("iss", $UserID, $Key, $Value)) {
         $Antwort['erfolg'] = false;
-        echo  "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        var_dump("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     if (!$stmt->execute()) {
         $Antwort['erfolg'] = false;
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        var_dump("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
     } else {
         return true;
     }
