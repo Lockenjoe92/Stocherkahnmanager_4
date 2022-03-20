@@ -236,7 +236,8 @@ function update_user_meta($UserID, $Key, $Value){
                     $Antwort['erfolg'] = false;
                     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
                 }
-                if (!$stmt->bind_param("ssis", $Value, timestamp(), $UserID, $Key)) {
+                $Timestamp = timestamp();
+                if (!$stmt->bind_param("ssis", $Value, $Timestamp, $UserID, $Key)) {
                     $Antwort['erfolg'] = false;
                     echo  "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
                 }
