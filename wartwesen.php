@@ -316,7 +316,7 @@ function section_uebergaben(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
+    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
     $AbfrageLadeAktiveUebergaben = mysqli_query($link, $AnfrageLadeAktiveUebergaben);
     $AnzahlLadeAktiveUebergaben = mysqli_num_rows($AbfrageLadeAktiveUebergaben);
 

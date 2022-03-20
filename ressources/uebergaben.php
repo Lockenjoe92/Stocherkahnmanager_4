@@ -229,7 +229,7 @@ function uebergabe_hinzufuegen($Res, $Wart, $Termin, $Beginn, $Kommentar, $Creat
 
     } else if ($DAUcounter == 0){
 
-        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', NULL, '0', '$Timestamp', '$Kommentar', '0000-00-00 00:00:00', '0', '')";
+        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', '0000-00-00 00:00:00', '0', '$Timestamp', '$Kommentar')";
         if (mysqli_query($link, $AnfrageUebergabeEintragen)){
 
             $Terminangebot = lade_terminangebot($Termin);
