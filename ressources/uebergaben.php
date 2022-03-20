@@ -196,7 +196,7 @@ function uebergabe_hinzufuegen($Res, $Wart, $Termin, $Beginn, $Kommentar, $Creat
     }
 
     //Limitierung schon abgelaufen?
-    if($Terminangebot['terminierung'] != "0000-00-00 00:00:00"){
+    if($Terminangebot['terminierung'] != NULL){
         if (time() > strtotime($Terminangebot['terminierung'])){
             $DAUcounter++;
             $DAUerror .= "Das Terminangebot ist inzwischen abgelaufen!<br>";
@@ -229,7 +229,7 @@ function uebergabe_hinzufuegen($Res, $Wart, $Termin, $Beginn, $Kommentar, $Creat
 
     } else if ($DAUcounter == 0){
 
-        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', '0000-00-00 00:00:00', '0', '$Timestamp', '$Kommentar')";
+        $AnfrageUebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, angelegt_am, kommentar) VALUES ('$Res', '$Wart', '$Termin', '$Beginn', '$Timestamp', '$Kommentar')";
         if (mysqli_query($link, $AnfrageUebergabeEintragen)){
 
             $Terminangebot = lade_terminangebot($Termin);
@@ -451,7 +451,7 @@ function spontanuebergabe_durchfuehren($IDres, $IDschluessel, $Gratisfahrt, $And
     $Antwort = array();
 
     //Reservierung inzwischen schon versorgt
-    $AnfrageLadeUebergabeResevierung = "SELECT id FROM uebergaben WHERE res = '$IDres' AND storno_user = '0' AND durchfuehrung > NULL";
+    $AnfrageLadeUebergabeResevierung = "SELECT id FROM uebergaben WHERE res = '$IDres' AND storno_user = '0' AND durchfuehrung IS NOT NULL";
     $AbfrageLadeUebergabeResevierung = mysqli_query($link, $AnfrageLadeUebergabeResevierung);
     $AnzahlLadeUebergabeResevierung = mysqli_num_rows($AbfrageLadeUebergabeResevierung);
 
@@ -572,7 +572,7 @@ function spontanuebergabe_eintragen($IDres, $IDschluessel, $Gratisfahrt, $Andere
     }
 
     //Übergabeobjekt anlegen
-    $AnfrageSpontanuebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar, storno_time, storno_user, storno_kommentar) VALUES ('$IDres', '$Wart', '0', '".$Timestamp."', '".$Timestamp."', '$IDschluessel', '".$Timestamp."', 'Spontan&uuml;bergabe', '0000-00-00 00:00:00', '0', '')";
+    $AnfrageSpontanuebergabeEintragen = "INSERT INTO uebergaben (res, wart, terminangebot, beginn, durchfuehrung, schluessel, angelegt_am, kommentar) VALUES ('$IDres', '$Wart', '0', '".$Timestamp."', '".$Timestamp."', '$IDschluessel', '".$Timestamp."', 'Spontan&uuml;bergabe')";
     if (!mysqli_query($link, $AnfrageSpontanuebergabeEintragen)){
         $Errorcounter++;
         $Error .= "Fehler beim Eintragen der Spontan&uuml;bergabe!<br>";

@@ -258,7 +258,7 @@ function schluessel_aktueller_status_listenelement_generieren(){
                 if($UserMeta['ist_wart']){
                     $Content = '<b>Aktueller User:</b> '.$UserMeta['vorname'].' '.$UserMeta['nachname'].' (Wart:in)';
                 } else {
-                    $Anfrage2 = 'SELECT * FROM schluesselausgabe WHERE storno_user = 0 AND user = '.$Schluessel['akt_user'].' AND rueckgabe = "0000-00-00 00:00:00"';
+                    $Anfrage2 = 'SELECT * FROM schluesselausgabe WHERE storno_user = 0 AND user = '.$Schluessel['akt_user'].' AND rueckgabe IS NULL';
                     $Abfrage2 = mysqli_query($link, $Anfrage2);
                     $Ausgabe2 = mysqli_fetch_assoc($Abfrage2);
                     $AusgabeWart = lade_user_meta($Ausgabe2['wart']);
