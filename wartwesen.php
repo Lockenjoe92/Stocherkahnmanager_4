@@ -316,7 +316,7 @@ function section_uebergaben(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
+    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
     $AbfrageLadeAktiveUebergaben = mysqli_query($link, $AnfrageLadeAktiveUebergaben);
     $AnzahlLadeAktiveUebergaben = mysqli_num_rows($AbfrageLadeAktiveUebergaben);
 
@@ -361,7 +361,7 @@ function section_termine(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
+    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung = NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
     $AbfrageLadeAktiveTermine = mysqli_query($link, $AnfrageLadeAktiveTermine);
     $AnzahlLadeAktiveTermine = mysqli_num_rows($AbfrageLadeAktiveTermine);
 

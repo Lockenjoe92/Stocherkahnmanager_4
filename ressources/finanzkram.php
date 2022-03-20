@@ -73,7 +73,7 @@ function forderung_generieren($Betrag, $Steuersatz, $VonUser, $VonKonto, $Zielko
         }
 
         //Forderung eintragen
-            $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '0')";
+            $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender', NULL, '0', NULL, '0')";
         $AbfrageForderungEintragen = mysqli_query($link, $AnfrageForderungEintragen);
 
         if ($AbfrageForderungEintragen){
@@ -111,7 +111,7 @@ function undo_forderung_stornieren($ForderungID){
 
     $link = connect_db();
 
-    $AnfrageForederungStornieren = "UPDATE finanz_forderungen SET storno_user = '0', storno_time = '0000-00-00 00:00:00' WHERE id = '".$ForderungID."'";
+    $AnfrageForederungStornieren = "UPDATE finanz_forderungen SET storno_user = '0', storno_time = NULL WHERE id = '".$ForderungID."'";
     if(mysqli_query($link, $AnfrageForederungStornieren)){
         return true;
     } else {
@@ -146,7 +146,7 @@ function ausgleich_loeschen($Ausgleich){
 
 function undo_ausgleich_loeschen($Ausgleich){
     $Link = connect_db();
-    $Anfrage = "UPDATE finanz_ausgleiche SET storno_user = '0', storno_time = '0000-00-00 00:00:00' WHERE id = ".$Ausgleich."";
+    $Anfrage = "UPDATE finanz_ausgleiche SET storno_user = '0', storno_time = NULL WHERE id = ".$Ausgleich;
     return mysqli_query($Link, $Anfrage);
 }
 
@@ -289,7 +289,7 @@ function undo_einnahme_loeschen($ID){
     $link = connect_db();
     $Einnahme = lade_einnahme($ID);
     $Konto = lade_konto_via_id($Einnahme['konto_id']);
-    $Anfrage = "UPDATE finanz_einnahmen SET storno = '0000-00-00 00:00:00', storno_user = 0 WHERE id = '$ID'";
+    $Anfrage = "UPDATE finanz_einnahmen SET storno = NULL, storno_user = 0 WHERE id = '$ID'";
     if(mysqli_query($link, $Anfrage)){
         $NeuerKontostand = $Konto['wert_aktuell']+$Einnahme['betrag'];
         return update_kontostand($Einnahme['konto_id'], $NeuerKontostand);
@@ -319,7 +319,7 @@ function undo_ausgabe_loeschen($ID){
     $link = connect_db();
     $Ausgabe = lade_ausgabe($ID);
     $Konto = lade_konto_via_id($Ausgabe['konto_id']);
-    $Anfrage = "UPDATE finanz_ausgaben SET storno = '0000-00-00 00:00:00', storno_user = 0 WHERE id = '$ID'";
+    $Anfrage = "UPDATE finanz_ausgaben SET storno = NULL, storno_user = 0 WHERE id = '$ID'";
     if(mysqli_query($link, $Anfrage)){
         $NeuerKontostand = $Konto['wert_aktuell']-$Ausgabe['betrag'];
         return update_kontostand($Ausgabe['konto_id'], $NeuerKontostand);
@@ -516,7 +516,7 @@ function einnahme_festhalten($Forderung, $Empfangskonto, $Betrag, $Steuersatz, $
         return false;
     } else {
         $link = connect_db();
-        $Anfrage = "INSERT INTO finanz_einnahmen (betrag, steuersatz, forderung_id, konto_id, timestamp, bucher, storno, storno_user) VALUES ('$Betrag', '$Steuersatz', '$Forderung', '$Empfangskonto', '$Timestamp', '".lade_user_id()."', '0000-00-00 00:00:00', '0')";
+        $Anfrage = "INSERT INTO finanz_einnahmen (betrag, steuersatz, forderung_id, konto_id, timestamp, bucher, storno, storno_user) VALUES ('$Betrag', '$Steuersatz', '$Forderung', '$Empfangskonto', '$Timestamp', '".lade_user_id()."', NULL, '0')";
         #var_dump($Anfrage);
         if (mysqli_query($link, $Anfrage)){
 
@@ -559,7 +559,7 @@ function wartkonto_anlegen($User){
 
     $link = connect_db();
 
-    $Anfrage = "INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES ('$User', 0, 0, 'wartkonto', '".lade_user_id()."', '".timestamp()."', 0, '0000-00-00 00:00:00')";
+    $Anfrage = "INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES ('$User', 0, 0, 'wartkonto', '".lade_user_id()."', '".timestamp()."', 0, NULL)";
     $Abfrage = mysqli_query($link, $Anfrage);
 
     return $Abfrage;
@@ -610,7 +610,7 @@ function konto_anlegen($Name, $Typ, $STartwert){
         $Antwort['success']=false;
         $Antwort['meldung']=$DAUerr;
     } else {
-        if (!($stmt = $link->prepare("INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES (?,?,?,?,?,?, 0, '0000-00-00 00:00:00')"))) {
+        if (!($stmt = $link->prepare("INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES (?,?,?,?,?,?, 0, NULL)"))) {
             $Antwort['success']=false;
             $Antwort['meldung']='Datenbankfehler!';
             #echo "Prepare failed: (" . $link->errno . ") " . $link->error;
@@ -902,7 +902,7 @@ function undo_transfer_loeschen($ID){
 
     if($ErfolgCount==2){
         $link = connect_db();
-        $Anfrage = "UPDATE finanz_transfer SET storno_user = 0, storno_time = '0000-00-00 00:00:00' WHERE id = ".$ID."";
+        $Anfrage = "UPDATE finanz_transfer SET storno_user = 0, storno_time = NULL WHERE id = ".$ID."";
         return mysqli_query($link, $Anfrage);
     } else {
         return false;

@@ -42,7 +42,7 @@ function schluesselrueckgabe_festhalten($SchluesselID, $Mode='wart'){
 
     $link = connect_db();
 
-    $AnfrageLadeAlleOffenenAusgaben = "SELECT id FROM schluesselausgabe WHERE schluessel = '$SchluesselID' AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' AND storno_user = '0'";
+    $AnfrageLadeAlleOffenenAusgaben = "SELECT id FROM schluesselausgabe WHERE schluessel = '$SchluesselID' AND ausgabe <> NULL AND rueckgabe = NULL AND storno_user = '0'";
     $AbfrageLadeAlleOffenenAusgaben = mysqli_query($link, $AnfrageLadeAlleOffenenAusgaben);
     $AnzahlLadeAlleOffenenAusgaben = mysqli_num_rows($AbfrageLadeAlleOffenenAusgaben);
 
@@ -126,7 +126,7 @@ function schluessel_hinzufuegen($ChosenID, $Farbe, $FarbeMat, $RFID){
             $AnAusWart = 'off';
         }
 
-        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_time, delete_time, delete_user, loeschgrund) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '', '".timestamp()."', '0000-00-00 00:00:00', '0', '')";
+        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_time, delete_time, delete_user, loeschgrund) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '', '".timestamp()."', NULL, '0', '')";
         if (mysqli_query($link, $Anfrage)){
 
             $Antwort['success'] = TRUE;
@@ -406,7 +406,7 @@ function schluessel_an_user_ausgeben($UebergabeID, $Schluessel, $Wart){
         return false;
     } else if ($DAUcounter == 0) {
 
-        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe, rueckgabe, storno_user, storno_time, storno_kommentar) VALUES ('$UebergabeID', '$Wart', '".$Reservierung['user']."', '".$Reservierung['id']."', '$Schluessel', '$Timestamp', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '')";
+        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe, rueckgabe, storno_user, storno_time, storno_kommentar) VALUES ('$UebergabeID', '$Wart', '".$Reservierung['user']."', '".$Reservierung['id']."', '$Schluessel', '$Timestamp', NULL, '0', NULL, '')";
 
         mysqli_query($link, $Anfrage);
 
@@ -431,7 +431,7 @@ function spalte_anstehende_rueckgaben(){
 
     $HTML .= "<ul class='collapsible popout' data-collapsible='accordion'>";
 
-    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' ORDER BY schluessel ASC";
+    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> NULL AND rueckgabe = NULL ORDER BY schluessel ASC";
     $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
     $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
 
@@ -454,7 +454,7 @@ function spalte_anstehende_rueckgaben(){
 
             if ((strtotime($Reservierung['ende']) < time()) OR ($Reservierung['storno_user'] != "0")){
                 //darf er dan Schlüssel weiter behalten?
-                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, wart, user, reservierung FROM schluesselausgabe WHERE user = '".$Ausgabe['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = '0000-00-00 00:00:00' AND id <> '".$Ausgabe['id']."'";
+                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, wart, user, reservierung FROM schluesselausgabe WHERE user = '".$Ausgabe['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
                 $AbfrageWeitereReservierungenMitDiesemSchluessel = mysqli_query($link, $AnfrageWeitereReservierungenMitDiesemSchluessel);
                 $AnzahlWeitereReservierungenMitDiesemSchluessel = mysqli_num_rows($AbfrageWeitereReservierungenMitDiesemSchluessel);
 
@@ -523,7 +523,7 @@ function spalte_anstehende_rueckgaben_parser(){
 
     $link = connect_db();
 
-    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' ORDER BY schluessel ASC";
+    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> NULL AND rueckgabe = NULL ORDER BY schluessel ASC";
     $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
     $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
     $UserID = lade_user_id();

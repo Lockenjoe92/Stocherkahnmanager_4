@@ -334,7 +334,7 @@ function wart_verfuegbare_schluessel($IDuser, $OverrideWartschluessel=false){
     $ZeitBefehl = "+ ".$TageGrenze." days";
     $Grenzzeit = date("Y-m-d G:i:s", strtotime($ZeitBefehl));
 
-    $Anfrage = "SELECT id FROM uebergaben WHERE wart = '$IDuser' AND durchfuehrung = '0000-00-00 00:00:00' AND beginn < '".$Grenzzeit."' AND storno_user = '0'";
+    $Anfrage = "SELECT id FROM uebergaben WHERE wart = '$IDuser' AND durchfuehrung = NULL AND beginn < '".$Grenzzeit."' AND storno_user = '0'";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl= mysqli_num_rows($Abfrage);
 

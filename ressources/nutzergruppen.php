@@ -249,7 +249,7 @@ function edit_nutzergruppe($Nutzergruppe, $erklaerung, $verification_rule, $visi
 function add_nutzergruppe($name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible, $array_kosten_pro_stunde){
 
     $link = connect_db();
-    if (!($stmt = $link->prepare("INSERT INTO nutzergruppen (name,erklaertext,req_verify,visible_for_user,alle_res_gratis,hat_freifahrten_pro_jahr,darf_last_minute_res,multiselect_possible,delete_user,delete_timestamp) VALUES (?,?,?,?,?,?,?,?,0,'0000-00-00 00:00:00')"))) {
+    if (!($stmt = $link->prepare("INSERT INTO nutzergruppen (name,erklaertext,req_verify,visible_for_user,alle_res_gratis,hat_freifahrten_pro_jahr,darf_last_minute_res,multiselect_possible,delete_user,delete_timestamp) VALUES (?,?,?,?,?,?,?,?,0,NULL)"))) {
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
@@ -683,7 +683,7 @@ function verify_nutzergruppe($User, $Eintragender, $success='true'){
     $UserMeta = lade_user_meta($User);
     $NutzergruppeMeta = lade_nutzergruppe_infos($UserMeta['ist_nutzergruppe'], 'name');
 
-    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp, delete_user, delete_time) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."',0,'0000-00-00 00:00:00')";
+    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp, delete_user, delete_time) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."',0,NULL)";
     if(mysqli_query($link, $Anfrage)){
         return true;
     } else {

@@ -233,7 +233,7 @@ function reservierung_hinzufuegen($Von, $Bis, $UserRes, $GratisFahrt, $Ermaessig
             $ErmaessigterTarif = 0;
         }
 
-        if (!($stmt = $link->prepare("INSERT INTO reservierungen (user, beginn, ende, storno_user, storno_zeit, gratis_fahrt, preis_geaendert, verlaengert, angelegt_von, angelegt_am) VALUES (?, ?, ?, 0, '0000-00-00 00:00:00', ?, ?, 0, ?, ?)"))) {
+        if (!($stmt = $link->prepare("INSERT INTO reservierungen (user, beginn, ende, storno_user, storno_zeit, gratis_fahrt, preis_geaendert, verlaengert, angelegt_von, angelegt_am) VALUES (?, ?, ?, 0, NULL, ?, ?, 0, ?, ?)"))) {
             $Antwort['success'] = FALSE;
             echo  __LINE__;
             $Antwort['meldung'] = "Fehler beim Datenbankzugriff. Bitte Admin kontaktieren!";
@@ -569,7 +569,7 @@ function reservierung_stornieren($ReservierungID, $IDstornierer, $Begruendung){
                 }
 
                 //Betroffene Übergaben stornieren
-                $AnfrageBetroffeneUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = '0000-00-00 00:00:00' AND res = '$ReservierungID' AND storno_user = '0'";
+                $AnfrageBetroffeneUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = NULL AND res = '$ReservierungID' AND storno_user = '0'";
                 $AbfrageBetroffeneUebergaben = mysqli_query($link, $AnfrageBetroffeneUebergaben);
                 $AnzahlBetroffeneUebergaben = mysqli_num_rows($AbfrageBetroffeneUebergaben);
 
@@ -653,7 +653,7 @@ function reservierung_storno_aufheben($ReservierungID){
         if (mysqli_num_rows($res) > 0){
             return "Inzwischen existiert leider bereits eine andere Reservierung in diesem Zeitfenster!";
         } else {
-            if (!($stmt = $link->prepare("UPDATE reservierungen SET storno_user = 0 AND storno_zeit = '0000-00-00 00:00:00' WHERE id = ?"))) {
+            if (!($stmt = $link->prepare("UPDATE reservierungen SET storno_user = 0 AND storno_zeit = NULL WHERE id = ?"))) {
                 #return "Prepare failed: (" . $link->errno . ") " . $link->error;
                 return "Fehler";
             }
@@ -750,7 +750,7 @@ function rueckgabe_notwendig_res($IDres){
             if ($Ausgabe['storno_time'] == "0000-00-00 00:00:00"){
 
                 //Nicht storniert - darf er dan Schlüssel weiter behalten?
-                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = '0000-00-00 00:00:00' AND id <> '".$Ausgabe['id']."'";
+                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
                 $AbfrageWeitereReservierungenMitDiesemSchluessel = mysqli_query($link, $AnfrageWeitereReservierungenMitDiesemSchluessel);
                 $AnzahlWeitereReservierungenMitDiesemSchluessel = mysqli_num_rows($AbfrageWeitereReservierungenMitDiesemSchluessel);
 
@@ -971,7 +971,7 @@ function schluesselwesen($ID, $Ansicht='user'){
         } else {
 
             //Res vorbei - darf er den Schlüssel weiter behalten?
-            $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = '0000-00-00 00:00:00' AND id <> '".$Ausgabe['id']."'";
+            $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
             $AbfrageWeitereReservierungenMitDiesemSchluessel = mysqli_query($link, $AnfrageWeitereReservierungenMitDiesemSchluessel);
             $AnzahlWeitereReservierungenMitDiesemSchluessel = mysqli_num_rows($AbfrageWeitereReservierungenMitDiesemSchluessel);
 
@@ -1484,7 +1484,7 @@ function ausgleich_hinzufuegen_res($ResID, $Betrag, $Steuersatz){
         $Antwort['meldung'] = $DAUerror;
     } else {
 
-        $Anfrage = "INSERT INTO finanz_ausgleiche (betrag, steuersatz, fuer_user, fuer_konto, von_konto, referenz, referenz_res, timestamp, anleger, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '".$Reservierung['user']."', '0', ".lade_ausgleiche_fuer_res_zielkonto().", '', '$ResID', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '0')";
+        $Anfrage = "INSERT INTO finanz_ausgleiche (betrag, steuersatz, fuer_user, fuer_konto, von_konto, referenz, referenz_res, timestamp, anleger, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '".$Reservierung['user']."', '0', ".lade_ausgleiche_fuer_res_zielkonto().", '', '$ResID', '".timestamp()."', '".lade_user_id()."', NULL, '0', NULL, '0')";
 
         if (mysqli_query($link, $Anfrage)){
             $Antwort['success'] = TRUE;

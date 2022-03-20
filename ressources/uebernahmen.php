@@ -230,7 +230,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
 
                     if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe)){
 
-                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', NULL, '0', '$Kommentar')";
                         if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                             $Antwort['success'] = TRUE;
                             $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
@@ -249,7 +249,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                     $Antwort['meldung'] = "Fehler beim Informieren der vorfahrenden Gruppe.";
                 }
             } else {
-                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', NULL, '0', '$Kommentar')";
                 if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                     $Antwort['success'] = TRUE;
                     $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
@@ -489,7 +489,7 @@ function schluessel_an_user_weitergeben($UebergabeDavorID, $Schluessel, $Reservi
 
     } else if ($DAUcounter == 0) {
 
-        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe, rueckgabe, storno_user, storno_time, storno_kommentar) VALUES ('$UebergabeDavorID', '$Wart', '".$Reservierung['user']."', '".$ReservierungID."', '$Schluessel', '$Timestamp', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '')";
+        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe, rueckgabe, storno_user, storno_time, storno_kommentar) VALUES ('$UebergabeDavorID', '$Wart', '".$Reservierung['user']."', '".$ReservierungID."', '$Schluessel', '$Timestamp', NULL, '0', NULL, '')";
 
         mysqli_query($link, $Anfrage);
 
