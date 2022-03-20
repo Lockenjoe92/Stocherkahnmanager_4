@@ -1555,13 +1555,12 @@ function listenelement_offene_forderung_kassenwart_durchfuehren_generieren($Ford
 function section_wasserstands_und_rueckgabeautomatikwesen($location='wartwesen'){
 
     $CollapsibleItem = "";
+    $link = connect_db();
 
     if(lade_xml_einstellung('wasserstand_global_on_off')=='on'){
         $SettingAnfaenger = lade_xml_einstellung('wasserstand_vorwarnung_beginner');
         $SettingErfahren = lade_xml_einstellung('wasserstand_vorwarnung_erfahrene');
         $SettingSperrung = lade_xml_einstellung('wasserstand_generelle_sperrung');
-
-        $link = connect_db();
 
         $Title = lade_xml_einstellung('wasserstand_akkordeon_title');
         $LastWasserstand = lade_letzten_wasserstand($link);
