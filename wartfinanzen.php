@@ -103,7 +103,7 @@ function section_vergangene_transaktionen($UserID){
             $Title = strftime("%A, %d. %B %G - %H:%M Uhr", strtotime($ErgebnisEinnahmen['timestamp'])).' - '.$ErgebnisEinnahmen['betrag'].'&euro; von '.$ForderungUser['vorname'].' '.$ForderungUser['nachname'].' für '.$ForString.'<br>';
             if(intval($Forderung['referenz_res'])>0){
                 //Buttons link to delete übergabe so we can take care of stuff there
-                $Anfrage = "SELECT id FROM uebergaben WHERE res = ".$Forderung['referenz_res']." AND durchfuehrung != '0000-00-00 00:00:00'";
+                $Anfrage = "SELECT id FROM uebergaben WHERE res = ".$Forderung['referenz_res']." AND durchfuehrung != NULL";
                 $Abfrage = mysqli_query($link, $Anfrage);
                 $Ergebnis = mysqli_fetch_assoc($Abfrage);
                 $Content = button_link_creator('löschen', "undo_uebergabe.php?uebergabe=".$Ergebnis['id']."", 'delete_forever', '');
