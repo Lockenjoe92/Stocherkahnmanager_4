@@ -43,15 +43,19 @@ function mail_senden($NameVorlage, $MailAdresse, $Bausteine, $Typ='')
     $EmpfaenegrID = lade_user_id_from_mail($MailAdresse);
     if($mail->Send())
     {
+        var_dump($Typ);
         if($Typ!=''){
             $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'true')";
+            var_dump($AnfrageMailMisserfolgSpeichern);
             mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
             return true;
         }
 
     } else {
+        var_dump($Typ);
         if($Typ!=''){
             $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'false')";
+            var_dump($AnfrageMailMisserfolgSpeichern);
             mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
         }
         return false;

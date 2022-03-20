@@ -42,7 +42,7 @@ function schluesselrueckgabe_festhalten($SchluesselID, $Mode='wart'){
 
     $link = connect_db();
 
-    $AnfrageLadeAlleOffenenAusgaben = "SELECT id FROM schluesselausgabe WHERE schluessel = '$SchluesselID' AND ausgabe <> NULL AND rueckgabe = NULL AND storno_user = '0'";
+    $AnfrageLadeAlleOffenenAusgaben = "SELECT id FROM schluesselausgabe WHERE schluessel = '$SchluesselID' AND ausgabe IS NOT NULL AND rueckgabe IS NULL AND storno_user = '0'";
     $AbfrageLadeAlleOffenenAusgaben = mysqli_query($link, $AnfrageLadeAlleOffenenAusgaben);
     $AnzahlLadeAlleOffenenAusgaben = mysqli_num_rows($AbfrageLadeAlleOffenenAusgaben);
 
@@ -523,7 +523,7 @@ function spalte_anstehende_rueckgaben_parser(){
 
     $link = connect_db();
 
-    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> NULL AND rueckgabe = NULL ORDER BY schluessel ASC";
+    $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe IS NOT NULL AND rueckgabe IS NULL ORDER BY schluessel ASC";
     $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
     $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
     $UserID = lade_user_id();
