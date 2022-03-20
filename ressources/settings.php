@@ -34,6 +34,11 @@ function update_xml_einstellung($NameEinstellung, $WertEinstellung, $mode='globa
 
     $WertEinstellung = utf8_encode($WertEinstellung);
 
+    #Catch Error when trying to save empty field
+    if(strlen($WertEinstellung)==0){
+        $WertEinstellung = utf8_encode(' ');
+    }
+
     if($mode == 'global'){
         $xml = simplexml_load_file("./ressources/settings.xml");
         $xml->$NameEinstellung = $WertEinstellung;
