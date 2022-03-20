@@ -61,17 +61,7 @@ function ausfall_hinzufuegen_formular($Typ, $Titel, $Erklaerung, $Von, $Bis, $Mo
         $HTML .= section_builder($Buttonmode['meldung'], '', 'center-align');
     }
 
-    if (($Buttonmode['success'] == NULL) OR ($Buttonmode['success'] === FALSE)) {
-        $TableHTML = table_form_string_item("Titel der " . $Modename . "", 'titel', $Titel, false);
-        $TableHTML .= table_form_string_item("Typ der " . $Modename . "", 'typus', $Typ, false);
-        $TableHTML .= table_form_datepicker_reservation_item('Datum Beginn', 'datum_von', date('Y-m-d', strtotime($Von)), false, true, '');
-        $TableHTML .= table_form_timepicker_item('Zeit Beginn', 'zeit_von', date('G:i', strtotime($Von)), false, true, '');
-        $TableHTML .= table_form_datepicker_reservation_item('Datum Ende', 'datum_bis', date('Y-m-d', strtotime($Bis)), false, true, '');
-        $TableHTML .= table_form_timepicker_item('Zeit Ende', 'zeit_bis', date('G:i', strtotime($Bis)), false, true, '');
-        $TableHTML .= table_form_string_item("Erklärung", 'erklaerung', $Erklaerung, false);
-        $TableHTML .= table_builder(table_row_builder(table_header_builder(button_link_creator('Zurück', 'ausfaelle.php', 'arrow_back', '')." ".form_button_builder('action', 'Eintragen', 'action', 'send')).table_row_builder('')));
-        $TableHTML = table_builder($TableHTML);
-    } else if ($Buttonmode['override'] === TRUE){
+    if($Buttonmode['override'] === TRUE){
         $TableHTML = table_form_string_item("Titel der " . $Modename . "", 'titel', $Titel, false);
         $TableHTML .= table_form_string_item("Typ der " . $Modename . "", 'typus', $Typ, false);
         $TableHTML .= table_form_datepicker_reservation_item('Datum Beginn', 'datum_von', date('Y-m-d', strtotime($Von)), false, true, '');
@@ -81,7 +71,17 @@ function ausfall_hinzufuegen_formular($Typ, $Titel, $Erklaerung, $Von, $Bis, $Mo
         $TableHTML .= table_form_string_item("Erklärung", 'erklaerung', $Erklaerung, false);
         $TableHTML .= table_builder(table_row_builder(table_header_builder(button_link_creator('Zurück', 'ausfaelle.php', 'arrow_back', '')." ".form_button_builder('override', 'Trotzdem eintragen', 'action', 'send')).table_row_builder('')));
         $TableHTML = table_builder($TableHTML);
-    } else if ($Buttonmode['success'] === TRUE){
+    } elseif (($Buttonmode['erfolg'] == NULL) OR ($Buttonmode['erfolg'] === FALSE)){
+        $TableHTML = table_form_string_item("Titel der " . $Modename . "", 'titel', $Titel, false);
+        $TableHTML .= table_form_string_item("Typ der " . $Modename . "", 'typus', $Typ, false);
+        $TableHTML .= table_form_datepicker_reservation_item('Datum Beginn', 'datum_von', date('Y-m-d', strtotime($Von)), false, true, '');
+        $TableHTML .= table_form_timepicker_item('Zeit Beginn', 'zeit_von', date('G:i', strtotime($Von)), false, true, '');
+        $TableHTML .= table_form_datepicker_reservation_item('Datum Ende', 'datum_bis', date('Y-m-d', strtotime($Bis)), false, true, '');
+        $TableHTML .= table_form_timepicker_item('Zeit Ende', 'zeit_bis', date('G:i', strtotime($Bis)), false, true, '');
+        $TableHTML .= table_form_string_item("Erklärung", 'erklaerung', $Erklaerung, false);
+        $TableHTML .= table_builder(table_row_builder(table_header_builder(button_link_creator('Zurück', 'ausfaelle.php', 'arrow_back', '')." ".form_button_builder('action', 'Eintragen', 'action', 'send')).table_row_builder('')));
+        $TableHTML = table_builder($TableHTML);
+    } else if ($Buttonmode['erfolg'] === TRUE){
         $TableHTML = table_builder(table_row_builder(table_header_builder(button_link_creator('Zurück', 'ausfaelle.php', 'arrow_back', '')).table_row_builder('')));
     }
 
@@ -137,8 +137,8 @@ function parser($Modus, $Modename){
         $Titel = $_POST['titel'];
         $Typ = $_POST['typus'];
         $Erklaerung = $_POST['erklaerung'];
-        $Von = "".$_POST['jahr_von']."-".$_POST['monat_von']."-".$_POST['tag_von']." ".$_POST['stunde_von'].":00:00";
-        $Bis = "".$_POST['jahr_bis']."-".$_POST['monat_bis']."-".$_POST['tag_bis']." ".$_POST['stunde_bis'].":00:00";
+        $Von = "".$_POST['datum_von']." ".$_POST['zeit_von'].":00";
+        $Bis = "".$_POST['datum_bis']." ".$_POST['zeit_bis'].":00";
 
         if ($Modus == "pause"){
             $Eintrag = pause_anlegen($Von, $Bis, $Typ, $Titel, $Erklaerung, lade_user_id(), TRUE);
@@ -146,7 +146,7 @@ function parser($Modus, $Modename){
             $Eintrag = sperrung_anlegen($Von, $Bis, $Typ, $Titel, $Erklaerung, lade_user_id(), TRUE);
         }
 
-        if ($Eintrag['success'] == FALSE){
+        if ($Eintrag['erfolg'] == FALSE){
             $Eintrag['meldung'] = "<h5>Fehler!</h5><br>".$Eintrag['meldung']."";
         } else if ($Eintrag['erfolg'] == TRUE){
             $Eintrag['meldung'] = "<h5>Erfolg!</h5><br>".$Eintrag['meldung']."";
