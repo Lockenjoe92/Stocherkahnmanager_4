@@ -346,7 +346,7 @@ function uebergabe_durchfuehren($IDuebergabe, $Schluessel, $GezahlterBetrag, $An
     }
 
     //Übergabe inzwischen durchgeführt
-    if ($Uebergabe['durchfuehrung'] != "0000-00-00 00:00:00"){
+    if ($Uebergabe['durchfuehrung'] != NULL){
         $DAUcounter++;
         $DAUerror .= "Die &Uuml;bergabe wurde inzwischen durchgef&uuml;hrt!<br>";
     }
@@ -437,6 +437,7 @@ function uebergabe_durchfuehrung_festhalten($IDuebergabe, $Schluessel){
     if (mysqli_query($link, $Anfrage)){
         return true;
     } else {
+        var_dump($Anfrage);
         return false;
     }
 }
