@@ -290,7 +290,7 @@ function reservierung_hinzufuegen($Von, $Bis, $UserRes, $GratisFahrt, $Ermaessig
                         $Bausteine['[reservierungsnummer]'] = $Reservierung['id'];
                         $Bausteine['[kosten_reservierung]'] = $Kosten;
 
-                        if (mail_senden('reservierung-angelegt', $UserMeta['mail'], $Bausteine)){
+                        if (mail_senden('reservierung-angelegt', $UserMeta['mail'], $Bausteine, 'reservierung-angelegt-res-'.$Reservierung['id'])){
                             $Antwort['success'] = TRUE;
                             $Antwort['meldung'] = "Deine Reservierung wurde erfolgreich eingetragen und tr&auml;gt die #".$Reservierung['id']."<br>Du erh&auml;ltst in K&uuml;rze eine Best&auml;tigungsmail:)";
                         } else {

@@ -216,7 +216,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
 
                 #var_dump($BausteineGruppeDavor);
 
-                if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor)){
+                if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor, 'uebernahme-angelegt-vorgruppe-res-'.$ReservierungVorher['id'])){
 
                     $BausteineGruppe = array();
                     $BausteineGruppe['[vorname_user]'] = $UserReservierungDavor['vorname'];
@@ -228,7 +228,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                         $BausteineGruppe['[kommentar]'] = "<p>Hier der Kommentar des anlegenden Users: ".$Kommentar."</p>";
                     }
 
-                    if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe)){
+                    if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe, 'uebernahme-angelegt-nachgruppe-res-'.$Reservierung['id'])){
 
                         $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '$Kommentar')";
                         if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
