@@ -192,7 +192,7 @@ function uebergabe_hinzufuegen($Res, $Wart, $Termin, $Beginn, $Kommentar, $Creat
     $Terminangebot = lade_terminangebot($Termin);
     if ($Terminangebot['storno_user'] != "0"){
         $DAUcounter++;
-        $DAUerror .= "Das Terminangebot ist inzwischen abgelaufen!<br>";
+        $DAUerror .= "Das Terminangebot ist inzwischen storniert!<br>";
     }
 
     //Limitierung schon abgelaufen?
@@ -437,7 +437,6 @@ function uebergabe_durchfuehrung_festhalten($IDuebergabe, $Schluessel){
     if (mysqli_query($link, $Anfrage)){
         return true;
     } else {
-        var_dump($Anfrage);
         return false;
     }
 }
@@ -927,7 +926,12 @@ function terminangebot_hinzufuegen($IDwart, $Beginn, $Ende, $Ort, $Kommentar, $T
         $Antwort['meldung'] = $DAUerror;
     } else {
 
-        $Anfrage = "INSERT INTO terminangebote (wart, von, bis, terminierung, ort, kommentar, create_time, create_user, storno_time, storno_user) VALUES ('$IDwart', '$Beginn','$Ende','$Terminierung','$Ort','$Kommentar','$Timestamp','".lade_user_id()."','0000-00-00 00:00:00','0')";
+        if($Terminierung == NULL){
+            $Anfrage = "INSERT INTO terminangebote (wart, von, bis, terminierung, ort, kommentar, create_time, create_user) VALUES ('$IDwart', '$Beginn','$Ende', NULL,'$Ort','$Kommentar','$Timestamp','".lade_user_id()."')";
+        } else {
+            $Anfrage = "INSERT INTO terminangebote (wart, von, bis, terminierung, ort, kommentar, create_time, create_user) VALUES ('$IDwart', '$Beginn','$Ende','$Terminierung','$Ort','$Kommentar','$Timestamp','".lade_user_id()."')";
+        }
+
         if (mysqli_query($link, $Anfrage)){
             $Antwort['success'] = TRUE;
             $Antwort['meldung'] = "Terminangebot erfolgreich eingetragen!";
@@ -1173,7 +1177,6 @@ function geplante_uebergabe_hinzufuegen($ResID, $Wart, $Gratis, $Verguenstigung,
         $AnfrageLadeAngebotID = "SELECT id FROM terminangebote WHERE wart = '$Wart' AND von = '$Zeitpunkt' AND bis = '$ZeitpunktZwei' AND storno_user = '0' AND ort = '$Uebergabeort'";
         $AbfrageLadeAngebotID = mysqli_query($link, $AnfrageLadeAngebotID);
         $AnzahlLadeAngebotID = mysqli_num_rows($AbfrageLadeAngebotID);
-
         if ($AnzahlLadeAngebotID == 0){
             //Fehler
             $Antwort['success'] = FALSE;

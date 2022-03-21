@@ -361,7 +361,7 @@ function gesamteinnahmen_jahr_konto($Jahr, $KontoID){
 
     $Abfrage = mysqli_query($link, $Anfrage);
     if(!$Abfrage){
-        var_dump($Anfrage);
+        #var_dump($Anfrage);
     }
 
     $Anzahl = mysqli_num_rows($Abfrage);
@@ -707,7 +707,7 @@ function nachzahlung_reservierung_festhalten($IDres, $Betrag, $Wart, $PayPal=fal
                 $PayPalKontoID = lade_paypal_konto_id();
                 $PayPalAusgabenKonto = lade_paypal_ausgaben_konto_id();
                 $PayPalGebuehr = paypal_gebuehr_berechnen($Betrag);
-                var_dump(ausgleich_hinzufuegen($PayPalAusgabenKonto['id'], 'PayPal-Gebühr Res. #'.$IDres, $PayPalGebuehr, 19));
+                #var_dump(ausgleich_hinzufuegen($PayPalAusgabenKonto['id'], 'PayPal-Gebühr Res. #'.$IDres, $PayPalGebuehr, 19));
 
 
                 $link = connect_db();

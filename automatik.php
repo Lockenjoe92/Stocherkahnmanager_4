@@ -348,7 +348,7 @@ function automatische_sperrung_wasserstand(){
                         $BeginnSperrung = date('Y-m-d G:i:s');
                         $Command = '+ '.lade_xml_einstellung('wasserstand_sperrungsautomatik_stunden').' hours';
                         $EndeSperrung = date('Y-m-d G:i:s', strtotime($Command));
-                        var_dump(sperrung_anlegen($BeginnSperrung, $EndeSperrung, 'Hochwasser', 'Automatische Hochwassersperre '.date('d.m.Y'), lade_xml_einstellung('wasserstand_sperrungsautomatik_text'), 1, true));
+                        #var_dump(sperrung_anlegen($BeginnSperrung, $EndeSperrung, 'Hochwasser', 'Automatische Hochwassersperre '.date('d.m.Y'), lade_xml_einstellung('wasserstand_sperrungsautomatik_text'), 1, true));
                     } else {
                         $Ergebnis = mysqli_fetch_assoc($Abfrage);
                         echo "<b>Sperrung bereits eingetragen - endet ".$Ergebnis['ende']."!</b>";

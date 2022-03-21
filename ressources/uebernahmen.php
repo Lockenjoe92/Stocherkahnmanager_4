@@ -214,7 +214,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                     $BausteineGruppeDavor['[kommentar]'] = "<p>Kommentar des anlegenden Users: ".$Kommentar."</p>";
                 }
 
-                var_dump($BausteineGruppeDavor);
+                #var_dump($BausteineGruppeDavor);
 
                 if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor)){
 

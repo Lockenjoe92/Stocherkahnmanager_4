@@ -50,7 +50,7 @@ if ($BausteinMeta['typ'] == 'row_container'){
     $HTMLform .= generate_collection_change_form($Item, 'create');
 } elseif ($BausteinMeta['typ'] == 'collapsible_container'){
     if(isset($_POST['action_add_site_item'])){
-        var_dump($_POST);
+        #var_dump($_POST);
         $Parser = parse_add_collapsible_item($Baustein);
         if(isset($Parser['meldung'])){
             $HTMLform .= "<h5>".$Parser['meldung']."</h5>";
@@ -59,7 +59,7 @@ if ($BausteinMeta['typ'] == 'row_container'){
     $HTMLform .= generate_collapsible_change_form($Item, 'create');
 } elseif ($BausteinMeta['typ'] == 'slider_mit_ueberschrift'){
     if(isset($_POST['action_add_site_item'])){
-        var_dump($_POST);
+        #var_dump($_POST);
         $Parser = parse_add_slider_item($Baustein);
         if(isset($Parser['meldung'])){
             $HTMLform .= "<h5>".$Parser['meldung']."</h5>";

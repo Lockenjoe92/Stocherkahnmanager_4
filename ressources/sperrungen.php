@@ -91,7 +91,7 @@ function sperrung_eintragen($Typ, $Beginn, $Ende, $Titel, $Erklaerung, $Erstelle
 
     $AnfragePauseEintragen = "INSERT INTO sperrungen (typ, beginn, ende, titel, erklaerung, ersteller) VALUES ('$Typ', '$Beginn', '$Ende', '$Titel', '$Erklaerung', '$Ersteller')";
     $AbfragePauseEintragen = mysqli_query($link, $AnfragePauseEintragen);
-    var_dump($AnfragePauseEintragen);
+    #var_dump($AnfragePauseEintragen);
 
     if ($AbfragePauseEintragen == TRUE){
         $Antwort['success'] = TRUE;

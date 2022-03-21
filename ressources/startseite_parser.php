@@ -238,7 +238,7 @@ function parse_add_collapsible_item($Baustein){
 }
 
 function parse_add_slider_item($Baustein){
-    var_dump($_POST);
+    #var_dump($_POST);
     return startseiteninhalt_einfuegen($Baustein, $_POST['item_title'], $_POST['second_item_title'], $_POST['item_title_color'], $_POST['second_item_title_color'], '', $_POST['item_pic_uri'], '', '');
 
 }
