@@ -520,7 +520,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
 
                     $UebergabeRes = mysqli_fetch_assoc($AbfrageLadeUebergabeRes);
 
-                    if ($UebergabeRes['durchfuehrung'] == "0000-00-00 00:00:00"){
+                    if ($UebergabeRes['durchfuehrung'] == NULL){
                         //Ausgemacht - nicht durchgeführt
                         if (time() < strtotime($UebergabeRes['beginn'])){
                             //Steht noch an - ok
@@ -533,7 +533,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                             $SpanResUebergabestatusMobile = "<span class=\"new badge red\" data-badge-caption=\"&Uuml;b. abgelaufen\"></span>";
                         }
 
-                    } else if ($UebergabeRes['durchfuehrung'] != "0000-00-00 00:00:00"){
+                    } else if ($UebergabeRes['durchfuehrung'] != NULL){
                         //Ausgemacht - durchgeführt
                         $SpanResUebergabestatus = "<span class=\"new badge\" data-badge-caption=\"&Uuml;bergabe durchgef&uuml;hrt\"></span>";
                         $SpanResUebergabestatusMobile = "<span class=\"new badge\" data-badge-caption=\"&Uuml;b. erfolgt\"></span>";
@@ -541,8 +541,8 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                 }
             }
 
-            $ReservierungenInhalt .= "<p class='collection-item'><i class='tiny material-icons'>today</i> ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$User."".$SpanResUebergabestatus."</p>";
-            $ReservierungenInhaltMobile .= "<p class='collection-item'><i class='tiny material-icons'>today</i> ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$UserMobile."".$SpanResUebergabestatusMobile."</p>";
+            $ReservierungenInhalt .= "<p class='collection-item'><i class='tiny material-icons'>today</i> #".$ResAktuell['id']." - ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$User."".$SpanResUebergabestatus."</p>";
+            $ReservierungenInhaltMobile .= "<p class='collection-item'><i class='tiny material-icons'>today</i> #".$ResAktuell['id']." - ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$UserMobile."".$SpanResUebergabestatusMobile."</p>";
         }
         $ReservierungenInhalt .= "</div>";
         $ReservierungenInhaltMobile .= "</div>";
