@@ -1189,7 +1189,7 @@ function table_form_terminangebote_fuer_termine($Titel, $NameElement, $Selected)
 
     for ($a=1;$a<=$Anzahl;$a++){
         $Ergebnis = mysqli_fetch_assoc($Abfrage);
-        if($Ergebnis['terminierung']=='0000-00-00 00:00:00'){
+        if($Ergebnis['terminierung']==NULL){
             $TimeInfos = strftime("%A, %d. %B %G * %H:%M - ", strtotime($Ergebnis['von'])).strftime("%H:%M Uhr", strtotime($Ergebnis['bis']));
             if($Ergebnis['id'] == $Selected){
                 $Ausgabe .= "<option value='".$Ergebnis['id']."' selected>".$TimeInfos."</option>";

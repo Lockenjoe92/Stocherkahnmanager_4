@@ -233,7 +233,7 @@ function reservierung_hinzufuegen($Von, $Bis, $UserRes, $GratisFahrt, $Ermaessig
             $ErmaessigterTarif = 0;
         }
 
-        if (!($stmt = $link->prepare("INSERT INTO reservierungen (user, beginn, ende, storno_user, storno_zeit, gratis_fahrt, preis_geaendert, verlaengert, angelegt_von, angelegt_am) VALUES (?, ?, ?, 0, '0000-00-00 00:00:00', ?, ?, 0, ?, ?)"))) {
+        if (!($stmt = $link->prepare("INSERT INTO reservierungen (user, beginn, ende, gratis_fahrt, preis_geaendert, verlaengert, angelegt_von, angelegt_am) VALUES (?, ?, ?, ?, ?, 0, ?, ?)"))) {
             $Antwort['success'] = FALSE;
             echo  __LINE__;
             $Antwort['meldung'] = "Fehler beim Datenbankzugriff. Bitte Admin kontaktieren!";
@@ -744,10 +744,10 @@ function rueckgabe_notwendig_res($IDres){
         //Ausgabe angelegt weitere Checks:
         $Ausgabe = mysqli_fetch_assoc($Abfrage);
 
-        if ($Ausgabe['ausgabe'] != "0000-00-00 00:00:00"){
+        if ($Ausgabe['ausgabe'] != NULL){
 
             //Ausgabe ist  erfolgt - storno?
-            if ($Ausgabe['storno_time'] == "0000-00-00 00:00:00"){
+            if ($Ausgabe['storno_time'] == NULL){
 
                 //Nicht storniert - darf er dan Schlüssel weiter behalten?
                 $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
@@ -761,7 +761,7 @@ function rueckgabe_notwendig_res($IDres){
                 } else {
 
                     //Er soll den schlüssel zurück geben
-                    if ($Ausgabe['rueckgabe'] == "0000-00-00 00:00:00"){
+                    if ($Ausgabe['rueckgabe'] == NULL){
                         return true;
                     } else {
                         return false;
@@ -986,7 +986,7 @@ function schluesselwesen($ID, $Ansicht='user'){
 
             } else {
 
-                if ($Ausgabe['rueckgabe'] === "0000-00-00 00:00:00"){
+                if ($Ausgabe['rueckgabe'] == NULL){
                     //Er soll den schlüssel zurück geben
                     if($Ansicht == 'user'){
                         $Antwort = "Bitte bring deinen Schl&uuml;ssel zeitnah zur&uuml;ck. Du kannst ihn ganz einfach in unseren <a href='schluesselrueckgabe_howto.php'>R&uuml;ckgabebriefkasten</a> werfen:)";
@@ -1036,7 +1036,7 @@ function schluesselwesen($ID, $Ansicht='user'){
                 $VorfahrendeReservierungID = $UebernahmeReservierung['reservierung_davor'];
                 $UebergabeVorfahrendeReservierung = lade_uebergabe_res($VorfahrendeReservierungID);
 
-                if ($UebergabeVorfahrendeReservierung['durchfuehrung'] == "0000-00-00 00:00:00"){
+                if ($UebergabeVorfahrendeReservierung['durchfuehrung'] == NULL){
                     if($Ansicht == 'user'){
                         $Antwort = "Die Gruppe vor dir hat noch keinen Schl&uuml;ssel ausgeteilt bekommen.";
                     } elseif ($Ansicht == 'wart'){
@@ -1485,7 +1485,7 @@ function ausgleich_hinzufuegen_res($ResID, $Betrag, $Steuersatz){
         $Antwort['meldung'] = $DAUerror;
     } else {
 
-        $Anfrage = "INSERT INTO finanz_ausgleiche (betrag, steuersatz, fuer_user, fuer_konto, von_konto, referenz, referenz_res, timestamp, anleger, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '".$Reservierung['user']."', '0', ".lade_ausgleiche_fuer_res_zielkonto().", '', '$ResID', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '0')";
+        $Anfrage = "INSERT INTO finanz_ausgleiche (betrag, steuersatz, fuer_user, fuer_konto, von_konto, referenz, referenz_res, timestamp, anleger) VALUES ('$Betrag', '$Steuersatz', '".$Reservierung['user']."', '0', ".lade_ausgleiche_fuer_res_zielkonto().", '', '$ResID', '".timestamp()."', '".lade_user_id()."')";
 
         if (mysqli_query($link, $Anfrage)){
             $Antwort['success'] = TRUE;

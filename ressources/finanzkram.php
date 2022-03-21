@@ -73,7 +73,7 @@ function forderung_generieren($Betrag, $Steuersatz, $VonUser, $VonKonto, $Zielko
         }
 
         //Forderung eintragen
-            $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher, update_time, update_user, storno_time, storno_user) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '0')";
+            $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender')";
         $AbfrageForderungEintragen = mysqli_query($link, $AnfrageForderungEintragen);
 
         if ($AbfrageForderungEintragen){
@@ -516,7 +516,7 @@ function einnahme_festhalten($Forderung, $Empfangskonto, $Betrag, $Steuersatz, $
         return false;
     } else {
         $link = connect_db();
-        $Anfrage = "INSERT INTO finanz_einnahmen (betrag, steuersatz, forderung_id, konto_id, timestamp, bucher, storno, storno_user) VALUES ('$Betrag', '$Steuersatz', '$Forderung', '$Empfangskonto', '$Timestamp', '".lade_user_id()."', '0000-00-00 00:00:00', '0')";
+        $Anfrage = "INSERT INTO finanz_einnahmen (betrag, steuersatz, forderung_id, konto_id, timestamp, bucher) VALUES ('$Betrag', '$Steuersatz', '$Forderung', '$Empfangskonto', '$Timestamp', '".lade_user_id()."')";
         #var_dump($Anfrage);
         if (mysqli_query($link, $Anfrage)){
 
@@ -559,7 +559,7 @@ function wartkonto_anlegen($User){
 
     $link = connect_db();
 
-    $Anfrage = "INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES ('$User', 0, 0, 'wartkonto', '".lade_user_id()."', '".timestamp()."', 0, '0000-00-00 00:00:00')";
+    $Anfrage = "INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt) VALUES ('$User', 0, 0, 'wartkonto', '".lade_user_id()."', '".timestamp()."')";
     $Abfrage = mysqli_query($link, $Anfrage);
 
     return $Abfrage;
@@ -610,7 +610,7 @@ function konto_anlegen($Name, $Typ, $STartwert){
         $Antwort['success']=false;
         $Antwort['meldung']=$DAUerr;
     } else {
-        if (!($stmt = $link->prepare("INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt, verstecker, versteckt) VALUES (?,?,?,?,?,?, 0, '0000-00-00 00:00:00')"))) {
+        if (!($stmt = $link->prepare("INSERT INTO finanz_konten (name, wert_start, wert_aktuell, typ, ersteller, erstellt) VALUES (?,?,?,?,?,?)"))) {
             $Antwort['success']=false;
             $Antwort['meldung']='Datenbankfehler!';
             #echo "Prepare failed: (" . $link->errno . ") " . $link->error;

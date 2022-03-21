@@ -662,7 +662,7 @@ function terminangebot_listenelement_generieren($IDangebot){
     $Zeitraum = "<b>".strftime("%A, %d. %B %G %H:%M", strtotime($Angebot['von']))."</b>&nbsp;bis&nbsp;<b>".strftime("%H:%M Uhr", strtotime($Angebot['bis']))."</b>";
     $ZeitraumMobil = "<b>".strftime("%a, %d. %b - %H:%M", strtotime($Angebot['von']))."</b>&nbsp;bis&nbsp;<b>".strftime("%H:%M Uhr", strtotime($Angebot['bis']))."</b>";
 
-    if($Angebot['terminierung'] == "0000-00-00 00:00:00"){
+    if($Angebot['terminierung'] == NULL){
         $Terminierung = "keine Terminierung";
     } else {
         $Terminierung = "Terminierung: ".strftime("%a, %d. %b - %H:%M Uhr", strtotime($Angebot['terminierung']))."";

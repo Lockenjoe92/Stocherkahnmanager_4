@@ -126,7 +126,7 @@ function schluessel_hinzufuegen($ChosenID, $Farbe, $FarbeMat, $RFID){
             $AnAusWart = 'off';
         }
 
-        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_time, delete_time, delete_user, loeschgrund) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '', '".timestamp()."', '0000-00-00 00:00:00', '0', '')";
+        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_time) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '', '".timestamp()."')";
         if (mysqli_query($link, $Anfrage)){
 
             $Antwort['success'] = TRUE;
