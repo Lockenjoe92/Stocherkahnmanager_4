@@ -96,7 +96,7 @@ function parse_uebernahme_ausmachen($ReservierungID){
             //User darf noch keine Übernahme machen
             $Benutzereinstellungen = lade_user_meta(lade_user_id());
 
-            $AnfrageEinweisungenJemals = "SELECT id FROM schluesselausgabe WHERE user = '".lade_user_id()."' AND storno_user = '0' AND rueckgabe != '0000-00-00 00:00:00'";
+            $AnfrageEinweisungenJemals = "SELECT id FROM schluesselausgabe WHERE user = '".lade_user_id()."' AND storno_user = '0' AND rueckgabe IS NOT NULL";
             $AbfrageEinweisungenJemals = mysqli_query($link,$AnfrageEinweisungenJemals);
             $AnzahlEinweisungenJemals = mysqli_num_rows($AbfrageEinweisungenJemals);
 
