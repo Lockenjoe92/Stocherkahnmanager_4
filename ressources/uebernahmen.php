@@ -452,7 +452,7 @@ function seiteninhalt_uebernahme_vorplanen_generieren($Reservierung){
                 } else if ($AnzahlZwei == 1){
 
                     $ErgebnisZwei = mysqli_fetch_assoc($AbfrageZwei);
-                    if ($ErgebnisZwei['rueckgabe'] == "0000-00-00 00:00:00"){
+                    if ($ErgebnisZwei['rueckgabe'] == NULL){
                         $HTMLitems = "Reservierung ".$GefundeneReservierung['id']." kommt in Frage - Hat bereits einen Schlüssel<br>";
                         $Resinfos = lade_reservierung($GefundeneReservierung['id']);
                         $UserResOption = lade_user_meta($Resinfos['user']);
