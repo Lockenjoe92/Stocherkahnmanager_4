@@ -107,7 +107,7 @@ function login_parser($MailVerificationSecret){
                 $Vals = $res->fetch_assoc();
 
                 #Muss die UserMail noch verifiziert werden?
-                if($Vals['mail_verified'] == '0000-00-00'){
+                if($Vals['mail_verified'] == NULL){
                     if($MailVerificationSecret == $Vals['register_secret']){
                         $MailVerified = verify_user_mail($Vals['id']);
                     } else {
