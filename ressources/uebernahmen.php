@@ -230,7 +230,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
 
                     if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe)){
 
-                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '$Kommentar')";
                         if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                             $Antwort['success'] = TRUE;
                             $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
@@ -249,7 +249,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                     $Antwort['meldung'] = "Fehler beim Informieren der vorfahrenden Gruppe.";
                 }
             } else {
-                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '$Kommentar')";
                 if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                     $Antwort['success'] = TRUE;
                     $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
