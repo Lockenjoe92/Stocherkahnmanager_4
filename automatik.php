@@ -44,7 +44,7 @@ function auto_update_uebernahmen(){
             $SchluesselausgabeDavor = lade_schluesselausgabe_reservierung($IDReservierungDavor);
 
             //Nur weiter wenn Rückgabe noch nicht bereits festgehalten!
-            if ($SchluesselausgabeDavor['rueckgabe'] == "0000-00-00 00:00:00"){
+            if ($SchluesselausgabeDavor['rueckgabe'] == NULL){
                 //Rückgabe des Schlüssels festhalten
                 schluesselrueckgabe_festhalten($SchluesselausgabeDavor['schluessel']);
                 echo "R&uuml;ckgabe Reservierung davor festgehalten - ";
