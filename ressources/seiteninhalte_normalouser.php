@@ -129,7 +129,7 @@ function faellige_schluesselrueckgaben_user(){
     $link = connect_db();
 
     //Lade ID
-    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe <> NULL AND rueckgabe = NULL AND storno_user = 0"))) {
+    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe IS NOT NULL AND rueckgabe IS NULL AND storno_user = 0"))) {
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
@@ -157,7 +157,7 @@ function faellige_schluesselrueckgaben_user(){
                 $KorrespondierendeRes = lade_reservierung($Ergebnis['reservierung']);
                 $SpanRueckgabeErforderlich = "";
 
-                if ($KorrespondierendeRes['storno_zeit'] == "0000-00-00 00:00:00") {
+                if ($KorrespondierendeRes['storno_zeit'] == NULL) {
 
                     if (time() > strtotime($KorrespondierendeRes['ende'])) {
 
@@ -182,7 +182,7 @@ function faellige_schluesselrueckgaben_user(){
                         }
                     }
 
-                } else if ($KorrespondierendeRes['storno_zeit'] != "0000-00-00 00:00:00") {
+                } else if ($KorrespondierendeRes['storno_zeit'] != NULL) {
 
                     //Rückgabe erforderlich
                     $Counter++;

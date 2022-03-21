@@ -169,7 +169,7 @@ function spalte_moegliche_rueckzahlungen(){
         $Reservierung = mysqli_fetch_assoc($AbfrageLadeReservierungen);
 
         //Überprüfe: hat User überhaupt eine Übergabe bekommen?
-        $AnfrageLadeUebergaben = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe <> '0000-00-00 00:00:00' AND storno_user = '0'";
+        $AnfrageLadeUebergaben = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe IS NOT NULL AND storno_user = '0'";
         $AbfrageLadeUebergaben = mysqli_query($link, $AnfrageLadeUebergaben);
         $AnzahlLadeUebergaben = mysqli_num_rows($AbfrageLadeUebergaben);
 
