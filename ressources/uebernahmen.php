@@ -212,6 +212,8 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                 $BausteineGruppeDavor['[name_nachfolgender_user]'] = "".$UserReservierung['vorname']." ".$UserReservierung['nachname']."";
                 if ($Kommentar != ""){
                     $BausteineGruppeDavor['[kommentar]'] = "<p>Kommentar des anlegenden Users: ".$Kommentar."</p>";
+                } else {
+                    $BausteineGruppeDavor['[kommentar]'] = '';
                 }
 
                 #var_dump($BausteineGruppeDavor);
@@ -226,6 +228,8 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                     $BausteineGruppe['[name_vorheriger_user]'] = "".$UserReservierungDavor['vorname']." ".$UserReservierungDavor['nachname']."";
                     if ($Kommentar != ""){
                         $BausteineGruppe['[kommentar]'] = "<p>Hier der Kommentar des anlegenden Users: ".$Kommentar."</p>";
+                    } else {
+                        $BausteineGruppeDavor['[kommentar]'] = '';
                     }
 
                     if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe, 'uebernahme-angelegt-nachgruppe-res-'.$Reservierung['id'])){
