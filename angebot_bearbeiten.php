@@ -61,7 +61,7 @@ function angebot_bearbeiten_karte($IDangebot){
     if(isset($_POST['stunden_terminierung_terminangebot_anlegen'])){
         $StundenTermin = $_POST['stunden_terminierung_terminangebot_anlegen'];
     } else {
-        if($Angebot['terminierung'] != "0000-00-00 00:00:00"){
+        if($Angebot['terminierung'] != NULL){
             $StundenTermin = date('G', strtotime($Angebot['von']))-date('G', strtotime($Angebot['terminierung']));
         } else {
             $StundenTermin = "";
@@ -75,7 +75,7 @@ function angebot_bearbeiten_karte($IDangebot){
         $CheckboxTermin = "checked";
     } else {
 
-        if($Angebot['terminierung'] != "0000-00-00 00:00:00"){
+        if($Angebot['terminierung'] != NULL){
             $CheckboxTermin = "on";
         } else {
             $CheckboxTermin = "off";
