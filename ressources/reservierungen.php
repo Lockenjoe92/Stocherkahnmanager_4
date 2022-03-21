@@ -854,7 +854,7 @@ function uebergabewesen($ID, $Ansicht='user'){
             //Übergabe gebucht
             $Uebergabe = mysqli_fetch_assoc($AbfrageUebergabe);
 
-            if ($Uebergabe['durchfuehrung'] === "0000-00-00 00:00:00"){
+            if ($Uebergabe['durchfuehrung'] == NULL){
 
                 //Ist das Zeitfenster abgelaufen?
                 $BefehlDauer = "+ ".lade_xml_einstellung('dauer-uebergabe-minuten')." minutes";
