@@ -664,7 +664,10 @@ function nutzergruppen_verifications_user_loeschen($UserID, $NutzergruppeID){
         $Antwort = false;
         var_dump("Prepare failed: (" . $link->errno . ") " . $link->error);
     }
-    if (!$stmt->bind_param("isii", lade_user_id(), timestamp(), $UserID, $NutzergruppeID)) {
+    $currUserID = lade_user_id();
+    $Timestamp = timestamp();
+
+    if (!$stmt->bind_param("isii", $currUserID, $Timestamp, $UserID, $NutzergruppeID)) {
         $Antwort = false;
         var_dump("Binding parameters nutzergruppen_verifications_user_loeschen failed: (" . $stmt->errno . ") " . $stmt->error);
     }
@@ -736,7 +739,9 @@ function nutzergruppe_loeschen($IDNutzergruppe){
         return false;
     }
 
-    if (!$stmt->bind_param("isi", lade_user_id(),$IDNutzergruppe, $IDNutzergruppe)) {
+    $User = lade_user_id();
+
+    if (!$stmt->bind_param("isi", $User,$IDNutzergruppe, $IDNutzergruppe)) {
         return false;
     }
     if (!$stmt->execute()) {
