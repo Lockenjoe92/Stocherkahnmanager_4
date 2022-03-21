@@ -683,7 +683,7 @@ function verify_nutzergruppe($User, $Eintragender, $success='true'){
     $UserMeta = lade_user_meta($User);
     $NutzergruppeMeta = lade_nutzergruppe_infos($UserMeta['ist_nutzergruppe'], 'name');
 
-    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp, delete_user, delete_time) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."',0,'0000-00-00 00:00:00')";
+    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."')";
     if(mysqli_query($link, $Anfrage)){
         return true;
     } else {
