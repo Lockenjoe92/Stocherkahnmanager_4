@@ -23,7 +23,8 @@ $XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms
 admin_xml_settings_parser($XMLsettings);
 
 $CDATAxmlSETTINGS = ['titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',
-    'text-info-uebergabe-einweisung', 'erklaerung_schluesseluebernahme', 'pretix_widget_css', 'pretix_widget_js', 'erklaerung-forderung-zahlen-user', 'site_name_html', 'rechnungs_header', 'rechnungs_footer', 'normal-payment-options', 'paypal-text', 'hinweis_login_formular'];
+    'text-info-uebergabe-einweisung', 'erklaerung_schluesseluebernahme', 'pretix_widget_css', 'pretix_widget_js', 'erklaerung-forderung-zahlen-user', 'site_name_html', 'rechnungs_header',
+    'rechnungs_footer', 'normal-payment-options', 'paypal-text', 'hinweis_login_formular', 'anleitung_kalenderabo_warte'];
 admin_xml_cdata_settings_parser($CDATAxmlSETTINGS);
 
 
@@ -147,6 +148,8 @@ $SettingTableItems .= table_form_select_item('Erinnerungsmail an Wart eine Schl�
 $SettingTableItems .= table_form_select_item('Anzahl Tage Zukunft bei täglicher Status-Mail an Warte', 'future_daily_status_mail', 0, 10,intval(lade_xml_einstellung('future_daily_status_mail')), 'd', '', '');
 $SettingTableItems .= table_form_timepicker_item('Uhrzeit Versand tägliche Status-Mail an Warte', 'soll_uhrzeit_daily_status_mail', lade_xml_einstellung('soll_uhrzeit_daily_status_mail'), false);
 $SettingTableItems .= table_form_timepicker_item('Uhrzeit Versand sonntägliche Status-Mail an Warte für die kommende Woche', 'soll_uhrzeit_weekly_status_mail', lade_xml_einstellung('soll_uhrzeit_weekly_status_mail'), false);
+$SettingTableItems .= table_form_html_area_item('Anleitung Kalenderabonnement Warte', 'anleitung_kalenderabo_warte', lade_xml_einstellung('anleitung_kalenderabo_warte'));
+
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Wartinformationen', $SettingTable, 'info');
 
