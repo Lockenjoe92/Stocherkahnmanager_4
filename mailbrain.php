@@ -317,7 +317,7 @@ function mail_wasserpegel_res(){
             } else {
 
                 //Suche nach der Schlüsselausgabe
-                $AnfrageLadeSchluesseluebergabe = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe <> NULL AND rueckgabe = NULL AND storno_user = '0'";
+                $AnfrageLadeSchluesseluebergabe = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe IS NOT NULL AND rueckgabe IS NULL AND storno_user = '0'";
                 $AbfrageLadeSchluesseluebergabe = mysqli_query($link, $AnfrageLadeSchluesseluebergabe);
                 $AnzahlLadeSchluesseluebergabe = mysqli_num_rows($AbfrageLadeSchluesseluebergabe);
 
@@ -374,7 +374,7 @@ function mail_wasserpegel_res(){
         $AbAnzahlTage = lade_xml_einstellung('erinnerung-schluessel-zurueckgeben-intervall-beginn');
         $IntervallTage = lade_xml_einstellung('erinnerung-schluessel-zurueckgeben-intervall-groesse');
 
-        $AnfrageLadeAlleOffenenAusgaben = "SELECT * FROM schluesselausgabe WHERE ausgabe <> NULL AND rueckgabe = NULL AND storno_user = '0'";
+        $AnfrageLadeAlleOffenenAusgaben = "SELECT * FROM schluesselausgabe WHERE ausgabe IS NOT NULL AND rueckgabe IS NULL AND storno_user = '0'";
         $AbfrageLadeAlleOffenenAusgaben = mysqli_query($link, $AnfrageLadeAlleOffenenAusgaben);
         $AnzahlLadeAlleOffenenAusgaben = mysqli_num_rows($AbfrageLadeAlleOffenenAusgaben);
 
@@ -512,7 +512,7 @@ function mail_wasserpegel_res(){
 
         $link = connect_db();
 
-        $Anfrage = "SELECT * FROM uebergaben WHERE storno_user = '0' AND beginn < '".timestamp()."' AND durchfuehrung = NULL";
+        $Anfrage = "SELECT * FROM uebergaben WHERE storno_user = '0' AND beginn < '".timestamp()."' AND durchfuehrung IS NULL";
         $Abfrage = mysqli_query($link, $Anfrage);
         $Anzahl = mysqli_num_rows($Abfrage);
 
@@ -784,7 +784,7 @@ function mail_wasserpegel_res(){
         $AbfrageSchluesselImKasten = mysqli_query($link, $AnfrageSchluesselImKasten);
         $AnzahlSchluesselImKasten = mysqli_num_rows($AbfrageSchluesselImKasten);
 
-        $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> NULL AND rueckgabe = NULL ORDER BY schluessel ASC";
+        $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe IS NOT NULL AND rueckgabe IS NULL ORDER BY schluessel ASC";
         $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
         $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
         $AnzahlAnstehendeSchluesselrueckgaben = 0;
@@ -800,7 +800,7 @@ function mail_wasserpegel_res(){
 
                 if ((strtotime($Reservierung['ende']) < time()) OR ($Reservierung['storno_user'] != "0")){
                     //darf er dan Schlüssel weiter behalten?
-                    $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, wart, user, reservierung FROM schluesselausgabe WHERE user = '".$Ausgabe['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
+                    $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, wart, user, reservierung FROM schluesselausgabe WHERE user = '".$Ausgabe['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe IS NULL AND id <> '".$Ausgabe['id']."'";
                     $AbfrageWeitereReservierungenMitDiesemSchluessel = mysqli_query($link, $AnfrageWeitereReservierungenMitDiesemSchluessel);
                     $AnzahlWeitereReservierungenMitDiesemSchluessel = mysqli_num_rows($AbfrageWeitereReservierungenMitDiesemSchluessel);
 

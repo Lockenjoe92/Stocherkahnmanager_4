@@ -154,7 +154,7 @@ function lora_stuff(){
             $KeystatusSecondLastLog = explode(',', $secondLastLog['schluessel']);
 
             //1. Schlüsselkram
-            $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> NULL AND rueckgabe = NULL ORDER BY schluessel ASC";
+            $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe IS NOT NULL AND rueckgabe IS NULL ORDER BY schluessel ASC";
             $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
             $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
 
