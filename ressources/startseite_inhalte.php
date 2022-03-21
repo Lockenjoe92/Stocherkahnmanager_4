@@ -415,7 +415,7 @@ function startseitenelement_anlegen($Ort, $Typ, $Name){
         $Rang = $AnzahlBisherigerObjekte + 1;
         $Timestamp = timestamp();
         $LadeUserID = lade_user_id();
-        $Anfrage3 = "INSERT INTO homepage_bausteine (ort, typ, rang, name, angelegt_am, angelegt_von, storno_user, storno_time) VALUES ('".$Ort."', '".$Typ."', '".$Rang."', '".$Name."', '".$Timestamp."', '".$LadeUserID."', '0', '0000-00-00 00:00:00')";
+        $Anfrage3 = "INSERT INTO homepage_bausteine (ort, typ, rang, name, angelegt_am, angelegt_von) VALUES ('".$Ort."', '".$Typ."', '".$Rang."', '".$Name."', '".$Timestamp."', '".$LadeUserID."')";
         $Abfrage3 = mysqli_query($link, $Anfrage3);
 
         #Überprüfen ob es geklappt hat
