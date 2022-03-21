@@ -641,7 +641,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
             $WartUebergabe = "".$WartUebergabeMeta['vorname']."";
             $UserUebergabe = "".$UserUebergabeMeta['vorname']." ".$UserUebergabeMeta['nachname']."";
 
-            if ($UebergabeAktuell['durchfuehrung'] == "0000-00-00 00:00:00"){
+            if ($UebergabeAktuell['durchfuehrung'] == NULL){
 
                 if (time() > strtotime($UebergabeAktuell['beginn'])){
                     $SpanUebergabestatus = "<span class=\"new badge red\" data-badge-caption=\"abgelaufen\"></span>";
@@ -649,7 +649,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                     $SpanUebergabestatus = "<span class=\"new badge yellow darken-2\" data-badge-caption=\"steht an\"></span>";
                 }
 
-            } else if ($UebergabeAktuell['durchfuehrung'] != "0000-00-00 00:00:00"){
+            } else if ($UebergabeAktuell['durchfuehrung'] != NULL){
                 $SpanUebergabestatus = "<span class=\"new badge\" data-badge-caption=\"durchgef&uuml;hrt\"></span>";
             }
 
