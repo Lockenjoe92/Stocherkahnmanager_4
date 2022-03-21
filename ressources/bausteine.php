@@ -1473,11 +1473,18 @@ function table_form_dropdown_transferkonten($Titel, $NameElement, $Selected){
 
 }
 
-function listenelement_offene_forderung_generieren($Forderung){
+function listenelement_offene_forderung_generieren($Forderung, $Mode=''){
 
     $User = lade_user_meta($Forderung['bucher']);
-    $Titel = $Forderung['referenz'].' - '.$Forderung['betrag'].'&euro;';
-    $Content = table_row_builder(table_header_builder('Forderung').table_data_builder($Forderung['referenz']));
+
+    if($Mode == 'is_a_res'){
+        $Titel = 'Reservierung #'.$Forderung['referenz_res'].' - '.$Forderung['betrag'].'&euro;';
+        $Content = table_row_builder(table_header_builder('Forderung').table_data_builder('Reservierung #'.$Forderung['referenz_res']));
+    } else {
+        $Titel = $Forderung['referenz'].' - '.$Forderung['betrag'].'&euro;';
+        $Content = table_row_builder(table_header_builder('Forderung').table_data_builder($Forderung['referenz']));
+    }
+
     $Content .= table_row_builder(table_header_builder('Betrag').table_data_builder($Forderung['betrag'].'&euro;'));
     $Content .= table_row_builder(table_header_builder('Zahlbar bis').table_data_builder(date('d.m.Y', strtotime($Forderung['zahlbar_bis']))));
     $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('erklaerung-forderung-zahlen-user')));
@@ -1493,7 +1500,9 @@ function listenelement_offene_forderung_generieren($Forderung){
         #$CollectionItems .= collection_item_builder( "<i class='tiny material-icons'>label</i> Du kannst jetzt direkt <a href='paypal.php?res='".$ID."''>mit PayPal bezahlen.</a>");
     }
 
-    $Content .= table_row_builder(table_header_builder('Kontakt bei Rückfragen').table_data_builder('<a href="mailto:'.$User['mail'].'">'.$User['vorname'].' '.$User['nachname'].'</a>'));
+    if($Mode != 'is_a_res') {
+        $Content .= table_row_builder(table_header_builder('Kontakt bei Rückfragen') . table_data_builder('<a href="mailto:' . $User['mail'] . '">' . $User['vorname'] . ' ' . $User['nachname'] . '</a>'));
+    }
     $Content = table_builder($Content);
     $Icon = 'payment';
     return collapsible_item_builder($Titel, $Content, $Icon);

@@ -1171,6 +1171,7 @@ function lade_einnahmen_forderung($ForderungID, $ReturnArrayMode=false){
     }elseif(!$ReturnArrayMode){
         $AnfrageSucheNachZahlungen = "SELECT * FROM finanz_einnahmen WHERE forderung_id = '".$ForderungID."' AND storno_user = 0";
     }
+
     $AbfrageSucheNachZahlungen = mysqli_query($link, $AnfrageSucheNachZahlungen);
     $AnzahlSucheNachZahlungen = mysqli_num_rows($AbfrageSucheNachZahlungen);
 

@@ -245,12 +245,16 @@ function anstehende_termine_user(){
 function faellige_zahlungen_user(){
 
     $Forderungen = lade_offene_forderungen_user(lade_user_id());
+
     if(sizeof($Forderungen)>0){
         $Counter = 0;
         $ReturnHTMLitems = '';
         foreach ($Forderungen as $Forderung){
             if($Forderung['referenz_res']=='0'){
                 $ReturnHTMLitems .= listenelement_offene_forderung_generieren($Forderung);
+                $Counter++;
+            } else {
+                $ReturnHTMLitems .= listenelement_offene_forderung_generieren($Forderung, 'is_a_res');
                 $Counter++;
             }
         }
