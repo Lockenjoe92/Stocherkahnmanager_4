@@ -1487,7 +1487,12 @@ function listenelement_offene_forderung_generieren($Forderung, $Mode=''){
 
     $Content .= table_row_builder(table_header_builder('Betrag').table_data_builder($Forderung['betrag'].'&euro;'));
     $Content .= table_row_builder(table_header_builder('Zahlbar bis').table_data_builder(date('d.m.Y', strtotime($Forderung['zahlbar_bis']))));
-    $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('erklaerung-forderung-zahlen-user')));
+
+    if($Mode == 'is_a_res'){
+        $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('normal-payment-options')));
+    } else {
+        $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('erklaerung-forderung-zahlen-user')));
+    }
 
     if(lade_xml_einstellung('paypal-aktiv') == "on"){
         #if(lade_user_id()==542){

@@ -1239,7 +1239,7 @@ function schluesseluebergabe_ausmachen_moeglichkeiten_anzeigen($IDres, $Mode){
 
                 $Terminangebot = mysqli_fetch_assoc($AbfrageSucheTerminangebote);
 
-                if($Terminangebot['terminierung']=='0000-00-00 00:00:00'){
+                if($Terminangebot['terminierung']==NULL){
                     //Hat der Wart noch Schlüssel?
                     if(wart_verfuegbare_schluessel($Terminangebot['wart']) > 0){
                         $Counter++;

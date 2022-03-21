@@ -241,7 +241,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                         $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                         $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginnAdapted)));
                     } else {
-                        $TerminierungTimestamp = "0000-00-00 00:00:00";
+                        $TerminierungTimestamp = NULL;
                     }
 
                     if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
@@ -272,7 +272,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                         $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                         $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginnAdapted)));
                     } else {
-                        $TerminierungTimestamp = "0000-00-00 00:00:00";
+                        $TerminierungTimestamp = NULL;
                     }
 
                     if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
@@ -289,7 +289,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                     $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                     $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginn)));
                 } else {
-                    $TerminierungTimestamp = "0000-00-00 00:00:00";
+                    $TerminierungTimestamp = NULL;
                 }
 
                 if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
