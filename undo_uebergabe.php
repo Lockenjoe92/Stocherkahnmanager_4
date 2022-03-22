@@ -71,7 +71,7 @@ function parse_undo_uebergabe($Uebergabe){
                     if(update_kontostand($Wartkonto, $NeuerKontostand)){
 
                         //5. Uebergabedurchführung wieder auf 0000 setzen
-                        $Anfrage = "UPDATE uebergaben SET durchfuehrung IS NULL WHERE id = ".$Uebergabe['id']."";
+                        $Anfrage = "UPDATE uebergaben SET durchfuehrung = NULL WHERE id = ".$Uebergabe['id'];
                         if(mysqli_query($link, $Anfrage)){
 
                             //6. Schluessel umbuchen

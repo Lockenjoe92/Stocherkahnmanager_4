@@ -388,7 +388,7 @@ function spalte_vergangene_uebergaben(){
     $link = connect_db();
     $Limit = lade_xml_einstellung('wochen-vergangenheit-durchgefuehrte-uebergaben');
     $Grenze = date("Y-m-d G:i:s", strtotime('- '.$Limit.' weeks'));
-    $Anfrage = "SELECT * FROM uebergaben WHERE durchfuehrung IS NOT NULL AND wart = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung > '".$Grenze."' ORDER BY durchfuehrung DESC";
+    $Anfrage = "SELECT * FROM uebergaben WHERE wart = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung > '".$Grenze."' ORDER BY durchfuehrung DESC";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
     if($Anzahl>0){
