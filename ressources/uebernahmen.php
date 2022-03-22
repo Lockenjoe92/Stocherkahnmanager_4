@@ -338,20 +338,27 @@ function user_darf_uebernahme($UserID){
     $Verification = load_last_nutzergruppe_verification_user($NutzergruppeInfos['id'], $UserID);
     $Antwort = false;
 
-    if($NutzergruppeInfos['req_verify']=='yearly'){
-        if($Verification['erfolg'] == 'true'){
-            if(date('Y', strtotime($Verification['timestamp']))){
+    $link = connect_db();
+    //Nur leute die schonmal es geschafft haben eine Reservierung zu wuppen
+    $AnfrageEinweisungenJemals = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND rueckgabe IS NOT NULL";
+    $AbfrageEinweisungenJemals = mysqli_query($link,$AnfrageEinweisungenJemals);
+    $AnzahlEinweisungenJemals = mysqli_num_rows($AbfrageEinweisungenJemals);
+
+    if ($AnzahlEinweisungenJemals > 0) {
+        if ($NutzergruppeInfos['req_verify'] == 'yearly') {
+            if ($Verification['erfolg'] == 'true') {
+                if (date('Y', strtotime($Verification['timestamp']))) {
+                    $Antwort = true;
+                }
+            }
+        } elseif ($NutzergruppeInfos['req_verify'] == 'once') {
+            if ($Verification['erfolg'] == 'true') {
                 $Antwort = true;
             }
-        }
-    } elseif($NutzergruppeInfos['req_verify']=='once'){
-        if($Verification['erfolg'] == 'true'){
+        } elseif ($NutzergruppeInfos['req_verify'] == 'false') {
             $Antwort = true;
         }
-    } elseif($NutzergruppeInfos['req_verify']=='false'){
-        $Antwort = true;
     }
-
     return $Antwort;
 }
 
