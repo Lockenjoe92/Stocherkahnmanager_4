@@ -537,6 +537,7 @@ function update_kontostand($KontoID, $KontostandNeu){
     $link = connect_db();
 
     $Anfrage = "UPDATE finanz_konten SET wert_aktuell = '$KontostandNeu' WHERE id = '$KontoID'";
+
     $Abfrage = mysqli_query($link, $Anfrage);
 
     return $Abfrage;

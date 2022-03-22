@@ -42,7 +42,7 @@ function parse_undo_uebergabe($Uebergabe){
         $link = connect_db();
         $Stornierender = lade_user_id();
         $Wartkonto = lade_konto_user($Stornierender);
-        $Wartkontostand = lade_kontostand($Wartkonto);
+        $Wartkontostand = lade_kontostand($Wartkonto['id']);
         $Uebergabe = lade_uebergabe($Uebergabe);
         $Res = lade_reservierung($Uebergabe['res']);
         $Forderung = lade_forderung_res($Res['id'],true);
@@ -68,7 +68,7 @@ function parse_undo_uebergabe($Uebergabe){
 
                     //4. Kontostand Wart updaten
                     $NeuerKontostand = $Wartkontostand - $ErgebnisZahlungLaden['betrag'];
-                    if(update_kontostand($Wartkonto, $NeuerKontostand)){
+                    if(update_kontostand($Wartkonto['id'], $NeuerKontostand)){
 
                         //5. Uebergabedurchführung wieder auf 0000 setzen
                         $Anfrage = "UPDATE uebergaben SET durchfuehrung = NULL WHERE id = ".$Uebergabe['id'];
