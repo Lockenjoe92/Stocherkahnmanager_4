@@ -361,7 +361,7 @@ function section_termine(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung = NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
+    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
     $AbfrageLadeAktiveTermine = mysqli_query($link, $AnfrageLadeAktiveTermine);
     $AnzahlLadeAktiveTermine = mysqli_num_rows($AbfrageLadeAktiveTermine);
 

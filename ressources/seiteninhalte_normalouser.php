@@ -226,7 +226,7 @@ function faellige_schluesselrueckgaben_user(){
 function anstehende_termine_user(){
 
     $link = connect_db();
-    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung = NULL ORDER BY zeitpunkt ASC";
+    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung IS NULL ORDER BY zeitpunkt ASC";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
     if($Anzahl>0){

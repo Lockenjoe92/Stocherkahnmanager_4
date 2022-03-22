@@ -569,7 +569,7 @@ function reservierung_stornieren($ReservierungID, $IDstornierer, $Begruendung){
                 }
 
                 //Betroffene Übergaben stornieren
-                $AnfrageBetroffeneUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = NULL AND res = '$ReservierungID' AND storno_user = '0'";
+                $AnfrageBetroffeneUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung IS NULL AND res = '$ReservierungID' AND storno_user = '0'";
                 $AbfrageBetroffeneUebergaben = mysqli_query($link, $AnfrageBetroffeneUebergaben);
                 $AnzahlBetroffeneUebergaben = mysqli_num_rows($AbfrageBetroffeneUebergaben);
 
@@ -750,7 +750,7 @@ function rueckgabe_notwendig_res($IDres){
             if ($Ausgabe['storno_time'] == NULL){
 
                 //Nicht storniert - darf er dan Schlüssel weiter behalten?
-                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe = NULL AND id <> '".$Ausgabe['id']."'";
+                $AnfrageWeitereReservierungenMitDiesemSchluessel = "SELECT id, reservierung FROM schluesselausgabe WHERE user = '".$Reservierung['user']."' AND schluessel = '".$Ausgabe['schluessel']."' AND storno_user = '0' AND rueckgabe IS NULL AND id <> '".$Ausgabe['id']."'";
                 $AbfrageWeitereReservierungenMitDiesemSchluessel = mysqli_query($link, $AnfrageWeitereReservierungenMitDiesemSchluessel);
                 $AnzahlWeitereReservierungenMitDiesemSchluessel = mysqli_num_rows($AbfrageWeitereReservierungenMitDiesemSchluessel);
 
