@@ -204,6 +204,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                 //Inform Gruppe davor:
                 $UserReservierungDavor = lade_user_meta($ReservierungVorher['user']);
                 $UserReservierung = lade_user_meta($Reservierung['user']);
+
                 $BausteineGruppeDavor = array();
                 $BausteineGruppeDavor['[vorname_user]'] = $UserReservierungDavor['vorname'];
                 $BausteineGruppeDavor['[angaben_reservierung_datum]'] = strftime("%A, den %d. %B %G", strtotime($ReservierungVorher['beginn']));
@@ -221,7 +222,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                 if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor, 'uebernahme-angelegt-vorgruppe-res-'.$ReservierungVorher['id'])){
 
                     $BausteineGruppe = array();
-                    $BausteineGruppe['[vorname_user]'] = $UserReservierungDavor['vorname'];
+                    $BausteineGruppe['[vorname_user]'] = $UserReservierung['vorname'];
                     $BausteineGruppe['[angaben_reservierung_datum]'] = strftime("%A, den %d. %B %G", strtotime($Reservierung['beginn']));
                     $BausteineGruppe['[angaben_reservierung_beginn]'] = strftime("%H", strtotime($Reservierung['beginn']));
                     $BausteineGruppe['[angaben_reservierung_ende]'] = strftime("%H", strtotime($Reservierung['ende']));
