@@ -218,7 +218,8 @@ function edit_nutzergruppe($Nutzergruppe, $erklaerung, $verification_rule, $visi
         $Antwort['success'] = false;
         $Antwort['meldung'] = "Prepare failed: (" . $link->errno . ") " . $link->error;
     } else {
-        if (!$stmt->bind_param("ssssissi", $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, intval($Anz_gratis_res), $last_minute_res, $multiselect_possible, $Nutzergruppe['id'])) {
+        $Anz_gratis_res = intval($Anz_gratis_res);
+        if (!$stmt->bind_param("ssssissi", $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible, $Nutzergruppe['id'])) {
             $Antwort['success'] = false;
             $Antwort['meldung'] = "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
         } else {
@@ -253,7 +254,8 @@ function add_nutzergruppe($name, $erklaerung, $verification_rule, $visibility_fo
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
-    if (!$stmt->bind_param("sssssiss", $name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, intval($Anz_gratis_res), $last_minute_res, $multiselect_possible)) {
+    $Anz_gratis_res = intval($Anz_gratis_res);
+    if (!$stmt->bind_param("sssssiss", $name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible)) {
         $Antwort = false;
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
