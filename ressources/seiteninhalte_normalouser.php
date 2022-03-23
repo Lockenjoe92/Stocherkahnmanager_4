@@ -161,6 +161,9 @@ function faellige_schluesselrueckgaben_user(){
 
                     if (time() > strtotime($KorrespondierendeRes['ende'])) {
 
+                        //Rückgabe erforderlich
+                        $Counter++;
+
                         $Jetzt = new DateTime();
                         $EndeRes = new DateTime($KorrespondierendeRes['ende']);
                         $interval = $Jetzt->diff($EndeRes);
@@ -212,7 +215,7 @@ function faellige_schluesselrueckgaben_user(){
                 $ErforderlicheRueckgabenInhalt .= collection_item_builder("". $SpanRueckgabeErforderlich . "<i class='tiny material-icons " . $Schluessel['farbe_materialize'] . "'>vpn_key</i> Schl&uuml;ssel #" . $Schluessel['id'] . "");
             }
 
-            if ($a > 0) {
+            if ($Counter > 0) {
                 $HTML = '<h3 class="hide-on-med-and-down center-align">Fällige Schlüsselrückaben!</h3>';
                 $HTML .= '<h3 class="hide-on-large-only center-align">Schlüsselrückaben</h3>';
                 $HTML .= collection_builder($ErforderlicheRueckgabenInhalt);

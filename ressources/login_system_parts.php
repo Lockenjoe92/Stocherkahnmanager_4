@@ -23,6 +23,11 @@ function login_formular($Parser, $SessionMessage){
     $HTMLform .= "</div>";
     $HTMLform .= "</div>";
 
+    if(!empty($Parser['meldung'])){
+        $HTMLform .= error_button_creator($Parser['meldung'],  '', '');
+        #$HTML .= toast($Parser['meldung']);
+    }
+
     $HTMLBigscreenButtons = form_button_builder('submit', 'Einloggen', 'submit', 'send', 'col s3');
     $HTMLBigscreenButtons .= button_link_creator('Registrieren', './register.php', 'person_add', 'col s3 offset-s1');
     $HTMLBigscreenButtons .= button_link_creator('Passwort vergessen', './forgot_password.php', 'loop', 'col s3 offset-s1');
@@ -41,11 +46,6 @@ function login_formular($Parser, $SessionMessage){
     #if(isset($SessionMessage)){
      #   $HTML .= $SessionMessage;
     #}
-
-    if(!empty($Parser['meldung'])){
-        $HTML .= error_button_creator($Parser['meldung'],  '', '');
-        #$HTML .= toast($Parser['meldung']);
-    }
 
     $Container = container_builder($HTML);
 
