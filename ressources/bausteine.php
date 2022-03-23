@@ -1578,33 +1578,43 @@ function section_wasserstands_und_rueckgabeautomatikwesen($location='wartwesen')
 
         $Title = lade_xml_einstellung('wasserstand_akkordeon_title');
         $LastWasserstand = lade_letzten_wasserstand($link);
-        $Content = "<b>Letzte Pegelmessung</b><br><br>";
-        $Content .= "Wasserstand: ".$LastWasserstand['f']."cm<br>";
-        $Content .= "Flussmenge: ".$LastWasserstand['q']."m&sup3;/s<br>";
-        $Content .= "Zeitpunkt: ".$LastWasserstand['timestamp_pegel']."<br><br>";
 
-        if($LastWasserstand['f']<=$SettingAnfaenger){
-            $Content .= lade_db_einstellung('homepagetext_wasserstand_fuer_anfaenger_geeignet')."<br>";
-            $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny green'>done</i>";
-        }
-        if($LastWasserstand['f']>$SettingAnfaenger){
-            if($LastWasserstand['f']<$SettingSperrung){
-                $Content .= "<b>".lade_db_einstellung('homepagetext_wasserstand_fuer_erfahrene_geeignet')."</b><br>";
-                $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny yellow'>priority_high</i>";
+        $LastTimestamp = strtotime($LastWasserstand['timestamp_pegel']);
+        $ChallengeTime = strtotime('+ 1 hours', $LastTimestamp);
+        if(time()>$ChallengeTime){
+            #Letzter Pegelstand veraltet!
+            $Content = "<b>Letzte Pegelmessung fehlerhaft!</b><br>Wir arbeiten an der Lösung des Problems!<br>Eventuell kannst du hier manuell den Wasserstand einsehen: HWZ Baden-Württemberg - Pegel Horb a. Neckar</a>";
+            $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny red'>error</i>";
+            $CollapsibleItem .= collapsible_item_builder($Title, $Content, 'show_chart');
+        } else {
+            $Content = "<b>Letzte Pegelmessung</b><br><br>";
+            $Content .= "Wasserstand: ".$LastWasserstand['f']."cm<br>";
+            $Content .= "Flussmenge: ".$LastWasserstand['q']."m&sup3;/s<br>";
+            $Content .= "Zeitpunkt: ".$LastWasserstand['timestamp_pegel']."<br><br>";
+
+            if($LastWasserstand['f']<=$SettingAnfaenger){
+                $Content .= lade_db_einstellung('homepagetext_wasserstand_fuer_anfaenger_geeignet')."<br>";
+                $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny green'>done</i>";
             }
+            if($LastWasserstand['f']>$SettingAnfaenger){
+                if($LastWasserstand['f']<$SettingSperrung){
+                    $Content .= "<b>".lade_db_einstellung('homepagetext_wasserstand_fuer_erfahrene_geeignet')."</b><br>";
+                    $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny yellow'>priority_high</i>";
+                }
+            }
+            if($LastWasserstand['f']>=$SettingSperrung){
+                $Content .= "<b>".lade_db_einstellung('homepagetext_wasserstand_sperrung_bald')."</b><br>";
+                $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny red'>cancel</i>";
+            }
+
+            $Messungen = lade_xml_einstellung('anzahl_messungen_trendberechnung_wasserstand');
+            $MinutenMessungen = ($Messungen-1)*15;
+            $Content .= "Trend der letzten ".$MinutenMessungen." Minuten: ".lade_wasserstand_trend_icon($link);
+
+            $Content .= "<br><br>Quelle: <a href='http://hochwasser-zentralen.de/pegel.html?id=00117'>HWZ Baden-Württemberg - Pegel Horb a. Neckar</a>, alle Angaben ohne Gewähr. <br><b>Befahren des Neckars immer auf eigene Gefahr!</b>";
+
+            $CollapsibleItem .= collapsible_item_builder($Title, $Content, 'show_chart');
         }
-        if($LastWasserstand['f']>=$SettingSperrung){
-            $Content .= "<b>".lade_db_einstellung('homepagetext_wasserstand_sperrung_bald')."</b><br>";
-            $Title .= "&nbsp;&nbsp;&nbsp;<i class='material-icons tiny red'>cancel</i>";
-        }
-
-        $Messungen = lade_xml_einstellung('anzahl_messungen_trendberechnung_wasserstand');
-        $MinutenMessungen = ($Messungen-1)*15;
-        $Content .= "Trend der letzten ".$MinutenMessungen." Minuten: ".lade_wasserstand_trend_icon($link);
-
-        $Content .= "<br><br>Quelle: <a href='http://hochwasser-zentralen.de/pegel.html?id=00117'>HWZ Baden-Württemberg - Pegel Horb a. Neckar</a>, alle Angaben ohne Gewähr. <br><b>Befahren des Neckars immer auf eigene Gefahr!</b>";
-
-        $CollapsibleItem .= collapsible_item_builder($Title, $Content, 'show_chart');
     }
 
     if($location=='wartwesen'){
