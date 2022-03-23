@@ -178,9 +178,13 @@ function site_navbar(){
 
     $HTML = '<!--  navbar   -->';
 
+    #catch SMD Error
+    $ColorSpanDropdown = "<span class='".lade_xml_einstellung('site_menue_dropdown_text_color')."'>";
+    $EndColorSpan = "</span>";
+
     $HTML .= "<ul id='dropdown1' class='dropdown-content'>";
-    $HTML .= '<li><a href="./my_reservations.php">Reservierungen</a></li>';
-    $HTML .= '<li><a href="./usereinstellungen.php">Einstellungen</a></li>';
+    $HTML .= '<li><a href="./my_reservations.php">'.$ColorSpanDropdown.'Reservierungen'.$EndColorSpan.'</a></li>';
+    $HTML .= '<li><a href="./usereinstellungen.php">'.$ColorSpanDropdown.'Einstellungen'.$EndColorSpan.'</a></li>';
     $HTML .= "</ul>";
 
     $HTML .= '<nav class="'.lade_db_einstellung('site_menue_color').'" role="navigation">';
@@ -203,7 +207,9 @@ function navbar_links_big(){
         $SiteName = lade_xml_einstellung('site_name_html');
     }
 
+    #catch SMD Error
     $ColorSpan = "<span class='".lade_xml_einstellung('site_menue_text_color')."'>";
+    $ColorSpanDropdown = "<span class='".lade_xml_einstellung('site_menue_dropdown_text_color')."'>";
     $EndColorSpan = "</span>";
 
     $HTML = '<a id="logo-container" href="./index.php" class="brand-logo">'.$SiteName.'</a>';
@@ -230,28 +236,28 @@ function navbar_links_big(){
 
         if($UserMeta['ist_wart'] == 'true'){
             $HTML .= "<ul id='dropdown2' class='dropdown-content'>";
-            $HTML .= '<li><a href="../wartwesen.php">'.$ColorSpan.'Wartwesen'.$EndColorSpan.'</a></li>';
-            $HTML .= "<li><a href='termine.php'>".$ColorSpan."Termine".$EndColorSpan."</a></li>";
-            $HTML .= "<li><a href=\"ausfaelle.php\">".$ColorSpan."Ausf&aumllle".$EndColorSpan."</a></li>";
-            $HTML .= "<li><a href=\"reservierungsmanagement.php\">".$ColorSpan."Reservierungen".$EndColorSpan."</a></li>";
-            $HTML .= "<li><a href=\"schluesselmanagement.php\">".$ColorSpan."Schl&uumlssel".$EndColorSpan."</a></li>";
-            $HTML .= "<li><a href=\"benutzermanagement_wart.php\">".$ColorSpan."User".$EndColorSpan."</a></li>";
-            $HTML .= "<li><a href=\"wartfinanzen.php\">".$ColorSpan."Wartfinanzen".$EndColorSpan."</a></li>";
+            $HTML .= '<li><a href="../wartwesen.php">'.$ColorSpanDropdown.'Wartwesen'.$EndColorSpan.'</a></li>';
+            $HTML .= "<li><a href='termine.php'>".$ColorSpanDropdown."Termine".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"ausfaelle.php\">".$ColorSpanDropdown."Ausf&aumllle".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"reservierungsmanagement.php\">".$ColorSpanDropdown."Reservierungen".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"schluesselmanagement.php\">".$ColorSpanDropdown."Schl&uumlssel".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"benutzermanagement_wart.php\">".$ColorSpanDropdown."User".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"wartfinanzen.php\">".$ColorSpanDropdown."Wartfinanzen".$EndColorSpan."</a></li>";
             if(site_exists('wartwiki')){
-                $HTML .= "<li><a href=\"index.php?tab=wartwiki\">".$ColorSpan."Wartwiki".$EndColorSpan."</a></li>";
+                $HTML .= "<li><a href=\"index.php?tab=wartwiki\">".$ColorSpanDropdown."Wartwiki".$EndColorSpan."</a></li>";
             }
             if($UserMeta['ist_kasse'] == 'true'){
-                $HTML .= '<li><a href="./kassenwart.php">'.$ColorSpan.'Kasse'.$EndColorSpan.'</a></li>';
+                $HTML .= '<li><a href="./kassenwart.php">'.$ColorSpanDropdown.'Kasse'.$EndColorSpan.'</a></li>';
             }
             if($UserMeta['ist_admin'] == 'true'){
-                $HTML .= '<li><a href="./administration.php">'.$ColorSpan.'Admin'.$EndColorSpan.'</a></li>';
+                $HTML .= '<li><a href="./administration.php">'.$ColorSpanDropdown.'Admin'.$EndColorSpan.'</a></li>';
             }
             $HTML .= "</ul>";
             $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">'.$ColorSpan.'Wartfunktionen<i class="material-icons right">arrow_drop_down</i>'.$EndColorSpan.'</a></li>';
         } else {
             if($UserMeta['ist_admin'] == 'true'){
                 $HTML .= "<ul id='dropdown2' class='dropdown-content'>";
-                $HTML .= '<li><a href="./administration.php">'.$ColorSpan.'Admin'.$EndColorSpan.'</a></li>';
+                $HTML .= '<li><a href="./administration.php">'.$ColorSpanDropdown.'Admin'.$EndColorSpan.'</a></li>';
                 $HTML .= "</ul>";
                 $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">'.$ColorSpan.'Administration<i class="material-icons right">arrow_drop_down</i>'.$EndColorSpan.'</a></li>';
             }

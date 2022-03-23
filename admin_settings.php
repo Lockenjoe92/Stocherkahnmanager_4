@@ -10,7 +10,7 @@ $DBSettings = ['site_name', 'site_footer_name', 'earliest_begin', 'latest_begin'
 admin_db_settings_parser($DBSettings);
 
 $XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms-active', 'user-sms', 'key-sms',
-    'absender-sms', 'max-kosten-einer-reservierung', 'max-dauer-einer-reservierung', 'max-stunden-vor-abfahrt-buchbar',
+    'absender-sms', 'max-kosten-einer-reservierung', 'max-dauer-einer-reservierung', 'max-stunden-vor-abfahrt-buchbar', 'site_menue_dropdown_text_color',
     'max-tage-vor-abfahrt-uebergabe', 'max-minuten-vor-abfahrt-uebergabe', 'zeit-ab-wann-zukuenftige-uebergaben-in-schluesselverfuegbarkeitskalkulation-einfliessen-tage',
     'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 'kritischer-abstand-storno-vor-beginn', 'uebernahmefunktion-global-aktiv', 'erinnerung-uebergabe-ausmachen-1',
     'erinnerung-uebergabe-ausmachen-2', 'erinnerung-schluessel-zurueckgeben-intervall-beginn', 'erinnerung-schluessel-zurueckgeben-intervall-groesse', 'stunden-bis-uebergabe-eingetragen-sein-soll',
@@ -52,6 +52,7 @@ $Items.=collapsible_item_builder('Website Skeleton', $SettingTable, 'colorize');
 # Farbenkram
 $SettingTableItems = table_form_string_item('Website Men&uuml;farbe', 'site_menue_color', lade_db_einstellung('site_menue_color'), false);
 $SettingTableItems .= table_form_string_item('Website Men&uuml; Textfarbe', 'site_menue_text_color', lade_xml_einstellung('site_menue_text_color'), false);
+$SettingTableItems .= table_form_string_item('Website Men&uuml; Dropdown Textfarbe', 'site_menue_dropdown_text_color', lade_xml_einstellung('site_menue_dropdown_text_color'), false);
 $SettingTableItems .= table_form_string_item('Website Footerfarbe', 'site_footer_color', lade_db_einstellung('site_footer_color'), false);
 #$SettingTableItems .= table_form_string_item('Website Hintergrundfarbe', 'site_background_color', lade_db_einstellung('site_background_color'), false);
 $SettingTableItems .= table_form_string_item('Farbe Link Buttons', 'site_buttons_color', lade_db_einstellung('site_buttons_color'), false);
@@ -235,14 +236,14 @@ $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Wasserstandswarnung', $SettingTable, 'show_chart');
 
 # Pretix stuff
-if(lade_xml_einstellung('site_url')!='https://www.smdkahn.de'){
+
     $SettingTableItems = table_form_swich_item('Pretix Widget CSS & JS einbinden', 'pretix_widget_global', 'Aus', 'An', lade_xml_einstellung('pretix_widget_global'));
     $SettingTableItems .= table_form_string_item('Pretix Widget CSS', 'pretix_widget_css', lade_xml_einstellung('pretix_widget_css'), false);
     $SettingTableItems .= table_form_string_item('Pretix Widget JS', 'pretix_widget_js', lade_xml_einstellung('pretix_widget_js'), false);
 
     $SettingTable = table_builder($SettingTableItems);
     $Items.=collapsible_item_builder('Pretix', $SettingTable, 'confirmation_number');
-}
+
 
 #Complete Settings Form
 $SettingTable = section_builder(collapsible_builder($Items));
