@@ -273,17 +273,12 @@ function spalte_kalenderabonnement($UserMeta){
         $OptionGewaehlt = "off";
     }
 
-    $HTML = "<h4 class='middle'>iCal Kalender</h4>";
-    $HTMLinfos = "<p>Mit dem Wartkalender kannst du alle deine Terminangebote und Termine (incl. &Uuml;bergabewesen) in dein Kalenderprogramm laden und bist somit immer auf dem neuesten Stand:) Um ihn nutzen zu k&ouml;nnen, musst du folgende Adresse in deinem Kalenderprogramm abonnieren und dann regenm&auml;&szlig;ig syncen:</p>";
-    $HTMLinfos .= "<p><blockquote>https://stocherkahn.fachschaftmedizin.de/wartkalender.php?wart=".lade_user_id()."</blockquote></p>";
-    $HTMLinfos .= "<p><i class='material-icons tiny'>info</i> <b>Hier findest du Anleitungen wie's Einrichten auf diversen Ger&auml;ten geht:</b><br>";
-    $HTMLinfos .= "<blockquote><ul>";
-    $HTMLinfos .= "<li><a href='https://support.apple.com/de-de/HT202361'>Anleitung f&uuml;r macOS</a></li>";
-    $HTMLinfos .= "<li>iOS: Einstellungen -> Kalender -> Accounts -> Account hinzuf&uuml;gen -> Andere -> Kalenderabo hinzuf&uuml;gen -> obige URL reinkopieren</li>";
-    $HTMLinfos .= "<li><a href='https://www.wann-is-was.de/anleitungen-fuer-den-import-von-ical-dateien/ical-kalender-android-importieren/'>Anleitung f&uuml;r Android</a></li>";
-    $HTMLinfos .= "</ul>";
-    $HTMLinfos .= "</blockquote></p>";
-    $HTML .= section_builder($HTMLinfos);
+    $HTMLinfos = lade_xml_einstellung('anleitung_kalenderabo_warte');
+    $Array = array();
+    $Array['[id_von_system]'] = lade_user_id();
+    $HTMLinfos = str_replace(array_keys($Array), array_values($Array), $HTMLinfos);
+
+    $HTML = section_builder($HTMLinfos);
     $HTMLtable = table_form_swich_item('Wartkalender aktivieren', 'kalenderabo_checkbox', 'Nein', 'Ja', $OptionGewaehlt);
     $HTMLtable .= table_row_builder(table_header_builder(form_button_builder('action_wart_kalenderabo_aendern', '&Auml;ndern', 'action', 'edit', '')).table_data_builder(''));
     $HTML .= section_builder(table_builder($HTMLtable));
@@ -310,7 +305,7 @@ function spalte_konto_loeschen(){
         $Reservierung = mysqli_fetch_assoc($AbfrageLadeAlleResUser);
 
         //Schlüssel zurückgegeben falls Ausgabe erfolgt?
-        $SchluesselausgabeAnfrage = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND ausgabe > '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00'";
+        $SchluesselausgabeAnfrage = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND ausgabe IS NOT NULL AND rueckgabe IS NULL";
         $SchluesselausgabeAbfrage = mysqli_query($link, $SchluesselausgabeAnfrage);
         $SchluesselausgabeAnzahl = mysqli_num_rows($SchluesselausgabeAbfrage);
 

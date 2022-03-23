@@ -15,7 +15,7 @@ $Header = "Reservierungen - " . lade_db_einstellung('site_name');
 # Page Title
 $PageTitle = '<h1 class="hide-on-med-and-down center-align">Willkommen im Buchungssystem!</h1>';
 $PageTitle .= '<h1 class="hide-on-large-only center-align">Willkommen!</h1>';
-$HTML .= section_builder($PageTitle);
+$HTML = section_builder($PageTitle);
 
 # Eigene Reservierungen Normalo-user
 $HTML .= section_wasserstands_und_rueckgabeautomatikwesen('my_reservations');

@@ -218,7 +218,8 @@ function edit_nutzergruppe($Nutzergruppe, $erklaerung, $verification_rule, $visi
         $Antwort['success'] = false;
         $Antwort['meldung'] = "Prepare failed: (" . $link->errno . ") " . $link->error;
     } else {
-        if (!$stmt->bind_param("ssssissi", $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, intval($Anz_gratis_res), $last_minute_res, $multiselect_possible, $Nutzergruppe['id'])) {
+        $Anz_gratis_res = intval($Anz_gratis_res);
+        if (!$stmt->bind_param("ssssissi", $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible, $Nutzergruppe['id'])) {
             $Antwort['success'] = false;
             $Antwort['meldung'] = "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
         } else {
@@ -249,11 +250,12 @@ function edit_nutzergruppe($Nutzergruppe, $erklaerung, $verification_rule, $visi
 function add_nutzergruppe($name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible, $array_kosten_pro_stunde){
 
     $link = connect_db();
-    if (!($stmt = $link->prepare("INSERT INTO nutzergruppen (name,erklaertext,req_verify,visible_for_user,alle_res_gratis,hat_freifahrten_pro_jahr,darf_last_minute_res,multiselect_possible,delete_user,delete_timestamp) VALUES (?,?,?,?,?,?,?,?,0,'0000-00-00 00:00:00')"))) {
+    if (!($stmt = $link->prepare("INSERT INTO nutzergruppen (name,erklaertext,req_verify,visible_for_user,alle_res_gratis,hat_freifahrten_pro_jahr,darf_last_minute_res,multiselect_possible) VALUES (?,?,?,?,?,?,?,?)"))) {
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
-    if (!$stmt->bind_param("sssssiss", $name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, intval($Anz_gratis_res), $last_minute_res, $multiselect_possible)) {
+    $Anz_gratis_res = intval($Anz_gratis_res);
+    if (!$stmt->bind_param("sssssiss", $name, $erklaerung, $verification_rule, $visibility_for_user, $Alle_res_gratis, $Anz_gratis_res, $last_minute_res, $multiselect_possible)) {
         $Antwort = false;
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
@@ -664,7 +666,10 @@ function nutzergruppen_verifications_user_loeschen($UserID, $NutzergruppeID){
         $Antwort = false;
         var_dump("Prepare failed: (" . $link->errno . ") " . $link->error);
     }
-    if (!$stmt->bind_param("isii", lade_user_id(), timestamp(), $UserID, $NutzergruppeID)) {
+    $currUserID = lade_user_id();
+    $Timestamp = timestamp();
+
+    if (!$stmt->bind_param("isii", $currUserID, $Timestamp, $UserID, $NutzergruppeID)) {
         $Antwort = false;
         var_dump("Binding parameters nutzergruppen_verifications_user_loeschen failed: (" . $stmt->errno . ") " . $stmt->error);
     }
@@ -683,7 +688,7 @@ function verify_nutzergruppe($User, $Eintragender, $success='true'){
     $UserMeta = lade_user_meta($User);
     $NutzergruppeMeta = lade_nutzergruppe_infos($UserMeta['ist_nutzergruppe'], 'name');
 
-    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp, delete_user, delete_time) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."',0,'0000-00-00 00:00:00')";
+    $Anfrage = "INSERT INTO nutzergruppe_verification (nutzergruppe, user, erfolg, kommentar, ueberpruefer, timestamp) VALUES ('".$NutzergruppeMeta['id']."','".$User."','".$success."','','".$Eintragender."','".timestamp()."')";
     if(mysqli_query($link, $Anfrage)){
         return true;
     } else {
@@ -698,6 +703,15 @@ function adminrolle_loeschen($User){
         return false;
     } else {
         return delete_user_meta($User, 'ist_admin', 'true');
+    }
+}
+
+function kassenrolle_loeschen($User){
+    $Admins = get_sorted_user_array_with_user_meta_fields('ist_kasse');
+    if(count($Admins)<=1){
+        return false;
+    } else {
+        return delete_user_meta($User, 'ist_kasse', 'true');
     }
 }
 
@@ -727,7 +741,9 @@ function nutzergruppe_loeschen($IDNutzergruppe){
         return false;
     }
 
-    if (!$stmt->bind_param("isi", lade_user_id(),$IDNutzergruppe, $IDNutzergruppe)) {
+    $User = lade_user_id();
+
+    if (!$stmt->bind_param("isi", $User,$IDNutzergruppe, $IDNutzergruppe)) {
         return false;
     }
     if (!$stmt->execute()) {

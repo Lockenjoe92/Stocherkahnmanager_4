@@ -129,11 +129,12 @@ function faellige_schluesselrueckgaben_user(){
     $link = connect_db();
 
     //Lade ID
-    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' AND storno_user = 0"))) {
+    if (!($stmt = $link->prepare("SELECT * FROM schluesselausgabe WHERE user = ? AND ausgabe IS NOT NULL AND rueckgabe IS NULL AND storno_user = 0"))) {
         $Antwort = false;
         echo "Prepare failed: (" . $link->errno . ") " . $link->error;
     }
-    if (!$stmt->bind_param("s", lade_user_id())) {
+    $UserId = lade_user_id();
+    if (!$stmt->bind_param("s", $UserId)) {
         $Antwort = false;
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
@@ -156,7 +157,7 @@ function faellige_schluesselrueckgaben_user(){
                 $KorrespondierendeRes = lade_reservierung($Ergebnis['reservierung']);
                 $SpanRueckgabeErforderlich = "";
 
-                if ($KorrespondierendeRes['storno_zeit'] == "0000-00-00 00:00:00") {
+                if ($KorrespondierendeRes['storno_zeit'] == NULL) {
 
                     if (time() > strtotime($KorrespondierendeRes['ende'])) {
 
@@ -181,7 +182,7 @@ function faellige_schluesselrueckgaben_user(){
                         }
                     }
 
-                } else if ($KorrespondierendeRes['storno_zeit'] != "0000-00-00 00:00:00") {
+                } else if ($KorrespondierendeRes['storno_zeit'] != NULL) {
 
                     //Rückgabe erforderlich
                     $Counter++;
@@ -225,7 +226,7 @@ function faellige_schluesselrueckgaben_user(){
 function anstehende_termine_user(){
 
     $link = connect_db();
-    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung = '0000-00-00 00:00:00' ORDER BY zeitpunkt ASC";
+    $Anfrage = "SELECT id FROM termine WHERE user = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung IS NULL ORDER BY zeitpunkt ASC";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
     if($Anzahl>0){
@@ -244,12 +245,16 @@ function anstehende_termine_user(){
 function faellige_zahlungen_user(){
 
     $Forderungen = lade_offene_forderungen_user(lade_user_id());
+
     if(sizeof($Forderungen)>0){
         $Counter = 0;
         $ReturnHTMLitems = '';
         foreach ($Forderungen as $Forderung){
             if($Forderung['referenz_res']=='0'){
                 $ReturnHTMLitems .= listenelement_offene_forderung_generieren($Forderung);
+                $Counter++;
+            } else {
+                $ReturnHTMLitems .= listenelement_offene_forderung_generieren($Forderung, 'is_a_res');
                 $Counter++;
             }
         }

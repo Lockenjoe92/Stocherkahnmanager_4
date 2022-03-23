@@ -68,7 +68,7 @@ function spalte_stats(){
     $AnzahlReservierungenLaden = mysqli_num_rows($AbfrageReservierungenLaden);
 
     //Übergaben
-    $AnfrageUebergabenLaden = "SELECT id FROM uebergaben WHERE storno_user = '0' AND durchfuehrung <> '0000-00-00 00:00:00' AND beginn > '$AnfangDiesesJahr' AND beginn < '$EndeDiesesJahr'";
+    $AnfrageUebergabenLaden = "SELECT id FROM uebergaben WHERE storno_user = '0' AND durchfuehrung <> NULL AND beginn > '$AnfangDiesesJahr' AND beginn < '$EndeDiesesJahr'";
     $AbfrageUebergabenLaden = mysqli_query($link, $AnfrageUebergabenLaden);
     $AnzahlUebergabenLaden = mysqli_num_rows($AbfrageUebergabenLaden);
 

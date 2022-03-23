@@ -107,7 +107,7 @@ function login_parser($MailVerificationSecret){
                 $Vals = $res->fetch_assoc();
 
                 #Muss die UserMail noch verifiziert werden?
-                if($Vals['mail_verified'] == '0000-00-00'){
+                if($Vals['mail_verified'] == NULL){
                     if($MailVerificationSecret == $Vals['register_secret']){
                         $MailVerified = verify_user_mail($Vals['id']);
                     } else {
@@ -177,7 +177,8 @@ function session_manager($Necessary_User_Role = NULL){
             $Ergebnis = false;
             #echo "Prepare failed: (" . $link->errno . ") " . $link->error;
         }
-        if (!$stmt->bind_param("i", intval($User_login))) {
+        $User_login = intval($User_login);
+        if (!$stmt->bind_param("i", $User_login)) {
             $Ergebnis = false;
             #echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
         }
@@ -214,7 +215,7 @@ function session_manager($Necessary_User_Role = NULL){
 
             //Importiere Einstellung
             $MaxMinutes = 1;
-            $MinimumTimestamp = strtotime("- " .$MaxMinutes. " minutes", $Timestamp);
+            $MinimumTimestamp = strtotime("- " .$MaxMinutes. " minutes", strtotime($Timestamp));
             $OldTimestamp = strtotime($Timestamp);
 
             if ($MinimumTimestamp > $OldTimestamp){

@@ -204,6 +204,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                 //Inform Gruppe davor:
                 $UserReservierungDavor = lade_user_meta($ReservierungVorher['user']);
                 $UserReservierung = lade_user_meta($Reservierung['user']);
+
                 $BausteineGruppeDavor = array();
                 $BausteineGruppeDavor['[vorname_user]'] = $UserReservierungDavor['vorname'];
                 $BausteineGruppeDavor['[angaben_reservierung_datum]'] = strftime("%A, den %d. %B %G", strtotime($ReservierungVorher['beginn']));
@@ -212,25 +213,29 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                 $BausteineGruppeDavor['[name_nachfolgender_user]'] = "".$UserReservierung['vorname']." ".$UserReservierung['nachname']."";
                 if ($Kommentar != ""){
                     $BausteineGruppeDavor['[kommentar]'] = "<p>Kommentar des anlegenden Users: ".$Kommentar."</p>";
+                } else {
+                    $BausteineGruppeDavor['[kommentar]'] = '';
                 }
 
-                var_dump($BausteineGruppeDavor);
+                #var_dump($BausteineGruppeDavor);
 
-                if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor)){
+                if (mail_senden('uebernahme-angelegt-vorgruppe', $UserReservierungDavor['mail'], $BausteineGruppeDavor, 'uebernahme-angelegt-vorgruppe-res-'.$ReservierungVorher['id'])){
 
                     $BausteineGruppe = array();
-                    $BausteineGruppe['[vorname_user]'] = $UserReservierungDavor['vorname'];
+                    $BausteineGruppe['[vorname_user]'] = $UserReservierung['vorname'];
                     $BausteineGruppe['[angaben_reservierung_datum]'] = strftime("%A, den %d. %B %G", strtotime($Reservierung['beginn']));
                     $BausteineGruppe['[angaben_reservierung_beginn]'] = strftime("%H", strtotime($Reservierung['beginn']));
                     $BausteineGruppe['[angaben_reservierung_ende]'] = strftime("%H", strtotime($Reservierung['ende']));
                     $BausteineGruppe['[name_vorheriger_user]'] = "".$UserReservierungDavor['vorname']." ".$UserReservierungDavor['nachname']."";
                     if ($Kommentar != ""){
                         $BausteineGruppe['[kommentar]'] = "<p>Hier der Kommentar des anlegenden Users: ".$Kommentar."</p>";
+                    } else {
+                        $BausteineGruppeDavor['[kommentar]'] = '';
                     }
 
-                    if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe)){
+                    if (mail_senden('uebernahme-angelegt-nachgruppe', $UserReservierung['mail'], $BausteineGruppe, 'uebernahme-angelegt-nachgruppe-res-'.$Reservierung['id'])){
 
-                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                        $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '$Kommentar')";
                         if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                             $Antwort['success'] = TRUE;
                             $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
@@ -249,7 +254,7 @@ function uebernahme_eintragen($ReservierungID, $Kommentar, $vorfahrerChosen=0){
                     $Antwort['meldung'] = "Fehler beim Informieren der vorfahrenden Gruppe.";
                 }
             } else {
-                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, storno_time, storno_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0', '$Kommentar')";
+                $AnfrageUebernahmeEintragen = "INSERT INTO uebernahmen (reservierung, reservierung_davor, create_time, create_user, kommentar) VALUES ('$ReservierungID', '".$ReservierungVorher['id']."', '".timestamp()."', '".lade_user_id()."', '$Kommentar')";
                 if (mysqli_query($link, $AnfrageUebernahmeEintragen)){
                     $Antwort['success'] = TRUE;
                     $Antwort['meldung'] = "Schl&uuml;ssel&uuml;bernahme erfolgreich eingetragen!";
@@ -334,20 +339,27 @@ function user_darf_uebernahme($UserID){
     $Verification = load_last_nutzergruppe_verification_user($NutzergruppeInfos['id'], $UserID);
     $Antwort = false;
 
-    if($NutzergruppeInfos['req_verify']=='yearly'){
-        if($Verification['erfolg'] == 'true'){
-            if(date('Y', strtotime($Verification['timestamp']))){
+    $link = connect_db();
+    //Nur leute die schonmal es geschafft haben eine Reservierung zu wuppen
+    $AnfrageEinweisungenJemals = "SELECT id FROM schluesselausgabe WHERE user = '".$UserID."' AND storno_user = '0' AND rueckgabe IS NOT NULL";
+    $AbfrageEinweisungenJemals = mysqli_query($link,$AnfrageEinweisungenJemals);
+    $AnzahlEinweisungenJemals = mysqli_num_rows($AbfrageEinweisungenJemals);
+
+    if ($AnzahlEinweisungenJemals > 0) {
+        if ($NutzergruppeInfos['req_verify'] == 'yearly') {
+            if ($Verification['erfolg'] == 'true') {
+                if (date('Y', strtotime($Verification['timestamp']))) {
+                    $Antwort = true;
+                }
+            }
+        } elseif ($NutzergruppeInfos['req_verify'] == 'once') {
+            if ($Verification['erfolg'] == 'true') {
                 $Antwort = true;
             }
-        }
-    } elseif($NutzergruppeInfos['req_verify']=='once'){
-        if($Verification['erfolg'] == 'true'){
+        } elseif ($NutzergruppeInfos['req_verify'] == 'false') {
             $Antwort = true;
         }
-    } elseif($NutzergruppeInfos['req_verify']=='false'){
-        $Antwort = true;
     }
-
     return $Antwort;
 }
 
@@ -452,7 +464,7 @@ function seiteninhalt_uebernahme_vorplanen_generieren($Reservierung){
                 } else if ($AnzahlZwei == 1){
 
                     $ErgebnisZwei = mysqli_fetch_assoc($AbfrageZwei);
-                    if ($ErgebnisZwei['rueckgabe'] == "0000-00-00 00:00:00"){
+                    if ($ErgebnisZwei['rueckgabe'] == NULL){
                         $HTMLitems = "Reservierung ".$GefundeneReservierung['id']." kommt in Frage - Hat bereits einen Schlüssel<br>";
                         $Resinfos = lade_reservierung($GefundeneReservierung['id']);
                         $UserResOption = lade_user_meta($Resinfos['user']);
@@ -489,7 +501,7 @@ function schluessel_an_user_weitergeben($UebergabeDavorID, $Schluessel, $Reservi
 
     } else if ($DAUcounter == 0) {
 
-        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe, rueckgabe, storno_user, storno_time, storno_kommentar) VALUES ('$UebergabeDavorID', '$Wart', '".$Reservierung['user']."', '".$ReservierungID."', '$Schluessel', '$Timestamp', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', '')";
+        $Anfrage = "INSERT INTO schluesselausgabe (uebergabe, wart, user, reservierung, schluessel, ausgabe) VALUES ('$UebergabeDavorID', '$Wart', '".$Reservierung['user']."', '".$ReservierungID."', '$Schluessel', '$Timestamp')";
 
         mysqli_query($link, $Anfrage);
 

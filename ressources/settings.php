@@ -34,6 +34,11 @@ function update_xml_einstellung($NameEinstellung, $WertEinstellung, $mode='globa
 
     $WertEinstellung = utf8_encode($WertEinstellung);
 
+    #Catch Error when trying to save empty field
+    if(strlen($WertEinstellung)==0){
+        $WertEinstellung = utf8_encode(' ');
+    }
+
     if($mode == 'global'){
         $xml = simplexml_load_file("./ressources/settings.xml");
         $xml->$NameEinstellung = $WertEinstellung;
@@ -119,7 +124,10 @@ function update_db_setting($Setting, $SettingValue){
         if (!($stmt = $link->prepare("UPDATE settings SET value = ? WHERE name = ?"))) {
             echo "Prepare failed: (" . $link->errno . ") " . $link->error;
         }
-        if (!$stmt->bind_param("ss", strval($SettingValue), $Setting)) {
+
+        $SettingValue = strval($SettingValue);
+
+        if (!$stmt->bind_param("ss", $SettingValue, $Setting)) {
             echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
         }
         if (!$stmt->execute()) {

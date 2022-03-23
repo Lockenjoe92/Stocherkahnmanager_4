@@ -17,11 +17,14 @@ $XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms
     'zeit-tage-nach-res-ende-zahlen', 'card_panel_hintergrund', 'delete-inactive-users-after-x-years', 'site_menue_text_color', 'rechnungsfunktion_global', 'rechnungsfunktion_wart', 'paypal-aktiv', 'future_daily_status_mail',
     'soll_uhrzeit_weekly_status_mail', 'soll_uhrzeit_daily_status_mail', 'erinnerung-nachzahlung-intervall-groesse', 'erinnerung-nachzahlung-intervall-beginn', 'rssi_db_untergrenze',
     'schluesselrueckgabe_automat_aktiv', 'wasserstand_mail_time', 'wasserstand_mail_wart_mode', 'wasserstand_akkordeon_title', 'wasserstand_sperrungsautomatik_stunden', 'wasserstand_sperrungsautomatik_on_off',
-    'pretix_widget_global', 'wasserstand_generelle_sperrung_auto', 'wasserstand_vorwarnung_beginner', 'wasserstand_mail_mode', 'grenze_trendberechnung_wasserstand', 'wasserstand_global_on_off', 'anzahl_messungen_trendberechnung_wasserstand', 'wasserstand_vorwarnung_erfahrene', 'wasserstand_generelle_sperrung', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown','warnung_lora_unterspannung_aktiv', 'batterie_spannung_untergrenze', 'warnung_lora_totmann_aktiv', 'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende'];
+    'pretix_widget_global', 'wasserstand_generelle_sperrung_auto', 'wasserstand_vorwarnung_beginner', 'wasserstand_mail_mode', 'grenze_trendberechnung_wasserstand', 'wasserstand_global_on_off', 'anzahl_messungen_trendberechnung_wasserstand',
+    'wasserstand_vorwarnung_erfahrene', 'wasserstand_generelle_sperrung', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown','warnung_lora_unterspannung_aktiv', 'batterie_spannung_untergrenze', 'warnung_lora_totmann_aktiv',
+    'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende', 'destination_url_after_logout'];
 admin_xml_settings_parser($XMLsettings);
 
 $CDATAxmlSETTINGS = ['titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',
-    'text-info-uebergabe-einweisung', 'erklaerung_schluesseluebernahme', 'pretix_widget_css', 'pretix_widget_js', 'erklaerung-forderung-zahlen-user', 'site_name_html', 'rechnungs_header', 'rechnungs_footer', 'normal-payment-options', 'paypal-text', 'hinweis_login_formular'];
+    'text-info-uebergabe-einweisung', 'erklaerung_schluesseluebernahme', 'pretix_widget_css', 'pretix_widget_js', 'erklaerung-forderung-zahlen-user', 'site_name_html', 'rechnungs_header',
+    'rechnungs_footer', 'normal-payment-options', 'paypal-text', 'hinweis_login_formular', 'anleitung_kalenderabo_warte'];
 admin_xml_cdata_settings_parser($CDATAxmlSETTINGS);
 
 
@@ -30,7 +33,7 @@ admin_xml_cdata_settings_parser($CDATAxmlSETTINGS);
 $PageTitle = '<h1>Admineinstellungen</h1>';
 $PageTitle = '<h1 class="hide-on-med-and-down">Admineinstellungen</h1>';
 $PageTitle .= '<h1 class="hide-on-large-only">Admin Settings</h1>';
-$HTML .= section_builder($PageTitle);
+$HTML = section_builder($PageTitle);
 
 #Settings Form
 $Items="";
@@ -42,6 +45,7 @@ $SettingTableItems .= table_form_string_item('Website Footer Name', 'site_footer
 $SettingTableItems .= table_form_swich_item('Website Big Footer', 'display_big_footer', 'deaktiviert', 'aktiviert', lade_db_einstellung('display_big_footer'), false);
 $SettingTableItems .= table_form_html_area_item('Big Footer Left Column', 'big_footer_left_column_html', lade_db_einstellung('big_footer_left_column_html'), slider_setting_interpreter(lade_db_einstellung('display_big_footer')));
 $SettingTableItems .= table_form_html_area_item('Big Footer Right Column', 'big_footer_right_column_html', lade_db_einstellung('big_footer_right_column_html'), slider_setting_interpreter(lade_db_einstellung('display_big_footer')));
+$SettingTableItems .= table_form_string_item('Logout Ziel URL', 'destination_url_after_logout', lade_xml_einstellung('destination_url_after_logout'), false);
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Website Skeleton', $SettingTable, 'colorize');
 
@@ -116,7 +120,7 @@ $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Übergaben', $SettingTable, 'arrow_forward');
 
 # Spontanübergabekram
-$SettingTableItems = table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Zukunft', 'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 0, 30,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-zukunft-dropdown')), '', '', '');
+$SettingTableItems = table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Zukunft', 'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 0, 100,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-zukunft-dropdown')), '', '', '');
 $SettingTableItems .= table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Vergangenheit', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown', 0, 21,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-vergangenheit-dropdown')), '', '', '');
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Spontanübergaben', $SettingTable, 'flash_on');
@@ -144,6 +148,8 @@ $SettingTableItems .= table_form_select_item('Erinnerungsmail an Wart eine Schl�
 $SettingTableItems .= table_form_select_item('Anzahl Tage Zukunft bei täglicher Status-Mail an Warte', 'future_daily_status_mail', 0, 10,intval(lade_xml_einstellung('future_daily_status_mail')), 'd', '', '');
 $SettingTableItems .= table_form_timepicker_item('Uhrzeit Versand tägliche Status-Mail an Warte', 'soll_uhrzeit_daily_status_mail', lade_xml_einstellung('soll_uhrzeit_daily_status_mail'), false);
 $SettingTableItems .= table_form_timepicker_item('Uhrzeit Versand sonntägliche Status-Mail an Warte für die kommende Woche', 'soll_uhrzeit_weekly_status_mail', lade_xml_einstellung('soll_uhrzeit_weekly_status_mail'), false);
+$SettingTableItems .= table_form_html_area_item('Anleitung Kalenderabonnement Warte', 'anleitung_kalenderabo_warte', lade_xml_einstellung('anleitung_kalenderabo_warte'));
+
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Wartinformationen', $SettingTable, 'info');
 

@@ -17,10 +17,10 @@ $Parser = do_uebergabe_parser($UebergabeID);
 
 if ($Parser['success'] == NULL){
     $HTML .= formular_do_uebergabe($UebergabeID);
-} else if (($Parser['success'] == TRUE)){
+} else if ($Parser['success'] == TRUE){
     $HTML .= zurueck_karte_generieren(TRUE, '&Uuml;bergabe erfolgreich durchgef&uuml;hrt!', 'termine.php');
-} else if (($Parser['success'] == FALSE)){
-    $HTML .= zurueck_karte_generieren(TRUE, 'Fehler bei der Durchf&uuml;hrung der &Uuml;bergabe!:<br>'.$Parser['error'].'', 'termine.php');
+} else if ($Parser['success'] == FALSE){
+    $HTML .= zurueck_karte_generieren(FALSE, 'Fehler bei der Durchf&uuml;hrung der &Uuml;bergabe!:<br>'.$Parser['error'].'', 'termine.php');
 }
 
 $HTML = container_builder($HTML);

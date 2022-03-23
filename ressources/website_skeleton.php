@@ -203,6 +203,9 @@ function navbar_links_big(){
         $SiteName = lade_xml_einstellung('site_name_html');
     }
 
+    $ColorSpan = "<span class='".lade_xml_einstellung('site_menue_text_color')."'>";
+    $EndColorSpan = "</span>";
+
     $HTML = '<a id="logo-container" href="./index.php" class="brand-logo">'.$SiteName.'</a>';
     $HTML .= '<ul class="right hide-on-med-and-down">';
 
@@ -214,11 +217,12 @@ function navbar_links_big(){
 
     for ($x=1;$x<=$Anzahl;$x++){
         $Ergebnis = mysqli_fetch_assoc($Abfrage);
-        $HTML .= "<li><a href='./index.php?tab=".$Ergebnis['name']."'>".$Ergebnis['menue_text']."</a></li>";
+        $HTML .= "<li><a href='./index.php?tab=".$Ergebnis['name']."'>".$ColorSpan.$Ergebnis['menue_text'].$EndColorSpan."</a></li>";
     }
 
     #Load available sites according to login and rights status
     $UserID = lade_user_id();
+
     if($UserID>0){
 
         #Load User Meta -> find user rights
@@ -226,31 +230,38 @@ function navbar_links_big(){
 
         if($UserMeta['ist_wart'] == 'true'){
             $HTML .= "<ul id='dropdown2' class='dropdown-content'>";
-            $HTML .= '<li><a href="../wartwesen.php">Wartwesen</a></li>';
-            $HTML .= "<li><a href='termine.php'>Termine</a></li>";
-            $HTML .= "<li><a href=\"ausfaelle.php\">Ausf&aumllle</a></li>";
-            $HTML .= "<li><a href=\"reservierungsmanagement.php\">Reservierungen</a></li>";
-            $HTML .= "<li><a href=\"schluesselmanagement.php\">Schl&uumlssel</a></li>";
-            $HTML .= "<li><a href=\"benutzermanagement_wart.php\">User</a></li>";
-            $HTML .= "<li><a href=\"wartfinanzen.php\">Wartfinanzen</a></li>";
+            $HTML .= '<li><a href="../wartwesen.php">'.$ColorSpan.'Wartwesen'.$EndColorSpan.'</a></li>';
+            $HTML .= "<li><a href='termine.php'>".$ColorSpan."Termine".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"ausfaelle.php\">".$ColorSpan."Ausf&aumllle".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"reservierungsmanagement.php\">".$ColorSpan."Reservierungen".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"schluesselmanagement.php\">".$ColorSpan."Schl&uumlssel".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"benutzermanagement_wart.php\">".$ColorSpan."User".$EndColorSpan."</a></li>";
+            $HTML .= "<li><a href=\"wartfinanzen.php\">".$ColorSpan."Wartfinanzen".$EndColorSpan."</a></li>";
             if(site_exists('wartwiki')){
-                $HTML .= "<li><a href=\"index.php?tab=wartwiki\">Wartwiki</a></li>";
+                $HTML .= "<li><a href=\"index.php?tab=wartwiki\">".$ColorSpan."Wartwiki".$EndColorSpan."</a></li>";
             }
             if($UserMeta['ist_kasse'] == 'true'){
-                $HTML .= '<li><a href="./kassenwart.php">Kasse</a></li>';
+                $HTML .= '<li><a href="./kassenwart.php">'.$ColorSpan.'Kasse'.$EndColorSpan.'</a></li>';
             }
             if($UserMeta['ist_admin'] == 'true'){
-                $HTML .= '<li><a href="./administration.php">Admin</a></li>';
+                $HTML .= '<li><a href="./administration.php">'.$ColorSpan.'Admin'.$EndColorSpan.'</a></li>';
             }
             $HTML .= "</ul>";
-            $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">Wartfunktionen<i class="material-icons right">arrow_drop_down</i></a></li>';
+            $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">'.$ColorSpan.'Wartfunktionen<i class="material-icons right">arrow_drop_down</i>'.$EndColorSpan.'</a></li>';
+        } else {
+            if($UserMeta['ist_admin'] == 'true'){
+                $HTML .= "<ul id='dropdown2' class='dropdown-content'>";
+                $HTML .= '<li><a href="./administration.php">'.$ColorSpan.'Admin'.$EndColorSpan.'</a></li>';
+                $HTML .= "</ul>";
+                $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown2">'.$ColorSpan.'Administration<i class="material-icons right">arrow_drop_down</i>'.$EndColorSpan.'</a></li>';
+            }
         }
 
-        $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Buchungstool<i class="material-icons right">arrow_drop_down</i></a></li>';
-        $HTML .= '<li><a href="./logout.php">Logout</a></li>';
+        $HTML .= '<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">'.$ColorSpan.'Buchungstool<i class="material-icons right">arrow_drop_down</i>'.$EndColorSpan.'</a></li>';
+        $HTML .= '<li><a href="./logout.php">'.$ColorSpan.'Logout'.$EndColorSpan.'</a></li>';
 
     } else{
-        $HTML .= '<li><a href="'.lade_xml_einstellung('site_url').'/login.php">Login</a></li>';
+        $HTML .= '<li><a href="'.lade_xml_einstellung('site_url').'/login.php">'.$ColorSpan.'Login'.$EndColorSpan.'</a></li>';
     }
 
     $HTML .= '</ul>';

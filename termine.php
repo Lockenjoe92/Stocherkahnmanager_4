@@ -241,7 +241,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                         $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                         $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginnAdapted)));
                     } else {
-                        $TerminierungTimestamp = "0000-00-00 00:00:00";
+                        $TerminierungTimestamp = NULL;
                     }
 
                     if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
@@ -272,7 +272,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                         $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                         $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginnAdapted)));
                     } else {
-                        $TerminierungTimestamp = "0000-00-00 00:00:00";
+                        $TerminierungTimestamp = NULL;
                     }
 
                     if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
@@ -289,7 +289,7 @@ function terminangebot_hinzufuegen_listenelement_parser(){
                     $TerminierungBefehl = "- ".$_POST['stunden_terminierung_terminangebot_anlegen']." hours";
                     $TerminierungTimestamp = date("Y-m-d G:i:s", strtotime($TerminierungBefehl, strtotime($DatumBeginn)));
                 } else {
-                    $TerminierungTimestamp = "0000-00-00 00:00:00";
+                    $TerminierungTimestamp = NULL;
                 }
 
                 if ($_POST['ortsangabe_terminangebot_anlegen'] != ""){
@@ -312,7 +312,7 @@ function spalte_uebergaben(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
+    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
     $AbfrageLadeAktiveUebergaben = mysqli_query($link, $AnfrageLadeAktiveUebergaben);
     $AnzahlLadeAktiveUebergaben = mysqli_num_rows($AbfrageLadeAktiveUebergaben);
 
@@ -355,7 +355,7 @@ function spalte_termine(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0'";
+    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0'";
     $AbfrageLadeAktiveTermine = mysqli_query($link, $AnfrageLadeAktiveTermine);
     $AnzahlLadeAktiveTermine = mysqli_num_rows($AbfrageLadeAktiveTermine);
 
@@ -388,7 +388,7 @@ function spalte_vergangene_uebergaben(){
     $link = connect_db();
     $Limit = lade_xml_einstellung('wochen-vergangenheit-durchgefuehrte-uebergaben');
     $Grenze = date("Y-m-d G:i:s", strtotime('- '.$Limit.' weeks'));
-    $Anfrage = "SELECT * FROM uebergaben WHERE durchfuehrung != '0000-00-00 00:00:00' AND wart = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung > '".$Grenze."' ORDER BY durchfuehrung DESC";
+    $Anfrage = "SELECT * FROM uebergaben WHERE wart = ".lade_user_id()." AND storno_user = 0 AND durchfuehrung > '".$Grenze."' ORDER BY durchfuehrung DESC";
     $Abfrage = mysqli_query($link, $Anfrage);
     $Anzahl = mysqli_num_rows($Abfrage);
     if($Anzahl>0){

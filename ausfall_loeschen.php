@@ -72,7 +72,7 @@ function seiteninhalt($Parser, $Modename, $Daten, $ID, $Typ){
         $HTML .= section_builder("<p>M&ouml;chtest du die ".$Modename." '".$Daten['titel']."' wirklich l&ouml;schen?</p>", '', 'center-align');
         $FormHTML = "<input type='hidden' name='id' value='$ID'>";
         $FormHTML .= "<input type='hidden' name='typ' value='$Typ'>";
-        $FormHTML .= form_button_builder('action', 'Löschen', 'action', 'delete', '')." ".button_link_creator('Abbruch', 'ausfaelle.php', 'arrow_back', '');
+        $FormHTML .= button_link_creator('Abbruch', 'ausfaelle.php', 'arrow_back', '')." ".form_button_builder('action', 'Löschen', 'action', 'delete', '');
         $HTML .= form_builder(section_builder($FormHTML, '', 'center-align'), '#', 'post', '', '');
     }
 

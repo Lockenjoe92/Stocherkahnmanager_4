@@ -27,7 +27,7 @@ function mail_senden($NameVorlage, $MailAdresse, $Bausteine, $Typ='')
     $mail->IsHTML(true);
 
     //Name des Abenders setzen
-    $mail->FromName = lade_xml_einstellung('site_name');
+    $mail->FromName = lade_xml_einstellung('absender_name');
 
     //Empfängeradresse setzen
     $mail->addAddress($MailAdresse);
@@ -47,14 +47,26 @@ function mail_senden($NameVorlage, $MailAdresse, $Bausteine, $Typ='')
             $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'true')";
             mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
             return true;
+        } else {
+            $Typ = $NameVorlage;
+            $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'true')";
+            mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
+            return true;
         }
 
     } else {
+        $Error = 'Mailer Error: ' . $mail->ErrorInfo;
         if($Typ!=''){
+            $Typ = $Typ.' Fehler:'.$Error;
             $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'false')";
             mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
+            return false;
+        } else {
+            $Typ = $NameVorlage.' Fehler:'.$Error;
+            $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'false')";
+            mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
+            return false;
         }
-        return false;
     }
 }
 

@@ -44,7 +44,7 @@ function auto_update_uebernahmen(){
             $SchluesselausgabeDavor = lade_schluesselausgabe_reservierung($IDReservierungDavor);
 
             //Nur weiter wenn Rückgabe noch nicht bereits festgehalten!
-            if ($SchluesselausgabeDavor['rueckgabe'] == "0000-00-00 00:00:00"){
+            if ($SchluesselausgabeDavor['rueckgabe'] == NULL){
                 //Rückgabe des Schlüssels festhalten
                 schluesselrueckgabe_festhalten($SchluesselausgabeDavor['schluessel']);
                 echo "R&uuml;ckgabe Reservierung davor festgehalten - ";
@@ -154,7 +154,7 @@ function lora_stuff(){
             $KeystatusSecondLastLog = explode(',', $secondLastLog['schluessel']);
 
             //1. Schlüsselkram
-            $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe <> '0000-00-00 00:00:00' AND rueckgabe = '0000-00-00 00:00:00' ORDER BY schluessel ASC";
+            $AnfrageLadeAlleSchluesselausgaben = "SELECT * FROM schluesselausgabe WHERE storno_user = '0' AND ausgabe IS NOT NULL AND rueckgabe IS NULL ORDER BY schluessel ASC";
             $AbfrageLadeAlleSchluesselausgaben = mysqli_query($link, $AnfrageLadeAlleSchluesselausgaben);
             $AnzahlLadeAlleSchluesselausgaben = mysqli_num_rows($AbfrageLadeAlleSchluesselausgaben);
 
@@ -348,7 +348,7 @@ function automatische_sperrung_wasserstand(){
                         $BeginnSperrung = date('Y-m-d G:i:s');
                         $Command = '+ '.lade_xml_einstellung('wasserstand_sperrungsautomatik_stunden').' hours';
                         $EndeSperrung = date('Y-m-d G:i:s', strtotime($Command));
-                        var_dump(sperrung_anlegen($BeginnSperrung, $EndeSperrung, 'Hochwasser', 'Automatische Hochwassersperre '.date('d.m.Y'), lade_xml_einstellung('wasserstand_sperrungsautomatik_text'), 1, true));
+                        #var_dump(sperrung_anlegen($BeginnSperrung, $EndeSperrung, 'Hochwasser', 'Automatische Hochwassersperre '.date('d.m.Y'), lade_xml_einstellung('wasserstand_sperrungsautomatik_text'), 1, true));
                     } else {
                         $Ergebnis = mysqli_fetch_assoc($Abfrage);
                         echo "<b>Sperrung bereits eingetragen - endet ".$Ergebnis['ende']."!</b>";

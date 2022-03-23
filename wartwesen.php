@@ -169,7 +169,7 @@ function spalte_moegliche_rueckzahlungen(){
         $Reservierung = mysqli_fetch_assoc($AbfrageLadeReservierungen);
 
         //Überprüfe: hat User überhaupt eine Übergabe bekommen?
-        $AnfrageLadeUebergaben = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe <> '0000-00-00 00:00:00' AND storno_user = '0'";
+        $AnfrageLadeUebergaben = "SELECT * FROM schluesselausgabe WHERE reservierung = '".$Reservierung['id']."' AND ausgabe IS NOT NULL AND storno_user = '0'";
         $AbfrageLadeUebergaben = mysqli_query($link, $AnfrageLadeUebergaben);
         $AnzahlLadeUebergaben = mysqli_num_rows($AbfrageLadeUebergaben);
 
@@ -316,7 +316,7 @@ function section_uebergaben(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
+    $AnfrageLadeAktiveUebergaben = "SELECT id FROM uebergaben WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY beginn ASC";
     $AbfrageLadeAktiveUebergaben = mysqli_query($link, $AnfrageLadeAktiveUebergaben);
     $AnzahlLadeAktiveUebergaben = mysqli_num_rows($AbfrageLadeAktiveUebergaben);
 
@@ -361,7 +361,7 @@ function section_termine(){
     $link = connect_db();
 
     //Lade aktive Übergaben
-    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung = '0000-00-00 00:00:00' AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
+    $AnfrageLadeAktiveTermine = "SELECT id FROM termine WHERE durchfuehrung IS NULL AND wart = '".lade_user_id()."' AND storno_user = '0' ORDER BY zeitpunkt ASC";
     $AbfrageLadeAktiveTermine = mysqli_query($link, $AnfrageLadeAktiveTermine);
     $AnzahlLadeAktiveTermine = mysqli_num_rows($AbfrageLadeAktiveTermine);
 
@@ -520,7 +520,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
 
                     $UebergabeRes = mysqli_fetch_assoc($AbfrageLadeUebergabeRes);
 
-                    if ($UebergabeRes['durchfuehrung'] == "0000-00-00 00:00:00"){
+                    if ($UebergabeRes['durchfuehrung'] == NULL){
                         //Ausgemacht - nicht durchgeführt
                         if (time() < strtotime($UebergabeRes['beginn'])){
                             //Steht noch an - ok
@@ -533,7 +533,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                             $SpanResUebergabestatusMobile = "<span class=\"new badge red\" data-badge-caption=\"&Uuml;b. abgelaufen\"></span>";
                         }
 
-                    } else if ($UebergabeRes['durchfuehrung'] != "0000-00-00 00:00:00"){
+                    } else if ($UebergabeRes['durchfuehrung'] != NULL){
                         //Ausgemacht - durchgeführt
                         $SpanResUebergabestatus = "<span class=\"new badge\" data-badge-caption=\"&Uuml;bergabe durchgef&uuml;hrt\"></span>";
                         $SpanResUebergabestatusMobile = "<span class=\"new badge\" data-badge-caption=\"&Uuml;b. erfolgt\"></span>";
@@ -541,8 +541,8 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                 }
             }
 
-            $ReservierungenInhalt .= "<p class='collection-item'><i class='tiny material-icons'>today</i> ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$User."".$SpanResUebergabestatus."</p>";
-            $ReservierungenInhaltMobile .= "<p class='collection-item'><i class='tiny material-icons'>today</i> ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$UserMobile."".$SpanResUebergabestatusMobile."</p>";
+            $ReservierungenInhalt .= "<p class='collection-item'><i class='tiny material-icons'>today</i> #".$ResAktuell['id']." - ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$User."".$SpanResUebergabestatus."</p>";
+            $ReservierungenInhaltMobile .= "<p class='collection-item'><i class='tiny material-icons'>today</i> #".$ResAktuell['id']." - ".date("G", strtotime($ResAktuell['beginn']))." bis ".date("G", strtotime($ResAktuell['ende']))." Uhr - ".$UserMobile."".$SpanResUebergabestatusMobile."</p>";
         }
         $ReservierungenInhalt .= "</div>";
         $ReservierungenInhaltMobile .= "</div>";
@@ -641,7 +641,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
             $WartUebergabe = "".$WartUebergabeMeta['vorname']."";
             $UserUebergabe = "".$UserUebergabeMeta['vorname']." ".$UserUebergabeMeta['nachname']."";
 
-            if ($UebergabeAktuell['durchfuehrung'] == "0000-00-00 00:00:00"){
+            if ($UebergabeAktuell['durchfuehrung'] == NULL){
 
                 if (time() > strtotime($UebergabeAktuell['beginn'])){
                     $SpanUebergabestatus = "<span class=\"new badge red\" data-badge-caption=\"abgelaufen\"></span>";
@@ -649,7 +649,7 @@ function listenelement_tagesgeschehen_generieren($TageVerschiebung, $Wartschlues
                     $SpanUebergabestatus = "<span class=\"new badge yellow darken-2\" data-badge-caption=\"steht an\"></span>";
                 }
 
-            } else if ($UebergabeAktuell['durchfuehrung'] != "0000-00-00 00:00:00"){
+            } else if ($UebergabeAktuell['durchfuehrung'] != NULL){
                 $SpanUebergabestatus = "<span class=\"new badge\" data-badge-caption=\"durchgef&uuml;hrt\"></span>";
             }
 

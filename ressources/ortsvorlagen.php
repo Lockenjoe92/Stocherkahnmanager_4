@@ -3,7 +3,7 @@
     function ortsvorlage_anlegen($Wart, $Angabe){
 
         $link = connect_db();
-        $Anfrage = "INSERT INTO vorlagen_ortsangaben (wart, angabe, create_time, create_user, delete_time, delete_user) VALUES ('$Wart', '$Angabe', '".timestamp()."', '".lade_user_id()."', '0000-00-00 00:00:00', '0')";
+        $Anfrage = "INSERT INTO vorlagen_ortsangaben (wart, angabe, create_time, create_user) VALUES ('$Wart', '$Angabe', '".timestamp()."', '".lade_user_id()."')";
         if (mysqli_query($link, $Anfrage)){
             return true;
         } else {

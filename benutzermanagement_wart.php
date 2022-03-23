@@ -282,7 +282,7 @@ function benutzermanagement_parser($AllUsers){
             update_user_meta($User['id'], 'stadt', $_POST['stadt_user_' . $User['id'] . '']);
             update_user_meta($User['id'], 'plz', $_POST['plz_user_' . $User['id'] . '']);
             if ($_POST['main_usergroup_' . $User['id'] . '']!='') {
-                $NutzergruppeMeta = lade_nutzergruppe_infos($_POST['main_usergroup_' . $User['id'] . '']);
+                $NutzergruppeMeta = lade_nutzergruppe_infos($_POST['main_usergroup_' . $User['id'] . ''], 'name');
                 $Setting = 'ist_nutzergruppe';
                 $SettingValue = $NutzergruppeMeta['name'];
                 update_user_meta($User['id'], $Setting, $SettingValue);

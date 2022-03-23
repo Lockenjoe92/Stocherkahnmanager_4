@@ -38,7 +38,7 @@ for($a=1; $a<=$Anzahl1; $a++){
     //Load Übergaben from this Year
     $BeginYear = "".$ThisYear."-01-01 00:00:01";
     $EndYear = "".$ThisYear."-12-31 23:59:59";
-    $Anfrage2 = "SELECT id FROM uebergaben WHERE wart = '".$WartID."' AND beginn > '".$BeginYear."' AND beginn < '".$EndYear."' AND durchfuehrung > '0000-00-00 00:00:00' AND storno_user = '0'";
+    $Anfrage2 = "SELECT id FROM uebergaben WHERE wart = '".$WartID."' AND beginn > '".$BeginYear."' AND beginn < '".$EndYear."' AND durchfuehrung IS NOT NULL AND storno_user = '0'";
     $Abfrage2 = mysqli_query($link, $Anfrage2);
     $Anzahl2 = mysqli_num_rows($Abfrage2);
 

@@ -1189,7 +1189,7 @@ function table_form_terminangebote_fuer_termine($Titel, $NameElement, $Selected)
 
     for ($a=1;$a<=$Anzahl;$a++){
         $Ergebnis = mysqli_fetch_assoc($Abfrage);
-        if($Ergebnis['terminierung']=='0000-00-00 00:00:00'){
+        if($Ergebnis['terminierung']==NULL){
             $TimeInfos = strftime("%A, %d. %B %G * %H:%M - ", strtotime($Ergebnis['von'])).strftime("%H:%M Uhr", strtotime($Ergebnis['bis']));
             if($Ergebnis['id'] == $Selected){
                 $Ausgabe .= "<option value='".$Ergebnis['id']."' selected>".$TimeInfos."</option>";
@@ -1473,14 +1473,26 @@ function table_form_dropdown_transferkonten($Titel, $NameElement, $Selected){
 
 }
 
-function listenelement_offene_forderung_generieren($Forderung){
+function listenelement_offene_forderung_generieren($Forderung, $Mode=''){
 
     $User = lade_user_meta($Forderung['bucher']);
-    $Titel = $Forderung['referenz'].' - '.$Forderung['betrag'].'&euro;';
-    $Content = table_row_builder(table_header_builder('Forderung').table_data_builder($Forderung['referenz']));
+
+    if($Mode == 'is_a_res'){
+        $Titel = 'Reservierung #'.$Forderung['referenz_res'].' - '.$Forderung['betrag'].'&euro;';
+        $Content = table_row_builder(table_header_builder('Forderung').table_data_builder('Reservierung #'.$Forderung['referenz_res']));
+    } else {
+        $Titel = $Forderung['referenz'].' - '.$Forderung['betrag'].'&euro;';
+        $Content = table_row_builder(table_header_builder('Forderung').table_data_builder($Forderung['referenz']));
+    }
+
     $Content .= table_row_builder(table_header_builder('Betrag').table_data_builder($Forderung['betrag'].'&euro;'));
     $Content .= table_row_builder(table_header_builder('Zahlbar bis').table_data_builder(date('d.m.Y', strtotime($Forderung['zahlbar_bis']))));
-    $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('erklaerung-forderung-zahlen-user')));
+
+    if($Mode == 'is_a_res'){
+        $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('normal-payment-options')));
+    } else {
+        $Content .= table_row_builder(table_header_builder('Wie zahlen?').table_data_builder(lade_xml_einstellung('erklaerung-forderung-zahlen-user')));
+    }
 
     if(lade_xml_einstellung('paypal-aktiv') == "on"){
         #if(lade_user_id()==542){
@@ -1493,7 +1505,9 @@ function listenelement_offene_forderung_generieren($Forderung){
         #$CollectionItems .= collection_item_builder( "<i class='tiny material-icons'>label</i> Du kannst jetzt direkt <a href='paypal.php?res='".$ID."''>mit PayPal bezahlen.</a>");
     }
 
-    $Content .= table_row_builder(table_header_builder('Kontakt bei Rückfragen').table_data_builder('<a href="mailto:'.$User['mail'].'">'.$User['vorname'].' '.$User['nachname'].'</a>'));
+    if($Mode != 'is_a_res') {
+        $Content .= table_row_builder(table_header_builder('Kontakt bei Rückfragen') . table_data_builder('<a href="mailto:' . $User['mail'] . '">' . $User['vorname'] . ' ' . $User['nachname'] . '</a>'));
+    }
     $Content = table_builder($Content);
     $Icon = 'payment';
     return collapsible_item_builder($Titel, $Content, $Icon);
@@ -1555,13 +1569,12 @@ function listenelement_offene_forderung_kassenwart_durchfuehren_generieren($Ford
 function section_wasserstands_und_rueckgabeautomatikwesen($location='wartwesen'){
 
     $CollapsibleItem = "";
+    $link = connect_db();
 
     if(lade_xml_einstellung('wasserstand_global_on_off')=='on'){
         $SettingAnfaenger = lade_xml_einstellung('wasserstand_vorwarnung_beginner');
         $SettingErfahren = lade_xml_einstellung('wasserstand_vorwarnung_erfahrene');
         $SettingSperrung = lade_xml_einstellung('wasserstand_generelle_sperrung');
-
-        $link = connect_db();
 
         $Title = lade_xml_einstellung('wasserstand_akkordeon_title');
         $LastWasserstand = lade_letzten_wasserstand($link);

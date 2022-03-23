@@ -45,8 +45,17 @@ function sperrung_anlegen($BeginnSperrung, $EndeSperrung, $Typ, $Titel, $Erklaer
                 }
 
                 if ($ErfolgCounter == $AnzahlBetroffeneReservierungen){
-                    $Antwort['erfolg'] = TRUE;
-                    $Antwort['meldung'] = "Sperrung erfolgreich eingetragen! Es wurden ".$ErfolgCounter." Reservierungen storniert.<br>";
+
+                    $Eintrag = sperrung_eintragen($Typ, $BeginnSperrung, $EndeSperrung, $Titel, $Erklaerung, $CreatorID);
+
+                    if ($Eintrag['success'] == TRUE){
+                        $Antwort['erfolg'] = TRUE;
+                        $Antwort['meldung'] = "Sperrung erfolgreich eingetragen! Es wurden ".$ErfolgCounter." Reservierungen storniert.<br>";
+                    } else {
+                        $Antwort['erfolg'] = FALSE;
+                        $Antwort['meldung'] = $Eintrag['error'];
+                    }
+
                 } else {
                     $Antwort['erfolg'] = FALSE;
                     $Antwort['meldung'] = $ErrorMessage;
@@ -80,8 +89,9 @@ function sperrung_eintragen($Typ, $Beginn, $Ende, $Titel, $Erklaerung, $Erstelle
 
     $link = connect_db();
 
-    $AnfragePauseEintragen = "INSERT INTO sperrungen (typ, beginn, ende, titel, erklaerung, ersteller, storno_user, storno_zeit) VALUES ('$Typ', '$Beginn', '$Ende', '$Titel', '$Erklaerung', '$Ersteller', '0', '0000-00-00 00:00:00')";
+    $AnfragePauseEintragen = "INSERT INTO sperrungen (typ, beginn, ende, titel, erklaerung, ersteller) VALUES ('$Typ', '$Beginn', '$Ende', '$Titel', '$Erklaerung', '$Ersteller')";
     $AbfragePauseEintragen = mysqli_query($link, $AnfragePauseEintragen);
+    #var_dump($AnfragePauseEintragen);
 
     if ($AbfragePauseEintragen == TRUE){
         $Antwort['success'] = TRUE;
@@ -236,8 +246,8 @@ function sperrung_bearbeiten($PauseID, $BeginnPause, $EndePause, $Typ, $Titel, $
                 $ErrorMessage = "";
 
                 //Generieren der Begründung für Mail an den User
-                $Begruendung = "<p>Zum Zeitpunkt deiner Reservierung musste leider eine betriebsbedingte Pause des Kahnbetriebs eingetragen werden.</p>";
-                $Begruendung .= "<p>Hier die Daten zu der Betriebspause:<br>";
+                $Begruendung = "<p>Zum Zeitpunkt deiner Reservierung musste leider eine betriebsbedingte Sperrung des Kahnbetriebs eingetragen werden.</p>";
+                $Begruendung .= "<p>Hier die Daten zu der Sperrung:<br>";
                 $Begruendung .= "Typ: ".$Typ."<br>";
                 $Begruendung .= "Titel: ".$Titel."<br>";
                 $Begruendung .= "Details: ".$Erklaerung."</p>";
@@ -277,7 +287,7 @@ function sperrung_bearbeiten($PauseID, $BeginnPause, $EndePause, $Typ, $Titel, $
 
             if ($Eintrag['success'] == TRUE){
                 $Antwort['erfolg'] = TRUE;
-                $Antwort['meldung'] = "Die Betriebspause wurde erfolgreich in der Datenbank abgelegt!";
+                $Antwort['meldung'] = "Die Sperrung wurde erfolgreich in der Datenbank abgelegt!";
             } else {
                 $Antwort['erfolg'] = FALSE;
                 $Antwort['meldung'] = $Eintrag['error'];
