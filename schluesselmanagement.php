@@ -19,7 +19,7 @@ $HTML = section_builder($PageTitle);
 #ParserStuff
 $Parser = parser_schluesselmanagement();
 if(isset($Parser['meldung'])){
-    $HTML .= "<h5>".$Parser['meldung']."</h5>";
+    $HTML .= section_builder(table_builder(table_row_builder(table_header_builder(error_button_creator($Parser['meldung'],  '', '')))));
 }
 
 # Content
