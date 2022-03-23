@@ -25,8 +25,16 @@ $key13 = $data->uplink_message->decoded_payload->key12;
 $key14 = $data->uplink_message->decoded_payload->key13;
 $key15 = $data->uplink_message->decoded_payload->key14;
 $key16 = $data->uplink_message->decoded_payload->key15;
+$key17 = $data->uplink_message->decoded_payload->key16;
+$key18 = $data->uplink_message->decoded_payload->key17;
+$key19 = $data->uplink_message->decoded_payload->key18;
+$key20 = $data->uplink_message->decoded_payload->key19;
+$key21 = $data->uplink_message->decoded_payload->key20;
+$key22 = $data->uplink_message->decoded_payload->key21;
+$key23 = $data->uplink_message->decoded_payload->key22;
+$key24 = $data->uplink_message->decoded_payload->key23;
 
-$schluesselcsv = $key1.",".$key2.",".$key3.",".$key4.",".$key5.",".$key6.",".$key7.",".$key8.",".$key9.",".$key10.",".$key11.",".$key12.",".$key13.",".$key14.",".$key15.",".$key16."";
+$schluesselcsv = $key1.",".$key2.",".$key3.",".$key4.",".$key5.",".$key6.",".$key7.",".$key8.",".$key9.",".$key10.",".$key11.",".$key12.",".$key13.",".$key14.",".$key15.",".$key16.",".$key17.",".$key18.",".$key19.",".$key20.",".$key21.",".$key22.",".$key23.",".$key24."";
 $timestamp = timestamp();
 $link = connect_db();
 
