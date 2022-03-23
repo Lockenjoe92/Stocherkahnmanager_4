@@ -39,7 +39,7 @@ function spalte_pausen(){
     $HTML .= "<h5 class='header center-align'>Betriebspausen</h5>";
 
     if ($AnzahlLadeAktivePausen == 0){
-        $HTML .= "<p class='caption'>Derzeit gibt es keine aktiven Betriebspausen! <br><a href='ausfall_hinzufuegen.php?typ=pause'><i class='tiny material-icons'>note_add</i> hinzuf&uuml;gen</a></p>";
+        $HTML .= section_builder("<p class='caption'>Derzeit gibt es keine aktiven Betriebspausen! <br><a href='ausfall_hinzufuegen.php?typ=pause'><i class='tiny material-icons'>note_add</i> hinzuf&uuml;gen</a></p>", '', 'center-align');
     } else if ($AnzahlLadeAktivePausen > 0){
         $HTML .= "<div class='section'>";
         $HTML .= "<ul class='collapsible popout' data-collapsible='accordion'>";
@@ -87,7 +87,7 @@ function spalte_sperrungen(){
     $HTML .= "<h5 class='header center-align'>Sperrungen</h5>";
 
     if ($AnzahlLadeAktiveSperrungen == 0){
-        $HTML .= "<p class='caption'>Derzeit gibt es keine aktiven Sperrungen! <br><a href='ausfall_hinzufuegen.php?typ=sperrung'><i class='tiny material-icons'>note_add</i> hinzuf&uuml;gen</a></p>";
+        $HTML .= section_builder("<p class='caption'>Derzeit gibt es keine aktiven Sperrungen! <br><a href='ausfall_hinzufuegen.php?typ=sperrung'><i class='tiny material-icons'>note_add</i> hinzuf&uuml;gen</a></p>", '', 'center-align');
     } else if ($AnzahlLadeAktiveSperrungen > 0){
         $HTML .= "<div class='section'>";
         $HTML .= "<ul class='collapsible popout' data-collapsible='accordion'>";
