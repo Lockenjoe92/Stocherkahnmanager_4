@@ -33,7 +33,7 @@ admin_xml_cdata_settings_parser($CDATAxmlSETTINGS);
 $PageTitle = '<h1>Admineinstellungen</h1>';
 $PageTitle = '<h1 class="hide-on-med-and-down">Admineinstellungen</h1>';
 $PageTitle .= '<h1 class="hide-on-large-only">Admin Settings</h1>';
-$HTML .= section_builder($PageTitle);
+$HTML = section_builder($PageTitle);
 
 #Settings Form
 $Items="";
@@ -120,7 +120,7 @@ $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Übergaben', $SettingTable, 'arrow_forward');
 
 # Spontanübergabekram
-$SettingTableItems = table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Zukunft', 'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 0, 30,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-zukunft-dropdown')), '', '', '');
+$SettingTableItems = table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Zukunft', 'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 0, 100,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-zukunft-dropdown')), '', '', '');
 $SettingTableItems .= table_form_select_item('Dropdown Reservierungen Sponatnübergabe: <br> Anz. Tage in die Vergangenheit', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown', 0, 21,intval(lade_xml_einstellung('tage-spontanuebergabe-reservierungen-vergangenheit-dropdown')), '', '', '');
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Spontanübergaben', $SettingTable, 'flash_on');
