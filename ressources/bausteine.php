@@ -1611,7 +1611,7 @@ function section_wasserstands_und_rueckgabeautomatikwesen($location='wartwesen')
             $MinutenMessungen = ($Messungen-1)*15;
             $Content .= "Trend der letzten ".$MinutenMessungen." Minuten: ".lade_wasserstand_trend_icon($link);
 
-            $Content .= "<br><br>Quelle: <a href='http://hochwasser-zentralen.de/pegel.html?id=00117'>HWZ Baden-Württemberg - Pegel Horb a. Neckar</a>, alle Angaben ohne Gewähr. <br><b>Befahren des Neckars immer auf eigene Gefahr!</b>";
+            $Content .= "<br><br>Quelle: <a href='https://www.hvz.baden-wuerttemberg.de/pegel.html?id=00117'>HWZ Baden-Württemberg - Pegel Horb a. Neckar</a>, alle Angaben ohne Gewähr. <br><b>Befahren des Neckars immer auf eigene Gefahr!</b>";
 
             $CollapsibleItem .= collapsible_item_builder($Title, $Content, 'show_chart');
         }
