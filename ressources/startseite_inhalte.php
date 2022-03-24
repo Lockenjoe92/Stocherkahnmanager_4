@@ -325,7 +325,9 @@ function parallax_mit_text_generieren($BausteinID){
         $SectionContainerContent = section_builder($ContainerContent, '', 'no-pad-bot');
 
         #Bild
-        $BildHTML = '<img class="responsive-img" src="' . $Ergebnis['uri_bild'] . '" alt="startseite background img">';
+        $BildHTML = '<img class="" src="' . $Ergebnis['uri_bild'] . '" alt="startseite background img">';
+        #$BildHTML .= '<img class="hide-on-large-only" src="' . $Ergebnis['uri_bild'] . '" alt="startseite background img">';
+
         $Bild = parallax_content_builder($BildHTML, '', '');
 
         $Content = parallax_container(($SectionContainerContent . $Bild), 'index-banner', '');
