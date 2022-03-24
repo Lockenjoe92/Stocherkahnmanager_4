@@ -183,6 +183,9 @@ function spalte_moegliche_rueckzahlungen(){
                 $Restbetrag = intval($Forderung['betrag']) - $BisherigeZahlungen;
                 $UserMeta = lade_user_meta($Reservierung['user']);
                 $UserNachzahlung = "".$UserMeta['vorname']." ".$UserMeta['nachname']."";
+                $ErgebnisLadeUebergaben = mysqli_fetch_assoc($AbfrageLadeUebergaben);
+                $WartMeta = lade_user_meta($ErgebnisLadeUebergaben['wart']);
+                $WartNachzahlung = "".$WartMeta['vorname']." ".$WartMeta['nachname']."";
                 $Typ = "mail_erinnerung_nachzahlung_intervall-".$Reservierung['id']."";
                 $DifferenzTage = tage_differenz_berechnen(timestamp(), $Reservierung['ende']);
 
@@ -217,6 +220,7 @@ function spalte_moegliche_rueckzahlungen(){
                 $HTML .= "<form method='post'>";
                 $HTML .= "<ul class='collection'>";
                 $HTML .= "<li class='collection-item'>User: ".$UserNachzahlung."</li>";
+                $HTML .= "<li class='collection-item'>Austeilende/r Wart*in: ".$WartNachzahlung."</li>";
                 $HTML .= "<li class='collection-item'>Restforderung: ".$Restbetrag."&euro;</li>";
                 $HTML .= "<li class='collection-item'>Letzte Erinnerung: ".$LetzeErinnerung."</li>";
                 $HTML .= "<li class='collection-item'>
