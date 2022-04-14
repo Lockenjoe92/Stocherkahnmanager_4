@@ -31,7 +31,12 @@ function startseite_inhalt_home(){
     #Iteriere über die Seiteninhalte
     $HTML = '';
     if($Anzahl == 0){
-        $HTML .= container_builder(section_builder('<h2>Hier entsteht eine neue Seite!</h2>'));
+        if($Tab=='index'){
+            header("Location: ./login.php");
+            die();
+        } else {
+            $HTML .= container_builder(section_builder('<h2>Hier entsteht eine neue Seite!</h2>'));
+        }
     } elseif($Anzahl > 0) {
         $i = 1;
         while ($i <= $Anzahl){
@@ -441,7 +446,7 @@ function startseitenelement_anlegen($Ort, $Typ, $Name){
             }
         } else {
             $Antwort['erfolg'] = false;
-            $Antwort['meldung'] = 'Fehler beim Eintragen des Bausteins:/';
+            $Antwort['meldung'] = 'Fehler beim Eintragen des Bausteins:/'.$Anfrage3;
         }
     }
 
@@ -578,7 +583,9 @@ function startseiteninhalt_loeschen($IDElement){
         echo "Prepare 3 failed: (" . $link->errno . ") " . $link->error;
     }
 
-    if (!$stmt->bind_param("isi",$UserID, $Timestamp, intval($IDElement))) {
+    $IDElement = intval($IDElement);
+
+    if (!$stmt->bind_param("isi",$UserID, $Timestamp, $IDElement)) {
         echo "Binding 3 parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
 

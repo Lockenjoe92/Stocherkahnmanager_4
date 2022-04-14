@@ -372,6 +372,7 @@ function add_website_bausteine_parser(){
             $NewBausteinName = "name_new_baustein_".$SubsiteName."";
 
             $Action = startseitenelement_anlegen($SubsiteName, $_POST[$NewBausteinType], $_POST[$NewBausteinName]);
+            #var_dump($Action);
         }
     }
 

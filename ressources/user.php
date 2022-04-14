@@ -615,7 +615,8 @@ function change_pswd_user($UserID, $PSWD, $PSWDrpt){
             $Antwort['success'] = false;
             echo "Prepare failed: (" . $link->errno . ") " . $link->error;
         }
-        if (!$stmt->bind_param("sii", $PSWD_hashed, intval(0), $UserID)) {
+        $NeedsChange = 0;
+        if (!$stmt->bind_param("sii", $PSWD_hashed, $NeedsChange, $UserID)) {
             $Antwort['success'] = false;
             echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
         }
