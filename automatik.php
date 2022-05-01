@@ -43,17 +43,25 @@ function auto_update_uebernahmen(){
 
             $SchluesselausgabeDavor = lade_schluesselausgabe_reservierung($IDReservierungDavor);
 
-            //Nur weiter wenn Rückgabe noch nicht bereits festgehalten!
-            if ($SchluesselausgabeDavor['rueckgabe'] == NULL){
-                //Rückgabe des Schlüssels festhalten
-                schluesselrueckgabe_festhalten($SchluesselausgabeDavor['schluessel']);
-                echo "R&uuml;ckgabe Reservierung davor festgehalten - ";
+            if($SchluesselausgabeDavor!=NULL){
+                //Nur weiter wenn Rückgabe noch nicht bereits festgehalten!
+                if($SchluesselausgabeDavor['storno_time'] == NULL){
+                    if ($SchluesselausgabeDavor['rueckgabe'] == NULL){
+                        //Rückgabe des Schlüssels festhalten
+                        schluesselrueckgabe_festhalten($SchluesselausgabeDavor['schluessel']);
+                        echo "R&uuml;ckgabe Reservierung davor festgehalten - ";
 
-                //Neuausgabe an Reservierung danach festhalten
-                schluessel_an_user_weitergeben($SchluesselausgabeDavor['uebergabe'], $SchluesselausgabeDavor['schluessel'], $IDReservierungDanach, $SchluesselausgabeDavor['wart']);
-                echo "Schl&uuml;ssel an Reservierung danach ausgegeben.";
+                        //Neuausgabe an Reservierung danach festhalten
+                        schluessel_an_user_weitergeben($SchluesselausgabeDavor['uebergabe'], $SchluesselausgabeDavor['schluessel'], $IDReservierungDanach, $SchluesselausgabeDavor['wart']);
+                        echo "Schl&uuml;ssel an Reservierung danach ausgegeben.";
+                    } else {
+                        echo "R&uuml;ckgabe bereits festgehalten!";
+                    }
+                } else {
+                    echo "Ausgabe storniert!";
+                }
             } else {
-                echo "R&uuml;ckgabe bereits festgehalten!";
+                echo "KDie &Auml;SE! Keine Ausgabe erfolgt!";
             }
 
             echo "<br>";
@@ -66,11 +74,11 @@ function auto_update_uebernahmen(){
 
 function auto_delete_user(){
 
-	$link = connect_db();
-	$Users = get_sorted_user_array_with_user_meta_fields('id');
-	
-	foreach ($Users as $User){
-	    if(date('Y')!=date('Y', strtotime($User['registrierung']))){
+    $link = connect_db();
+    $Users = get_sorted_user_array_with_user_meta_fields('id');
+
+    foreach ($Users as $User){
+        if(date('Y')!=date('Y', strtotime($User['registrierung']))){
             $StopCount=0;
             if($User['ist_wart']=='true'){
                 $StopCount++;
@@ -117,9 +125,9 @@ function auto_delete_user(){
         } else {
             #echo $User['id'].' hat sich erst DIESES JAHR REGISTRIERT!<br>';
         }
-	}
+    }
 
-	return null;
+    return null;
 }
 
 function lora_stuff(){
@@ -287,13 +295,13 @@ function pegelstand_fetcher(){
     #lade URL
     #old version : $SearchURL = 'http://hochwasser-zentralen.de/js/hvz_peg_stmn.js';
 
-	if(lade_xml_einstellung('search_URL_pegelstaende')!=""){
-		$SearchURL = lade_xml_einstellung('search_URL_pegelstaende');
-	} else {
-		$SearchURL = 'https://www.hvz.baden-wuerttemberg.de/js/hvz_peg_stmn.js';
-	}
-	
-	
+    if(lade_xml_einstellung('search_URL_pegelstaende')!=""){
+        $SearchURL = lade_xml_einstellung('search_URL_pegelstaende');
+    } else {
+        $SearchURL = 'https://www.hvz.baden-wuerttemberg.de/js/hvz_peg_stmn.js';
+    }
+
+
     #fetch URL content
 
     $data = file_get_contents($SearchURL);
