@@ -23,7 +23,7 @@ $(document).ready(function(){
 
     $('.datepicker_new_res').datepicker({
         autoClose: true,
-        yearRange: [2020, 2021],
+        yearRange: [2021, 2022],
         setDefaultDate: true,
         i18n: {
             today: 'Heute',

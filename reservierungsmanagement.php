@@ -68,16 +68,29 @@ function spalte_stats(){
     $AnzahlReservierungenLaden = mysqli_num_rows($AbfrageReservierungenLaden);
 
     //Übergaben
-    $AnfrageUebergabenLaden = "SELECT id FROM uebergaben WHERE storno_user = '0' AND durchfuehrung <> NULL AND beginn > '$AnfangDiesesJahr' AND beginn < '$EndeDiesesJahr'";
+    $AnfrageUebergabenLaden = "SELECT id FROM uebergaben WHERE storno_user = '0' AND durchfuehrung IS NOT NULL AND beginn > '$AnfangDiesesJahr' AND beginn < '$EndeDiesesJahr'";
     $AbfrageUebergabenLaden = mysqli_query($link, $AnfrageUebergabenLaden);
     $AnzahlUebergabenLaden = mysqli_num_rows($AbfrageUebergabenLaden);
 
     //Einnahmen-Ausgaben-Rechner
-    $Gesamtdifferenz = gesamteinnahmen_jahr(date("Y")) - gesamtausgaben_jahr(date("y"));
+    $Gesamteinnahmen = gesamteinnahmen_jahr(date("Y"));
+    $Gesamtdifferenz = $Gesamteinnahmen - gesamtausgaben_jahr(date("y"));
 
     $HTML .= "<p><table>";
-    $HTML .= "<tr><th>Reservierungen</th><th>&Uuml;bergaben</th><th>Einnahmen</th></tr>";
-    $HTML .= "<tr><td>".$AnzahlReservierungenLaden."</td><td>".$AnzahlUebergabenLaden."</td><td>".$Gesamtdifferenz."&euro;</td></tr>";
+
+    if(lade_xml_einstellung('paypal-aktiv')=='on'){
+
+        $PayPalKonto = lade_paypal_konto_id();
+        $GesamteinnahmenPaypal = gesamteinnahmen_jahr_konto(date("Y"), $PayPalKonto['id']);
+        $ProzentPayPal = $GesamteinnahmenPaypal/$Gesamteinnahmen*100;
+        $ProzentPayPal = round($ProzentPayPal,1);
+
+        $HTML .= "<tr><th>Reservierungen</th><th>&Uuml;bergaben</th><th>Einnahmen</th><th>Davon Paypal</th></tr>";
+        $HTML .= "<tr><td>".$AnzahlReservierungenLaden."</td><td>".$AnzahlUebergabenLaden."</td><td>".$Gesamteinnahmen."&euro;</td><td>".$ProzentPayPal."%</td></tr>";
+    }else{
+        $HTML .= "<tr><th>Reservierungen</th><th>&Uuml;bergaben</th><th>Einnahmen</th></tr>";
+        $HTML .= "<tr><td>".$AnzahlReservierungenLaden."</td><td>".$AnzahlUebergabenLaden."</td><td>".$Gesamteinnahmen."&euro;</td></tr>";
+    }
     $HTML .= "</table></p>";
 
     $HTML .= "</div>";

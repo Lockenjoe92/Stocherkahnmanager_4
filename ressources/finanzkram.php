@@ -708,8 +708,7 @@ function nachzahlung_reservierung_festhalten($IDres, $Betrag, $Wart, $PayPal=fal
                 $PayPalKontoID = lade_paypal_konto_id();
                 $PayPalAusgabenKonto = lade_paypal_ausgaben_konto_id();
                 $PayPalGebuehr = paypal_gebuehr_berechnen($Betrag);
-                #var_dump(ausgleich_hinzufuegen($PayPalAusgabenKonto['id'], 'PayPal-Gebühr Res. #'.$IDres, $PayPalGebuehr, 19));
-
+                ausgleich_hinzufuegen($PayPalAusgabenKonto['id'], 'PayPal-Gebühr Res. #'.$IDres, $PayPalGebuehr, 19);
 
                 $link = connect_db();
                 $Anfrage = "SELECT id FROM finanz_ausgleiche WHERE referenz = 'PayPal-Gebühr Res. #".$IDres."' AND storno_user = 0";
