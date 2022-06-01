@@ -630,4 +630,15 @@ function change_pswd_user($UserID, $PSWD, $PSWDrpt){
 	
 	return $Antwort;
 }
+
+function default_warteinstellungen_anlegen($User){
+
+    add_user_meta($User, 'mail-wart-neue-uebergabe', 'true');
+    add_user_meta($User, 'mail-kurzfristig-uebernahme-abgesagt', 'true');
+    add_user_meta($User, 'erinnerung-wart-schluesseluebergabe-eintragen', 'true');
+    add_user_meta($User, 'mail-wart-daily-update', 'true');
+    add_user_meta($User, 'mail-wart-weekly-update', 'true');
+
+}
+
 ?>

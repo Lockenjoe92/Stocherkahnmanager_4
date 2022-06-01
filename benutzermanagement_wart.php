@@ -309,6 +309,7 @@ function benutzermanagement_parser($AllUsers){
                     if($Setting=='ist_wart'){
                         wartkonto_anlegen($User['id']);
                         add_user_meta($User['id'], $Setting, $SettingValue);
+                        default_warteinstellungen_anlegen($User['id']);
                     } else {
                         add_user_meta($User['id'], $Setting, $SettingValue);
                     }
