@@ -174,7 +174,23 @@ function spalte_moegliche_rueckzahlungen(){
         $AnzahlLadeUebergaben = mysqli_num_rows($AbfrageLadeUebergaben);
 
         if (($AnzahlLadeUebergaben > 0)){
+            $Continue = true;
+        } else {
+            $Userinfos = lade_user_meta($Reservierung['user']);
+            if($Userinfos['hat_eigenen_schluessel']=='true'){
 
+                if(strtotime($Reservierung['ende'])<strtotime('2022-01-01')){
+                    $Continue = false;
+                } else {
+                    $Continue = true;
+                }
+
+            } else {
+                $Continue = false;
+            }
+        }
+
+        if($Continue){
             $Forderung = lade_forderung_res($Reservierung['id']);
             $BisherigeZahlungen = lade_gezahlte_summe_forderung($Forderung['id']);
 
@@ -245,9 +261,7 @@ function spalte_moegliche_rueckzahlungen(){
                 $HTML .= "</li>";
 
             }
-
         }
-
     }
 
     if ($Counter > 0){
