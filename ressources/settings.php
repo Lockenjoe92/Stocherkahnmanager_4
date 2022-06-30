@@ -410,6 +410,23 @@ function user_settings_parser($SettingsArray){
         }
     }
 
+    //Übergabeeinstellungen
+    if (isset($_POST['action_wart_uebergaben_aendern'])){
+
+        $Anfrage = "SELECT * FROM user_meta WHERE user = '".lade_user_id()."' AND schluessel = 'max_num_uebergaben_at_once'";
+        $Abfrage = mysqli_query($link, $Anfrage);
+        $Anzahl = mysqli_num_rows($Abfrage);
+        if($Anzahl==0){
+            $AnfrageEinfuegen = "INSERT INTO user_meta (user, schluessel, wert) VALUES ('$UserID', 'max_num_uebergaben_at_once', ".$_POST['max_num_uebergaben_at_once'].")";
+            mysqli_query($link, $AnfrageEinfuegen);
+        } elseif ($Anzahl>0){
+            $Anfrage = "UPDATE user_meta SET wert = ".$_POST['max_num_uebergaben_at_once']." WHERE user = '".lade_user_id()."' AND schluessel = 'max_num_uebergaben_at_once'";
+            mysqli_query($link, $Anfrage);
+        }
+    }
+
+
+
     //Benachrichtigungen
     if (isset($_POST['action_wart_benachrichtigungen_aendern'])){
 

@@ -111,6 +111,8 @@ $HTML = "<li>";
     $HTML .= "<div class='divider'></div>";
     $HTML .= spalte_persoenliche_daten($UserMeta);
     $HTML .= "<div class='divider'></div>";
+    $HTML .= spalte_uebergabeeinstellungen($UserMeta);
+    $HTML .= "<div class='divider'></div>";
     $HTML .= spalte_infos_erhalten($UserMeta);
     $HTML .= "<div class='divider'></div>";
     $HTML .= spalte_kalenderabonnement($UserMeta);
@@ -132,6 +134,22 @@ function spalte_Ortsvorlagen(){
     $HTML .= table_builder($TableHTML);
 
     return section_builder($HTML);
+}
+function spalte_uebergabeeinstellungen($UserMeta){
+
+    $HTML = "<h4 class='middle'>Übergabeeinstellungen</h4>";
+    if(isset($UserMeta['max_num_uebergaben_at_once'])){
+        $SettingMaxNumUebergaben = $UserMeta['max_num_uebergaben_at_once'];
+    } else {
+        $SettingMaxNumUebergaben = 3;
+    }
+    $TableHTML = table_form_range_item('Max. Anzahl gleichzeitiger Übergaben', 'max_num_uebergaben_at_once', 1, 5, $SettingMaxNumUebergaben);
+    $HTML .= section_builder(table_builder($TableHTML));
+
+    $HTML .= divider_builder();
+    $HTML .= section_builder(table_builder(table_row_builder(table_header_builder(form_button_builder('action_wart_uebergaben_aendern', '&Auml;ndern', 'action', 'edit', '')).table_data_builder(''))));
+
+    return $HTML;
 }
 function spalte_persoenliche_daten($UserMeta){
 
