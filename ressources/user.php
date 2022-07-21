@@ -273,36 +273,38 @@ function check_password($PSWD) {
     if (!preg_match('/^(?=.*[A-Za-z])(?=.*[0-9]).*$/', $PSWD))
         return 'Das Passwort muss Zahlen und Buchstaben enthalten';
 
-    // Check if password contains at least 3 numbers
-    if (preg_match_all('/[0-9]/', $PSWD) < 3)
-        return 'Das Passwort muss mindestens drei Zahlen enthalten';
+    if(lade_xml_einstellung('extremepasswordmode')=='on'){
+        // Check if password contains at least 3 numbers
+        if (preg_match_all('/[0-9]/', $PSWD) < 3)
+            return 'Das Passwort muss mindestens drei Zahlen enthalten';
 
-    // Check if password contains the words password or passwort (case insensitive)
-    if (preg_match('/pa[s\$]{0,2}w[o0]{0,1}rd|pa[s\$]{0,2}w[o0]{0,1}rt/i', $PSWD))
-        return 'Das Passwort darf die W&ouml;rter Passwort, Password oder Variationen davon nicht enthalten';
+        // Check if password contains the words password or passwort (case insensitive)
+        if (preg_match('/pa[s\$]{0,2}w[o0]{0,1}rd|pa[s\$]{0,2}w[o0]{0,1}rt/i', $PSWD))
+            return 'Das Passwort darf die W&ouml;rter Passwort, Password oder Variationen davon nicht enthalten';
 
-    // Check if password contains too many repeating chars
-    if (preg_match('/(.)\1{3,}/i', $PSWD))
-        return 'Das Passwort darf nicht mehr als 3 gleiche Zeichen (egal ob gro&szlig;/klein) hintereinander enthalten';
+        // Check if password contains too many repeating chars
+        if (preg_match('/(.)\1{3,}/i', $PSWD))
+            return 'Das Passwort darf nicht mehr als 3 gleiche Zeichen (egal ob gro&szlig;/klein) hintereinander enthalten';
 
-    if (preg_match('/(.{3,})\1{2,}/i', $PSWD))
-        return 'Das Passwort darf keine sich wiederholenden Zeichenketten enthalten (egal ob gro&szlig;/klein, z.B. abcABCabc)';
+        if (preg_match('/(.{3,})\1{2,}/i', $PSWD))
+            return 'Das Passwort darf keine sich wiederholenden Zeichenketten enthalten (egal ob gro&szlig;/klein, z.B. abcABCabc)';
 
-    // Check if password contains continuous alphabetical rows
-    if (preg_match('/abcde|bcdef|cdefg|defgh|efghi|fghij|ghijk|hijkl|ijklm|jklmn|klmno|lmnop|mnopq|nopqr|opqrs|pqrst|qrstu|rstuv|stuvw|tuvwx|uvwxy|vwxyz/i', $PSWD))
-        return 'Das Passwort darf keine alphabetischen Zeichenketten enthalten (z.B. abcde)';
+        // Check if password contains continuous alphabetical rows
+        if (preg_match('/abcde|bcdef|cdefg|defgh|efghi|fghij|ghijk|hijkl|ijklm|jklmn|klmno|lmnop|mnopq|nopqr|opqrs|pqrst|qrstu|rstuv|stuvw|tuvwx|uvwxy|vwxyz/i', $PSWD))
+            return 'Das Passwort darf keine alphabetischen Zeichenketten enthalten (z.B. abcde)';
 
-    // Check if password contains continuous ascending or descending numbers
-    if (preg_match('/.*1\D{0,1}2\D{0,1}3.*|.*2\D{0,1}3\D{0,1}4.*|.*3\D{0,1}4\D{0,1}5.*|.*4\D{0,1}5\D{0,1}6.*|.*5\D{0,1}6\D{0,1}7.*|.*6\D{0,1}7\D{0,1}8.*|.*7\D{0,1}8\D{0,1}9.*|.*8\D{0,1}9\D{0,1}0.*|.*9\D{0,1}8\D{0,1}7.*|.*8\D{0,1}7\D{0,1}6.*|.*7\D{0,1}6\D{0,1}5.*|.*6\D{0,1}5\D{0,1}4.*|.*5\D{0,1}4\D{0,1}3.*|.*4\D{0,1}3\D{0,1}2.*|.*3\D{0,1}2\D{0,1}1.*/', $PSWD))
-        return 'Das Passwort darf keine fortlaufenden Zahlenreihen enthalten (z.B. 1234, 9o8i7u6z)';
+        // Check if password contains continuous ascending or descending numbers
+        if (preg_match('/.*1\D{0,1}2\D{0,1}3.*|.*2\D{0,1}3\D{0,1}4.*|.*3\D{0,1}4\D{0,1}5.*|.*4\D{0,1}5\D{0,1}6.*|.*5\D{0,1}6\D{0,1}7.*|.*6\D{0,1}7\D{0,1}8.*|.*7\D{0,1}8\D{0,1}9.*|.*8\D{0,1}9\D{0,1}0.*|.*9\D{0,1}8\D{0,1}7.*|.*8\D{0,1}7\D{0,1}6.*|.*7\D{0,1}6\D{0,1}5.*|.*6\D{0,1}5\D{0,1}4.*|.*5\D{0,1}4\D{0,1}3.*|.*4\D{0,1}3\D{0,1}2.*|.*3\D{0,1}2\D{0,1}1.*/', $PSWD))
+            return 'Das Passwort darf keine fortlaufenden Zahlenreihen enthalten (z.B. 1234, 9o8i7u6z)';
 
-    // Check if password contains continuous chars from keyboard rows
-    if (preg_match('/qwert|asdfg|yxcvb|zxcvb|<yxcv|<zxcv|poiuz|poiuy|üpoiu|\+üpoi|lkjhg|äölkj|mnbvc|-.,mn/i', $PSWD))
-        return 'Das Passwort darf keine fortlaufenden Buchstabenreihen der Tastatur enthalten (z.B. qwert, asdfg)';
+        // Check if password contains continuous chars from keyboard rows
+        if (preg_match('/qwert|asdfg|yxcvb|zxcvb|<yxcv|<zxcv|poiuz|poiuy|üpoiu|\+üpoi|lkjhg|äölkj|mnbvc|-.,mn/i', $PSWD))
+            return 'Das Passwort darf keine fortlaufenden Buchstabenreihen der Tastatur enthalten (z.B. qwert, asdfg)';
 
-    // Check if password begins or ends with 1 or 2 numbers and does not contain any other numbers
-    if (preg_match('/^[0-9]{1,2}|[0-9]{1,2}$/', $PSWD) && !preg_match('/[0-9]/', substr($PSWD, 2, -2)))
-        return 'Das Passwort darf Zahlen nicht nur als Pr&auml;fix oder Suffix enthalten (z.B. passwort99)';
+        // Check if password begins or ends with 1 or 2 numbers and does not contain any other numbers
+        if (preg_match('/^[0-9]{1,2}|[0-9]{1,2}$/', $PSWD) && !preg_match('/[0-9]/', substr($PSWD, 2, -2)))
+            return 'Das Passwort darf Zahlen nicht nur als Pr&auml;fix oder Suffix enthalten (z.B. passwort99)';
+    }
 
     // Compute SHA1 hash + convert to uppercase
     $hash_to_check = strtoupper(sha1($PSWD));

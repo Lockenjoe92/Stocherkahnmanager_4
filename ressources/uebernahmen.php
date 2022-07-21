@@ -433,7 +433,7 @@ function seiteninhalt_uebernahme_vorplanen_generieren($Reservierung){
             for ($a = 1; $a <= $Anzahl; $a++){
                 //Hat Res eine Schlüsselausgabe die bereits zurückgegeben wurde? -> Reservierung ist abgeschlossen:
                 $GefundeneReservierung = mysqli_fetch_assoc($Abfrage);
-                $AnfrageZwei = "SELECT rueckgabe FROM schluesselausgabe WHERE reservierung = '".$GefundeneReservierung['id']."' AND storno_user = '0'";
+                $AnfrageZwei = "SELECT id, rueckgabe FROM schluesselausgabe WHERE reservierung = '".$GefundeneReservierung['id']."' AND storno_user = '0'";
                 $AbfrageZwei = mysqli_query($link, $AnfrageZwei);
                 $AnzahlZwei = mysqli_num_rows($AbfrageZwei);
 
@@ -471,6 +471,14 @@ function seiteninhalt_uebernahme_vorplanen_generieren($Reservierung){
                         $Content = table_row_builder(table_header_builder('User').table_data_builder(''.$UserResOption['vorname'].' '.$UserResOption['nachname'].''));
                         $Content .= table_row_builder(table_header_builder('Reservierungsdaten').table_data_builder('Beginn: '.strftime("%A, %d. %B %G - %H:%M Uhr", strtotime($Resinfos['beginn'])).'<br>Ende: '.strftime("%H:%M Uhr", strtotime($Resinfos['ende']))));
                         $Content .= table_row_builder(table_header_builder('').table_data_builder(form_button_builder('uebernahme_vorplanen_'.$GefundeneReservierung['id'].'', 'Eintragen', 'action', 'send', '')));
+                        $Content = table_builder($Content);
+                        $Options .= collapsible_item_builder($HTMLitems, $Content, 'today');
+                    } else {
+                        $HTMLitems = "Reservierung ".$GefundeneReservierung['id']." kommt in Frage - Hat jedoch den Schlüssel zurückgegeben.<br>";
+                        $Resinfos = lade_reservierung($GefundeneReservierung['id']);
+                        $UserResOption = lade_user_meta($Resinfos['user']);
+                        $Content = table_row_builder(table_header_builder('User').table_data_builder(''.$UserResOption['vorname'].' '.$UserResOption['nachname'].''));
+                        $Content .= table_row_builder(table_header_builder('Reservierungsdaten').table_data_builder('Beginn: '.strftime("%A, %d. %B %G - %H:%M Uhr", strtotime($Resinfos['beginn'])).'<br>Ende: '.strftime("%H:%M Uhr", strtotime($Resinfos['ende']))));
                         $Content = table_builder($Content);
                         $Options .= collapsible_item_builder($HTMLitems, $Content, 'today');
                     }

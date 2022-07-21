@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <global_settings>
 
+    <!-- PASSWORD STUFF -->
+    <extremepasswordmode>on</extremepasswordmode>
+    <rules_normal_password_mode><![CDATA[
+        <h5 class="white-text">Normal Rulez</h5>
+        ]]></rules_normal_password_mode>
+    <rules_extreme_password_mode><![CDATA[
+        <h5 class="white-text">Extreme Rulez</h5>
+        ]]></rules_extreme_password_mode>
+
     <!--- STARTSEITE -->
     <site_name>Stocherkahn Medizin e.V.</site_name>
-    <site_name_html><![CDATA[<span>Mediziner</span><span class='orange-text'>Kahn</span>]]></site_name_html>
+    <site_name_html><![CDATA[<span>Mediziner</spanx><span class='orange-text'>Kahn</span>]]></site_name_html>
     <site_footer_name>Stocherkahn Medizin e.V.</site_footer_name>
     <display_big_footer>false</display_big_footer>
     <big_footer_left_column_html>

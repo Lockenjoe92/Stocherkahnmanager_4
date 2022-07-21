@@ -284,9 +284,15 @@ function register_formular($Parser){
         $TableHTML .= table_form_email_item('EMail', 'mail_large', $_POST['mail_large'], '');
         $TableHTML .= table_form_string_item('Telefon (optional)', 'telefon', $_POST['telefon'], '');
         $TableHTML .= table_form_dropdown_nutzergruppen_waehlen('Nutzergruppe', 'nutzergruppe', $_POST['nutzergruppe'], $Nutzergruppen, 'user');
+        $FormHTML = section_builder(table_builder($TableHTML));
+        if(lade_xml_einstellung('extremepasswordmode')=='on'){
+            $TableHTML = table_row_builder(table_header_builder('Passwortregeln').table_data_builder(lade_xml_einstellung('rules_extreme_password_mode')));
+        } else {
+            $TableHTML = table_row_builder(table_header_builder('Passwortregeln').table_data_builder(lade_xml_einstellung('rules_normal_password_mode')));
+        }
         $TableHTML .= table_form_password_item('Passwort', 'password_large', '', '');
         $TableHTML .= table_form_password_item('Passwort wiederholen', 'password_verify_large', '', '');
-        $FormHTML = section_builder(table_builder($TableHTML));
+        $FormHTML .= section_builder(table_builder($TableHTML));
         $FormHTML .= section_builder(ds_und_vertrag_unterschreiben_formular_parts());
         $FormHTML .= section_builder(table_builder(table_row_builder(table_data_builder(button_link_creator('Zur&uuml;ck', './login.php', 'arrow_left', '')).table_data_builder(form_button_builder('action_large', 'Registrieren', 'submit', 'send', '')))));
         $HTML .= form_builder($FormHTML, './register.php', 'post', 'register_form', '');

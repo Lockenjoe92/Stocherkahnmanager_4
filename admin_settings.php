@@ -9,7 +9,7 @@ $DBSettings = ['site_name', 'site_footer_name', 'earliest_begin', 'latest_begin'
     'farbe-button-kalender-nicht-buchbar', 'homepagetext_wasserstand_fuer_erfahrene_geeignet','homepagetext_rueckgabeautomatik_needs_charge','homepagetext_rueckgabeautomatik_24hours', 'homepagetext_rueckgabeautomatik_fehlerfrei','homepagetext_wasserstand_sperrung_bald', 'homepagetext_wasserstand_fuer_anfaenger_geeignet', 'farbe-button-kalender-reserviert','site_background_color','wasserstand_sperrungsautomatik_text'];
 admin_db_settings_parser($DBSettings);
 
-$XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms-active', 'user-sms', 'key-sms',
+$XMLsettings = ['extremepasswordmode', 'site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms-active', 'user-sms', 'key-sms',
     'absender-sms', 'max-kosten-einer-reservierung', 'max-dauer-einer-reservierung', 'max-stunden-vor-abfahrt-buchbar',
     'max-tage-vor-abfahrt-uebergabe', 'max-minuten-vor-abfahrt-uebergabe', 'zeit-ab-wann-zukuenftige-uebergaben-in-schluesselverfuegbarkeitskalkulation-einfliessen-tage',
     'tage-spontanuebergabe-reservierungen-zukunft-dropdown', 'kritischer-abstand-storno-vor-beginn', 'uebernahmefunktion-global-aktiv', 'erinnerung-uebergabe-ausmachen-1',
@@ -22,7 +22,7 @@ $XMLsettings = ['site_url', 'absender_mail', 'absender_name', 'reply_mail', 'sms
     'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende', 'destination_url_after_logout'];
 admin_xml_settings_parser($XMLsettings);
 
-$CDATAxmlSETTINGS = ['titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',
+$CDATAxmlSETTINGS = ['rules_normal_password_mode', 'rules_extreme_password_mode','titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',
     'text-info-uebergabe-einweisung', 'erklaerung_schluesseluebernahme', 'pretix_widget_css', 'pretix_widget_js', 'erklaerung-forderung-zahlen-user', 'site_name_html', 'rechnungs_header',
     'rechnungs_footer', 'normal-payment-options', 'paypal-text', 'hinweis_login_formular', 'anleitung_kalenderabo_warte'];
 admin_xml_cdata_settings_parser($CDATAxmlSETTINGS);
@@ -48,6 +48,13 @@ $SettingTableItems .= table_form_html_area_item('Big Footer Right Column', 'big_
 $SettingTableItems .= table_form_string_item('Logout Ziel URL', 'destination_url_after_logout', lade_xml_einstellung('destination_url_after_logout'), false);
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Website Skeleton', $SettingTable, 'colorize');
+
+# Passwortkram
+$SettingTableItems = table_form_swich_item('Passwortmodus', 'extremepasswordmode', 'Normal', 'Extrem', lade_xml_einstellung('extremepasswordmode'), false);
+$SettingTableItems .= table_form_html_area_item('HTML für Regeln normale Passwortvorgaben', 'rules_normal_password_mode', lade_xml_einstellung('rules_normal_password_mode'), false);
+$SettingTableItems .= table_form_html_area_item('HTML für Regeln schwere Passwortvorgaben', 'rules_extreme_password_mode', lade_xml_einstellung('rules_extreme_password_mode'), false);
+$SettingTable = table_builder($SettingTableItems);
+$Items.=collapsible_item_builder('Passwortanforderungen für Nutzerkonten', $SettingTable, 'vpn_key');
 
 # Farbenkram
 $SettingTableItems = table_form_string_item('Website Men&uuml;farbe', 'site_menue_color', lade_db_einstellung('site_menue_color'), false);
