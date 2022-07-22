@@ -50,9 +50,9 @@ $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Website Skeleton', $SettingTable, 'colorize');
 
 # Passwortkram
-$SettingTableItems = table_form_swich_item('Passwortmodus', 'extremepasswordmode', 'Normal', 'Extrem', lade_xml_einstellung('extremepasswordmode'), false);
-$SettingTableItems .= table_form_html_area_item('HTML für Regeln normale Passwortvorgaben', 'rules_normal_password_mode', lade_xml_einstellung('rules_normal_password_mode'), false);
-$SettingTableItems .= table_form_html_area_item('HTML für Regeln schwere Passwortvorgaben', 'rules_extreme_password_mode', lade_xml_einstellung('rules_extreme_password_mode'), false);
+$SettingTableItems = table_form_swich_item('Passwortmodus', 'extremepasswordmode', 'Normal', 'Stark', lade_xml_einstellung('extremepasswordmode'), false);
+$SettingTableItems .= table_form_html_area_item('HTML für Regeln normale Passwortvorgaben', 'rules_normal_password_mode', lade_xml_einstellung('rules_normal_password_mode'), true);
+$SettingTableItems .= table_form_html_area_item('HTML für Regeln schwere Passwortvorgaben', 'rules_extreme_password_mode', lade_xml_einstellung('rules_extreme_password_mode'), true);
 $SettingTable = table_builder($SettingTableItems);
 $Items.=collapsible_item_builder('Passwortanforderungen für Nutzerkonten', $SettingTable, 'vpn_key');
 

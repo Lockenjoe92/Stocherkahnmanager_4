@@ -126,7 +126,7 @@ function schluessel_hinzufuegen($ChosenID, $Farbe, $FarbeMat, $RFID){
             $AnAusWart = 'off';
         }
 
-        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_time) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '', '".timestamp()."')";
+        $Anfrage = "INSERT INTO schluessel (id, farbe, farbe_materialize, RFID, ist_wartschluessel, akt_ort, akt_user, create_user, create_time) VALUES ('$ChosenID','$Farbe', '$FarbeMat', '$RFID', '$AnAusWart', 'rueckgabekasten', '0', '".lade_user_id()."', '".timestamp()."')";
         if (mysqli_query($link, $Anfrage)){
 
             $Antwort['success'] = TRUE;
@@ -134,6 +134,7 @@ function schluessel_hinzufuegen($ChosenID, $Farbe, $FarbeMat, $RFID){
 
         } else {
             $Antwort['success'] = FALSE;
+            #$Antwort['meldung'] = "Fehler beim Datenbankzugriff!".$Anfrage;
             $Antwort['meldung'] = "Fehler beim Datenbankzugriff!";
         }
     }

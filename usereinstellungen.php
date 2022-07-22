@@ -303,10 +303,15 @@ function spalte_kalenderabonnement($UserMeta){
     return $HTML;
 }
 function spalte_passwort_aendern($Parser){
-    $Table = table_form_password_item('Dein neues Passwort', 'password', '', false);
-    $Table .= table_form_password_item('Eingabe wiederholen', 'password_repeat', '', false);
-    $Table .= table_row_builder(table_header_builder(form_button_builder('action_password', '&Auml;ndern', 'action', 'send')).table_data_builder(''));
-    return collapsible_item_builder('Passwort &auml;ndern', form_builder("<h5 class='center-align'>".$Parser['meldung']."</h5>".table_builder($Table), '#', 'post','passwort_aendern_form'), 'vpn_key');
+    if(lade_xml_einstellung('extremepasswordmode')=='on'){
+        $TableHTML = table_row_builder(table_header_builder('Passwortregeln').table_data_builder(lade_xml_einstellung('rules_extreme_password_mode')));
+    } else {
+        $TableHTML = table_row_builder(table_header_builder('Passwortregeln').table_data_builder(lade_xml_einstellung('rules_normal_password_mode')));
+    }
+    $TableHTML .= table_form_password_item('Dein neues Passwort', 'password', '', false);
+    $TableHTML .= table_form_password_item('Eingabe wiederholen', 'password_repeat', '', false);
+    $TableHTML .= table_row_builder(table_header_builder(form_button_builder('action_password', '&Auml;ndern', 'action', 'send')).table_data_builder(''));
+    return collapsible_item_builder('Passwort &auml;ndern', form_builder("<h5 class='center-align'>".$Parser['meldung']."</h5>".table_builder($TableHTML), '#', 'post','passwort_aendern_form'), 'vpn_key');
 }
 function spalte_konto_loeschen(){
 

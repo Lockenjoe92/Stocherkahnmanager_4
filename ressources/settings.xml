@@ -4,10 +4,20 @@
     <!-- PASSWORD STUFF -->
     <extremepasswordmode>on</extremepasswordmode>
     <rules_normal_password_mode><![CDATA[
-        <h5 class="white-text">Normal Rulez</h5>
+        <class="black-text"><ul><li>- Das Passwort muss mindestens 10 Zeichen lang sein</li><li>- Das Passwort muss Zahlen und Buchstaben enthalten</li></ul>
         ]]></rules_normal_password_mode>
     <rules_extreme_password_mode><![CDATA[
-        <h5 class="white-text">Extreme Rulez</h5>
+        <p>Wir erhalten von der Fachschaft strenge Regeln zur Passwortvergabe der User um eure Daten besser zu schützen. Wir empfehlen euch auch generell einen Passwortmanager zu verwenden, um komplexere Passwörter generieren zu lassen:)</p>
+<p><class="black-text left-align"><ul>
+<li>- Das Passwort muss mindestens 10 Zeichen lang sein</li>
+<li>- Das Passwort muss mindestens 3 Zahlen und Buchstaben enthalten</li>
+<li>- Das Passwort darf die Wörter Passwort, Password oder Variationen davon nicht enthalten</li>
+<li>- Das Passwort darf nicht mehr als 3 gleiche Zeichen hintereinander enthalten</li>
+<li>- Das Passwort darf keine sich wiederholenden Zeichenketten enthalten (egal ob groß/klein, z.B. abcABCabc)</li>
+<li>- Das Passwort darf keine alphabetischen Zeichenketten enthalten (z.B. abcde)</li>
+<li>- Das Passwort darf keine fortlaufenden Zahlenreihen enthalten (z.B. 1234, 9o8i7u6z)</li>
+<li>- Das Passwort darf keine fortlaufenden Buchstabenreihen der Tastatur enthalten (z.B. qwert, asdfg)</li>
+<li>- Das Passwort darf Zahlen nicht nur als Präfix oder Suffix enthalten (z.B. passwort99)</li></ul></p>
         ]]></rules_extreme_password_mode>
 
     <!--- STARTSEITE -->
