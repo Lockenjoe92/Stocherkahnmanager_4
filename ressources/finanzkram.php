@@ -73,7 +73,11 @@ function forderung_generieren($Betrag, $Steuersatz, $VonUser, $VonKonto, $Zielko
         }
 
         //Forderung eintragen
-            $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender')";
+        if($ReferenzReservierung==''){
+            $ReferenzReservierung=0;
+        }
+
+        $AnfrageForderungEintragen = "INSERT INTO finanz_forderungen (betrag, steuersatz, von_user, von_konto, zielkonto, referenz_res, referenz, zahlbar_bis, timestamp, bucher) VALUES ('$Betrag', '$Steuersatz', '$VonUser', '$VonKonto', '$Zielkonto', '$ReferenzReservierung', '$Referenz', '$ZahlbarBis', '$Timestamp', '$Buchender')";
         $AbfrageForderungEintragen = mysqli_query($link, $AnfrageForderungEintragen);
 
         if ($AbfrageForderungEintragen){
@@ -81,8 +85,8 @@ function forderung_generieren($Betrag, $Steuersatz, $VonUser, $VonKonto, $Zielko
             $Antwort['meldung'] = "Forderung erfolgreich eingetragen!";
         } else {
             $Antwort['success'] = FALSE;
-            $Antwort['meldung'] = "Fehler beim Zugriff auf die Datenbank!<br>";
-            #$Antwort['meldung'] = "Fehler beim Zugriff auf die Datenbank!<br>".$AnfrageForderungEintragen;
+            #$Antwort['meldung'] = "Fehler beim Zugriff auf die Datenbank!<br>";
+            $Antwort['meldung'] = "Fehler beim Zugriff auf die Datenbank!<br>".$AnfrageForderungEintragen;
         }
     }
     return $Antwort;
