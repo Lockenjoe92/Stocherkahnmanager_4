@@ -601,11 +601,15 @@ function reservierung_stornieren($ReservierungID, $IDstornierer, $Begruendung){
 
             //Finanzkram:
             $ForderungenRes = lade_offene_forderung_res($Reservierung['id']);
-            $Einnahmen = lade_einnahmen_forderung($ForderungenRes['id']);
-            if($Einnahmen>0){
-                ausgleich_hinzufuegen_res($Reservierung['id'], $Einnahmen, 19);
+            if(sizeof($ForderungenRes)>0){
+                $Einnahmen = lade_einnahmen_forderung($ForderungenRes['id']);
+                if($Einnahmen>0){
+                    ausgleich_hinzufuegen_res($Reservierung['id'], $Einnahmen, 19);
+                }
+                forderung_stornieren($ForderungenRes['id']);
+            } else {
+                echo "nix forderung";
             }
-            forderung_stornieren($ForderungenRes['id']);
 
             $Antwort['success'] = TRUE;
             $Antwort['meldung'] = "Reservierung erfolgreich storniert!<br>";
