@@ -156,18 +156,18 @@ function parser_angebot_bearbeiten($IDangebot){
 
             if (isset($_POST['terminierung_terminangebot_bearbeiten'])){
                 $Befehl = "- ".$_POST['stunden_terminierung_terminangebot_bearbeiten']." hours";
-                $Terminierung = date('Y-m-d G:i:s', strtotime($Befehl, strtotime($EingabeAnfang)));
+                $Terminierung = "'".date('Y-m-d G:i:s', strtotime($Befehl, strtotime($EingabeAnfang)))."'";
             } else {
                 $Terminierung = "NULL";
             }
 
-            $Anfrage = "UPDATE terminangebote SET von = '$EingabeAnfang', bis = '$EingabeEnde', terminierung = '$Terminierung', kommentar = '".$_POST['kommentar_terminangebot_bearbeiten']."' WHERE id = '$IDangebot'";
+            $Anfrage = "UPDATE terminangebote SET von = '$EingabeAnfang', bis = '$EingabeEnde', terminierung = ".$Terminierung.", kommentar = '".$_POST['kommentar_terminangebot_bearbeiten']."' WHERE id = '$IDangebot'";
             if(mysqli_query($link, $Anfrage)){
                 $Antwort['success'] = TRUE;
                 $Antwort['meldung'] = "Terminangebot erfolgreich bearbeitet!";
             } else {
                 $Antwort['success'] = FALSE;
-                $Antwort['meldung'] = "Datenbankfehler!";
+                $Antwort['meldung'] = "Datenbankfehler!".$Anfrage;
             }
         } else if (!isset($_POST['action_terminangebot_bearbeiten'])) {
             $Antwort['success'] = NULL;
