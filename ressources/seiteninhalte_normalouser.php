@@ -425,6 +425,17 @@ function reservierung_hinzufuegen_parser(){
 
         $Anfang = "" . $_POST['datum_buchung'] . " " . $_POST['beginn_reservierung'] . ":00:00";
         $Ende = "" . $_POST['datum_buchung'] . " " . $_POST['ende_reservierung'] . ":00:00";
+
+        #var_dump($Anfang, $Ende);
+
+        #Catch bad string entries by old Browser & Andriod Verisons
+        #$ThisYearShortWithProcedingDot = strftime('.y');
+        #$ThisYearLongWithProcedingDot = strftime('.Y');
+        #$Anfang = str_replace($ThisYearShortWithProcedingDot, $ThisYearLongWithProcedingDot, $Anfang);
+        #$Ende = str_replace($ThisYearShortWithProcedingDot, $ThisYearLongWithProcedingDot, $Ende);
+
+        #var_dump($Anfang, $Ende);
+
         $AktuelleUserID = lade_user_id();
         $Benutzerrollen = lade_user_meta(lade_user_id());
 

@@ -81,10 +81,10 @@ function formular_do_uebergabe($UebergabeID){
                 $VerifizierungAusgabe = "<b>Letzte Verifizierung ABGELEHNT!</b><br>Nutzergruppe <b>".$NutzergruppeMeta['name']."</b> trotzdem verifizieren";
                 $NGswitchPreload = 'off';
             } elseif ($NutzergruppeVerification['erfolg'] == 'true'){
-                if($NutzergruppeVerification['timestamp'] < "".date('Y')."-01-01 00:00:01"){
+                if(strtotime($NutzergruppeVerification['timestamp']) < strtotime("".date('Y')."-01-01 00:00:01")){
                     $VerifizierungAusgabe = "<b>Verifizierung abgelaufen!</b><br>Nutzergruppe <b>".$NutzergruppeMeta['name']."</b> verifizieren";
                     $NGswitchPreload = 'off';
-                } elseif ($NutzergruppeVerification['timestamp'] >= "".date('Y')."-01-01 00:00:01"){
+                } elseif (strtotime($NutzergruppeVerification['timestamp']) >= strtotime("".date('Y')."-01-01 00:00:01")){
                     $VerifizierungAusgabe = "<b>Verifizierung dieses Jahr erfolgt!:)</b>";
                     $NGswitchPreload = 'on';
                 }

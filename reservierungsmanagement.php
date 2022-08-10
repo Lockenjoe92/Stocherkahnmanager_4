@@ -35,16 +35,17 @@ $HTML .= spalte_stats();
 //Aktive Reservierungen
 //Objekt: ID, Datum, Von-Bis, User, Übergabestatus, Schlüsselstatus, Zahlstatus; Funktionen: bearbeiten, stornieren
 //Reservierung hinzufügen
-$HTML .= spalte_aktive_reservierungen($PayPal);
+$CollapsibleHTML = collapsible_item_builder('Anstehende Reservierungen', spalte_aktive_reservierungen($PayPal), 'access_alarm');
 //Vergangene Reservierungen
 //Objekt: ID, Datum, Von-Bis, User, Übergabestatus, Schlüsselstatus, Zahlstatus; Funktionen: bearbeiten, stornieren
-$HTML .= spalte_vergangene_reservierungen($PayPal);
+$CollapsibleHTML .= collapsible_item_builder('Vergangene Reservierungen', spalte_vergangene_reservierungen($PayPal), 'hourglass_empty');
 //Stornierte Reservierungen
 //Objekt: ID, Datum, Von-Bis, User, Übergabestatus, Schlüsselstatus, Zahlstatus; Funktionen: storno-aufheben
-$HTML .= spalte_stornierte_reservierungen($PayPal);
+$CollapsibleHTML .= collapsible_item_builder('Stornierte Reservierungen', spalte_stornierte_reservierungen($PayPal), 'delete_forever');
+
+$HTML .= collapsible_builder($CollapsibleHTML);
+
 $HTML = form_builder($HTML, '#', 'post', '', '');
-
-
 $HTML = container_builder($HTML);
 
 # Output site
