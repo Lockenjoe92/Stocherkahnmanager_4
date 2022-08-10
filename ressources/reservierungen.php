@@ -608,7 +608,7 @@ function reservierung_stornieren($ReservierungID, $IDstornierer, $Begruendung){
                 }
                 forderung_stornieren($ForderungenRes['id']);
             } else {
-                echo "nix forderung";
+                $Antwort['meldung'] = "Reservierung erfolgreich storniert!<br>Keine Forderung zu löschen.";
             }
 
             $Antwort['success'] = TRUE;
