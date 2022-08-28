@@ -179,12 +179,20 @@ function spalte_moegliche_rueckzahlungen(){
             $Userinfos = lade_user_meta($Reservierung['user']);
             if($Userinfos['hat_eigenen_schluessel']=='true'){
 
-                if(strtotime($Reservierung['ende'])<strtotime('2022-01-01')){
+                $yahr = date('Y')."-01-01";
+                if(strtotime($Reservierung['ende'])<strtotime($yahr)){
                     $Continue = false;
                 } else {
                     $Continue = true;
                 }
 
+            } elseif($Userinfos['wg_hat_eigenen_schluessel']=='true'){
+                $yahr = date('Y')."-01-01";
+                if(strtotime($Reservierung['ende'])<strtotime($yahr)){
+                    $Continue = false;
+                } else {
+                    $Continue = true;
+                }
             } else {
                 $Continue = false;
             }
