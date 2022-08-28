@@ -34,11 +34,16 @@ function site_header($PageTitle, $LoginCheckActive=Null){
     #CSS
     $HTML .= '  <!-- CSS  -->';
     $HTML .= '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
- 	$HTML .= '<link rel="stylesheet" type="text/css" href="https://pretix.tueticket.shop/medikahn/grundkurs/widget/v1.css">';
+    if(lade_xml_einstellung('pretix_widget_global'=='on')){
+        $HTML .= lade_xml_einstellung('pretix_widget_css');
+    }
     $HTML .= '<link href="/materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>';
     $HTML .= '<link href="/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>';
-	
-	$HTML .= '<script type="text/javascript" src="https://pretix.tueticket.shop/widget/v1.de.js" async></script>';
+
+    if(lade_xml_einstellung('pretix_widget_global'=='on')){
+        $HTML = '  <!-- Pretix Scripts-->';
+        $HTML .= lade_xml_einstellung('pretix_widget_js');
+    }
 
     #End header
     $HTML .= '</head>';
