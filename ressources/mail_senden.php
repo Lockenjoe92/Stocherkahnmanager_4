@@ -70,7 +70,52 @@ function mail_senden($NameVorlage, $MailAdresse, $Bausteine, $Typ='')
     }
 }
 
-    function mail_schon_gesendet($User, $Typ){
+function rundmail_senden($Content, $Subject, $MailAdresse, $Bausteine, $Typ='')
+{
+    //Vorlagentext generieren
+    $Mailtext = str_replace(array_keys($Bausteine), array_values($Bausteine),$Content);
+
+    //Instanz von PHPMailer bilden
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+    //Absenderadresse der E-Mail setzen
+    $mail->addReplyTo(lade_xml_einstellung('reply_mail'), lade_xml_einstellung('site_name'));
+    $mail->From = lade_xml_einstellung('absender_mail');
+    $mail->Sender = lade_xml_einstellung('absender_mail');
+
+    //HTML-Format setzen
+    $mail->IsHTML(true);
+
+    //Name des Abenders setzen
+    $mail->FromName = lade_xml_einstellung('absender_name');
+
+    //Empfängeradresse setzen
+    $mail->addAddress($MailAdresse);
+
+    //Betreff der E-Mail setzen
+    $mail->Subject = $Subject;
+
+    //Text der E-Mail setzen
+    $mail->Body = html_entity_decode($Mailtext);
+
+    //E-Mail senden
+    $link = connect_db();
+    $EmpfaenegrID = lade_user_id_from_mail($MailAdresse);
+    if($mail->Send())
+    {
+            $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'true')";
+            mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
+            return true;
+    } else {
+        $Error = 'Mailer Error: ' . $mail->ErrorInfo;
+            $Typ = $Typ.' Fehler:'.$Error;
+            $AnfrageMailMisserfolgSpeichern = "INSERT INTO mail_protokoll (timestamp, typ, empfaenger, erfolg) VALUES ('".timestamp()."', '$Typ', '$EmpfaenegrID', 'false')";
+            mysqli_query($link, $AnfrageMailMisserfolgSpeichern);
+            return false;
+    }
+}
+
+function mail_schon_gesendet($User, $Typ){
 
         $link = connect_db();
 

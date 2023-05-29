@@ -989,20 +989,28 @@ function dropdown_nutzergruppen_waehlen($NameElement, $Selected, $Nutzergruppen,
         $ID = $Nutzergruppe['id'];
         $UserVisible = $Nutzergruppe['visible_for_user'];
 
-        if($UserVisible == 'true'){
-            if(($Mode=='wart_visibles') OR ($Mode=='user')){
-                if($ID == $Selected){
-                    $Ausgabe .= "<option value='".$Name."' selected>".$Name."</option>";
-                } else {
-                    $Ausgabe .= "<option value='".$Name."'>".$Name."</option>";
-                }
+        if ($Mode=='all'){
+            if($ID == $Selected){
+                $Ausgabe .= "<option value='".$Name."' selected>".$Name."</option>";
+            } else {
+                $Ausgabe .= "<option value='".$Name."'>".$Name."</option>";
             }
-        } elseif ($UserVisible == 'false'){
-            if($Mode=='wart_unvisibles'){
-                if($ID == $Selected){
-                    $Ausgabe .= "<option value='".$Name."' selected>".$Name."</option>";
-                } else {
-                    $Ausgabe .= "<option value='".$Name."'>".$Name."</option>";
+        } else {
+            if($UserVisible == 'true'){
+                if(($Mode=='wart_visibles') OR ($Mode=='user')){
+                    if($ID == $Selected){
+                        $Ausgabe .= "<option value='".$Name."' selected>".$Name."</option>";
+                    } else {
+                        $Ausgabe .= "<option value='".$Name."'>".$Name."</option>";
+                    }
+                }
+            } elseif ($UserVisible == 'false'){
+                if($Mode=='wart_unvisibles'){
+                    if($ID == $Selected){
+                        $Ausgabe .= "<option value='".$Name."' selected>".$Name."</option>";
+                    } else {
+                        $Ausgabe .= "<option value='".$Name."'>".$Name."</option>";
+                    }
                 }
             }
         }
@@ -1067,7 +1075,38 @@ function dropdown_buchungstoolgruppe_waehlen($NameElement, $Selected){
         $Ausgabe .= "<option value=''>wählen</option>";
     }
 
-    $Nutzergruppen = array('ist_admin','ist_wart', 'ist_kasse');
+    $Nutzergruppen = array('ist_admin','ist_wart', 'ist_kasse', 'ist_rundmail');
+
+    foreach ($Nutzergruppen as $Nutzergruppe){
+        if($Nutzergruppe == $Selected){
+            $Ausgabe .= "<option value='".$Nutzergruppe."' selected>".$Nutzergruppe."</option>";
+        } else {
+            $Ausgabe .= "<option value='".$Nutzergruppe."'>".$Nutzergruppe."</option>";
+        }
+    }
+
+    $Ausgabe .= "</select>";
+    return $Ausgabe;
+}
+
+function dropdown_rundmailmodus_waehlen($NameElement, $Selected){
+    $Ausgabe = "<select name='" .$NameElement. "' id='".$NameElement."' class='browser-default'>";
+
+    //Startwert
+    if($Selected == ''){
+        $Ausgabe .= "<option value='' selected>wählen</option>";
+    } else {
+        $Ausgabe .= "<option value=''>wählen</option>";
+    }
+
+    #    $Nutzergruppen = array('alle_nutzer','bestimmte_nutzer','nur_warte','offene_zahlungen','anstehende_reservierungen','nur_nutzergruppe');
+    $Nutzergruppen = array('alle_nutzer','nur_warte','nur_nutzergruppe', 'nur_ich');
+
+    #Debugging für Marc
+    $User = lade_user_id();
+    if ($User == 1){
+        $Nutzergruppen = array('alle_nutzer','nur_warte','nur_nutzergruppe', 'nur_ich', 'debug');
+    }
 
     foreach ($Nutzergruppen as $Nutzergruppe){
         if($Nutzergruppe == $Selected){

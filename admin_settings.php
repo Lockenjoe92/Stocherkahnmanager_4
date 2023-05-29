@@ -19,7 +19,7 @@ $XMLsettings = ['extremepasswordmode', 'site_url', 'absender_mail', 'absender_na
     'schluesselrueckgabe_automat_aktiv', 'wasserstand_mail_time', 'wasserstand_mail_wart_mode', 'wasserstand_akkordeon_title', 'wasserstand_sperrungsautomatik_stunden', 'wasserstand_sperrungsautomatik_on_off',
     'pretix_widget_global', 'wasserstand_generelle_sperrung_auto', 'wasserstand_vorwarnung_beginner', 'wasserstand_mail_mode', 'grenze_trendberechnung_wasserstand', 'wasserstand_global_on_off', 'anzahl_messungen_trendberechnung_wasserstand',
     'wasserstand_vorwarnung_erfahrene', 'wasserstand_generelle_sperrung', 'tage-spontanuebergabe-reservierungen-vergangenheit-dropdown','warnung_lora_unterspannung_aktiv', 'batterie_spannung_untergrenze', 'warnung_lora_totmann_aktiv',
-    'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende', 'destination_url_after_logout'];
+    'hinweis_login_formular', 'moegliche_schluesselorte', 'search_URL_pegelstaende', 'destination_url_after_logout', 'dauer-uebergabe-minuten'];
 admin_xml_settings_parser($XMLsettings);
 
 $CDATAxmlSETTINGS = ['rules_normal_password_mode', 'rules_extreme_password_mode','titelinfo-reservierung-hinzufuegen', 'inhalt-dokumente-und-nuetzliches', 'html-faq-user-hauptansicht', 'text-info-uebergabe-dabei-haben', 'text-info-uebergabe-ablauf',

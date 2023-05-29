@@ -910,6 +910,12 @@ function terminangebot_hinzufuegen($IDwart, $Beginn, $Ende, $Ort, $Kommentar, $T
         $DAUerror .= "Du kannst kein Angebot f&uuml;r die Vergangenheit eingeben!<br>";
     }
 
+    $MinimumDauerUebergabe = lade_xml_einstellung('dauer-uebergabe-minuten');
+    if(minuten_differenz_berechnen($Beginn, $Ende)<$MinimumDauerUebergabe){
+        $DAUcounter++;
+        $DAUerror .= "Das angegebene Zeitfenster unterschreitet die im System Eingestellte Mindestdauer für eine Übergabe!<br>Bitte erstelle ein Angebot von mindestens ".$MinimumDauerUebergabe." Minuten dauer.<br>";
+    }
+
     //Überprüfe clash mit vorhandenem Angebot
     $AnfrageClash = "SELECT id FROM terminangebote WHERE wart = '$IDwart' AND (((von <= '$Beginn') AND (bis >= '$Ende')) OR (('$Beginn' < von) AND ('$Ende' > von)) OR (('$Beginn' < bis) AND ('$Ende' > bis))) AND storno_user = '0'";
     $AbfrageClash = mysqli_query($link, $AnfrageClash);

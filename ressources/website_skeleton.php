@@ -248,6 +248,9 @@ function navbar_links_big(){
             if($UserMeta['ist_kasse'] == 'true'){
                 $HTML .= '<li><a href="./kassenwart.php">'.$ColorSpan.'Kasse'.$EndColorSpan.'</a></li>';
             }
+            if($UserMeta['ist_rundmail'] == 'true'){
+                $HTML .= '<li><a href="./rundmailsystem.php">'.$ColorSpan.'Rundmails'.$EndColorSpan.'</a></li>';
+            }
             if($UserMeta['ist_admin'] == 'true'){
                 $HTML .= '<li><a href="./administration.php">'.$ColorSpan.'Admin'.$EndColorSpan.'</a></li>';
             }
@@ -314,6 +317,9 @@ function navbar_links_mobile(){
             }
             if($UserMeta['ist_kasse'] == 'true'){
                 $HTML .= '<li><a href="./kassenwart.php" class="'.$TextColor.'">Kasse</a></li>';
+            }
+            if($UserMeta['ist_rundmail'] == 'true'){
+                $HTML .= '<li><a href="./rundmailsystem.php" class="'.$TextColor.'">Rundmails</a></li>';
             }
         }
 

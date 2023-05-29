@@ -171,6 +171,10 @@ function listenobjekt_user_generieren($UserID, $UserIDchosen, $Nutzergruppen, $A
         $BuchungstoolCounter++;
         $BuchungstoolRollen .= '- Kassenwart*in <a href="./delete_buchungstool_rolle.php?rolle=ist_kasse&user='.$UserID.'"><i class="tiny material-icons">delete_forever</i></a><br>';
     }
+    if($UserMeta['ist_rundmail'] == 'true'){
+        $BuchungstoolCounter++;
+        $BuchungstoolRollen .= '- Rundmailwart*in <a href="./delete_buchungstool_rolle.php?rolle=ist_rundmail&user='.$UserID.'"><i class="tiny material-icons">delete_forever</i></a><br>';
+    }
     if($BuchungstoolCounter==0){
         $BuchungstoolRollen .= 'keine';
     }
