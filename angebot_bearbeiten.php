@@ -141,6 +141,16 @@ function parser_angebot_bearbeiten($IDangebot){
             $DAUerror .= "Die Zeiten d&uuml;rfen nicht identisch sein!<br>";
         }
 
+        $MinimumDauerUebergabe = lade_xml_einstellung('dauer-uebergabe-minuten');
+        if(tage_differenz_berechnen($EingabeAnfang, $EingabeEnde)<1){
+            if(stunden_differenz_berechnen($EingabeAnfang, $EingabeEnde)<1){
+                if(minuten_differenz_berechnen($EingabeAnfang, $EingabeEnde)<$MinimumDauerUebergabe){
+                    $DAUcounter++;
+                    $DAUerror .= "Das angegebene Zeitfenster unterschreitet die im System Eingestellte Mindestdauer für eine Übergabe!<br>Bitte erstelle ein Angebot von mindestens ".$MinimumDauerUebergabe." Minuten dauer.<br>";
+                }
+            }
+        }
+
         if ((isset($_POST['terminierung_terminangebot_bearbeiten'])) AND ($_POST['stunden_terminierung_terminangebot_bearbeiten'] == "")){
             $DAUcounter++;
             $DAUerror .= "Du musst eine Angabe zur Dauer der Terminierung angeben, wenn du diese einschalten m&oumlchtest!<br>";

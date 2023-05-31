@@ -1575,6 +1575,7 @@ function listenelement_offene_forderung_kassenwart_durchfuehren_generieren($Ford
 
     $User = lade_user_meta($Forderung['von_user']);
     $Bucher = lade_user_meta($Forderung['bucher']);
+
     if($Mode=='andere'){
         $Titel = $Forderung['referenz'].' - '.$User['vorname'].' '.$User['nachname'].' - '.$Forderung['betrag'].'&euro;';
         $Content = table_row_builder(table_header_builder('Forderung').table_data_builder($Forderung['referenz']));

@@ -911,9 +911,13 @@ function terminangebot_hinzufuegen($IDwart, $Beginn, $Ende, $Ort, $Kommentar, $T
     }
 
     $MinimumDauerUebergabe = lade_xml_einstellung('dauer-uebergabe-minuten');
-    if(minuten_differenz_berechnen($Beginn, $Ende)<$MinimumDauerUebergabe){
-        $DAUcounter++;
-        $DAUerror .= "Das angegebene Zeitfenster unterschreitet die im System Eingestellte Mindestdauer für eine Übergabe!<br>Bitte erstelle ein Angebot von mindestens ".$MinimumDauerUebergabe." Minuten dauer.<br>";
+    if(tage_differenz_berechnen($Beginn, $Ende)<1){
+        if(stunden_differenz_berechnen($Beginn, $Ende)<1){
+            if(minuten_differenz_berechnen($Beginn, $Ende)<$MinimumDauerUebergabe){
+                $DAUcounter++;
+                $DAUerror .= "Das angegebene Zeitfenster unterschreitet die im System Eingestellte Mindestdauer für eine Übergabe!<br>Bitte erstelle ein Angebot von mindestens ".$MinimumDauerUebergabe." Minuten dauer.<br>";
+            }
+        }
     }
 
     //Überprüfe clash mit vorhandenem Angebot
